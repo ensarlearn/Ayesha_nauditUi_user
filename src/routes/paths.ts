@@ -67,8 +67,9 @@ export const PATH_DASHBOARD = {
   },
   nist: {
     root: path(ROOTS_DASHBOARD, '/nist'),
-
+    edit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/edit`),
     list: path(ROOTS_DASHBOARD, '/nist/list'),
+    new: path(ROOTS_DASHBOARD, '/nist/new'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

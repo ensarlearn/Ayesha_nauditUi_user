@@ -146,12 +146,9 @@ export default function Router() {
           path: 'nist',
           children: [
             { element: <Navigate to="/dashboard/nist/list" replace />, index: true },
-            { path: 'profile', element: <UserProfile /> },
-            { path: 'cards', element: <UserCards /> },
-            { path: 'list', element: <AuditUserList /> },
-            { path: 'new', element: <UserCreate /> },
-            { path: ':name/edit', element: <UserCreate /> },
-            { path: 'account', element: <UserAccount /> },
+            { path: 'list', element: <SystemsUserList /> },
+            { path: 'new', element: <SystemsCreate /> },
+            { path: ':id/edit', element: <SystemsCreate /> },
           ],
         },
       ],
@@ -248,4 +245,5 @@ const Page404 = Loadable(lazy(() => import('../pages/Page404')));
 
 //Audit
 const AuditApp = Loadable(lazy(() => import('../pages/audit/dashboard/GeneralApp')));
-const AuditUserList = Loadable(lazy(() => import('../pages/audit/users/UserList')));
+const SystemsUserList = Loadable(lazy(() => import('../pages/audit/nist/systems/SystemsList')));
+const SystemsCreate = Loadable(lazy(() => import('../pages/audit/nist/systems/SystemsCreate')));

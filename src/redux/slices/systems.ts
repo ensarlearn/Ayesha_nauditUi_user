@@ -113,7 +113,7 @@ export function addSystems(system: SystemsRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.get('/v1/user/');
+      const response = await axios.post('/v1/systems/', system);
       dispatch(slice.actions.addSystemsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -125,7 +125,7 @@ export function updateSystems(system: SystemsRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.get('/v1/user/');
+      const response = await axios.put('/v1/systems/' + system.id, system);
       dispatch(slice.actions.updateSystemsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -137,7 +137,7 @@ export function deleteSystems(id: string) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.get('/v1/user/');
+      const response = await axios.delete('/v1/systems/' + id);
       dispatch(slice.actions.deleteSystemsSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

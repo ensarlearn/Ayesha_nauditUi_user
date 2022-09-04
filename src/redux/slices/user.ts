@@ -104,7 +104,7 @@ export function getCurrentUser() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/v1/user');
+      const response = await axios.get('/v1/user/current');
       dispatch(slice.actions.getUserSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -122,7 +122,13 @@ export function addUser(
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.get('/v1/user');
+      const data: any = {
+        firstName,
+        lastName,
+        email,
+        role,
+      };
+      const response = await axios.post('/v1/user/', data);
       dispatch(slice.actions.addUserSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -141,7 +147,13 @@ export function updateUser(
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.get('/v1/user');
+      const response = await axios.put('/v1/user/', {
+        firstName,
+        lastName,
+        email,
+        role,
+        organizationId,
+      });
       dispatch(slice.actions.updateUserSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

@@ -8,7 +8,7 @@ import productReducer from './slices/product';
 import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 import userReducer from './slices/user';
-
+import systemsReducer from './slices/systems';
 // ----------------------------------------------------------------------
 
 const rootPersistConfig = {
@@ -31,7 +31,12 @@ const userPersistConfig = {
   keyPrefix: 'redux-',
   whitelist: ['sortBy'],
 };
-
+const systemsPersistConfig = {
+  key: 'systems',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['sortBy'],
+};
 const rootReducer = combineReducers({
   mail: mailReducer,
   chat: chatReducer,
@@ -39,6 +44,7 @@ const rootReducer = combineReducers({
   kanban: kanbanReducer,
   user: persistReducer(userPersistConfig, userReducer),
   product: persistReducer(productPersistConfig, productReducer),
+  systems: persistReducer(systemsPersistConfig, systemsReducer),
 });
 
 export { rootPersistConfig, rootReducer };
