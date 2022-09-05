@@ -4,6 +4,7 @@ export type Systems = {
   id: string;
   name: string;
   ipaddress: string;
+  os: string;
   user: User;
 };
 
@@ -11,6 +12,7 @@ export type SystemsRequest = {
   id: string;
   name: string;
   ipaddress: string;
+  os: string;
   userid: string;
 };
 

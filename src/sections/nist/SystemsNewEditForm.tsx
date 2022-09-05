@@ -48,6 +48,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
       id: currentSystem?.id || '',
       name: currentSystem?.name || '',
       ipaddress: currentSystem?.ipaddress || '',
+      os: currentSystem?.os || '',
       userid: currentSystem?.user.id || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,6 +93,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
           id: data.id,
           name: data.name,
           ipaddress: data.ipaddress,
+          os: data.os,
           userid: dropdownuser,
         };
         dispatch(updateSystems(update));
@@ -101,6 +103,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
           id: data.id,
           name: data.name,
           ipaddress: data.ipaddress,
+          os: data.os,
           userid: dropdownuser,
         };
         dispatch(addSystems(newsystem));
@@ -132,6 +135,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
             >
               <RHFTextField name="name" label="Full Name" />
               <RHFTextField name="ipaddress" label="IP Address" />
+              <RHFTextField name="os" label="OS" />
               <RHFSelect
                 name={dropdownuser}
                 value={dropdownuser}
