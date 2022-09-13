@@ -38,8 +38,8 @@ export default function LoginForm() {
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: 'bhakta@ensarsolutions.com',
+    password: '!Nellore123',
     remember: true,
   };
 
