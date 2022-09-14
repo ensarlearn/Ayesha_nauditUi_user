@@ -59,6 +59,7 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/user'),
     new: path(ROOTS_DASHBOARD, '/user/new'),
     list: path(ROOTS_DASHBOARD, '/user/list'),
+    softwares: path(ROOTS_DASHBOARD, '/user/softwares'),
     cards: path(ROOTS_DASHBOARD, '/user/cards'),
     profile: path(ROOTS_DASHBOARD, '/user/profile'),
     account: path(ROOTS_DASHBOARD, '/user/account'),
@@ -67,14 +68,29 @@ export const PATH_DASHBOARD = {
   },
   nist: {
     root: path(ROOTS_DASHBOARD, '/nist'),
+    
     edit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/edit`),
     list: path(ROOTS_DASHBOARD, '/nist/list'),
+
+    softwareedit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/softwareedit`),
+    softwares: path(ROOTS_DASHBOARD, '/nist/softwares'),
+
+    controlsedit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/controlsedit`),
+    controls: path(ROOTS_DASHBOARD, '/nist/controls'),
+
+    featureedit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/featureedit`),
+    features: path(ROOTS_DASHBOARD, '/nist/features'),
+
     new: path(ROOTS_DASHBOARD, '/nist/new'),
+    softwarenew: path(ROOTS_DASHBOARD, '/nist/softwarenew'),
+    controlsnew: path(ROOTS_DASHBOARD, '/nist/controlsnew'),
+    featurenew: path(ROOTS_DASHBOARD, '/nist/featurenew'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/e-commerce/shop'),
     list: path(ROOTS_DASHBOARD, '/e-commerce/list'),
+    softwares: path(ROOTS_DASHBOARD, '/e-commerce/softwares'),
     checkout: path(ROOTS_DASHBOARD, '/e-commerce/checkout'),
     new: path(ROOTS_DASHBOARD, '/e-commerce/product/new'),
     view: (name: string) => path(ROOTS_DASHBOARD, `/e-commerce/product/${name}`),
@@ -85,6 +101,7 @@ export const PATH_DASHBOARD = {
   invoice: {
     root: path(ROOTS_DASHBOARD, '/invoice'),
     list: path(ROOTS_DASHBOARD, '/invoice/list'),
+    softwares: path(ROOTS_DASHBOARD, '/invoice/softwares'),
     new: path(ROOTS_DASHBOARD, '/invoice/new'),
     view: (id: string) => path(ROOTS_DASHBOARD, `/invoice/${id}`),
     edit: (id: string) => path(ROOTS_DASHBOARD, `/invoice/${id}/edit`),

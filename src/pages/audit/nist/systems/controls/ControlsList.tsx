@@ -1,60 +1,63 @@
-import { paramCase } from 'change-case';
-import { useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { paramCase } from "change-case";
+import { useEffect, useState } from "react";
+// import { Link as RouterLink, useNavigate } from 'raect-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import {
-  Box,
-  Tab,
-  Tabs,
-  Card,
-  Table,
-  Switch,
-  Button,
-  Tooltip,
-  Divider,
-  TableBody,
-  Container,
-  IconButton,
-  TableContainer,
-  TablePagination,
-  FormControlLabel,
+    Box,
+    Tab,
+    Tabs,
+    Card,
+    Table,
+    Switch,
+    Button,
+    Tooltip,
+    Divider,
+    TableBody,
+    Container,
+    IconButton,
+    TableContainer,
+    TablePagination,
+    FormControlLabel,
 } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "src/routes/paths";
 // hooks
-import useTabs from '../../../../hooks/useTabs';
-import useSettings from '../../../../hooks/useSettings';
-import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
+import useTabs from "src/hooks/useTabs";
+import useSettings from "src/hooks/useSettings";
+import useTable, { getComparator, emptyRows } from 'src/hooks/useTable';
 
 // components
-import Page from '../../../../components/Page';
-import Iconify from '../../../../components/Iconify';
-import Scrollbar from '../../../../components/Scrollbar';
-import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
+import Page from 'src/components/Page';
+import Iconify from "src/components/Iconify";
+import Scrollbar from "src/components/Scrollbar";
+import { TableNoData, TableEmptyRows, TableHeadCustom } from "src/components/table";
 // sections
-import { SystemsTableToolbar, SystemTableRow } from '../../../../sections/nist';
-import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import { ControlsTableToolbar, ControlTableRow } from 'src/sections/nist';
+import HeaderBreadcrumbs from '../../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
-import { dispatch } from '../../../../redux/store';
-import { deleteSystems, getSystems } from '../../../../redux/slices/systems';
-import { Systems, SystemsState } from '../../../../@types/systems';
+import { dispatch } from '../../../../../redux/store';
+import { deleteControls, getControls } from 'src/redux/slices/controls';
+import { Controls, ControlsState } from '../../../../../@types/controls';
+import { useNavigate } from "react-router-dom";
 
-// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------
 
 const ROLE_OPTIONS = ['all', 'ux designer'];
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'Id', align: 'left' },
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: '' },
+    { id: 'id', label: 'Id', align: 'left' },
+    { id: 'name', label: 'Name', align: 'left' },
+    { id: 'subcategory', label: 'Sub-category', align: 'left' },
+    { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
-// ----------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
 
-export default function SystemsList() {
-  const {
-    dense,
+export default function ControlsList() {
+    const {
+        dense,
     page,
     order,
     orderBy,
@@ -70,26 +73,26 @@ export default function SystemsList() {
     onChangeDense,
     onChangePage,
     onChangeRowsPerPage,
-  } = useTable();
+    } = useTable();
 
-  const { themeStretch } = useSettings();
+    const { themeStretch } = useSettings();
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const { systems, createStatus, updateStatus, errorMessage } = useSelector(
-    (state: { systems: SystemsState }) => state.systems
-  );
-  useEffect(() => {
-    dispatch(getSystems());
-  }, []);
+    const { controls, createStatus, updateStatus, errorMessage } = useSelector(
+        (state: { controls: ControlsState }) => state.controls
+    );
+    useEffect(() => {
+        dispatch(getControls());
+    }, []);
 
-  const [filterName, setFilterName] = useState('');
+    const [filterName, setFilterName] = useState('');
 
-  const [filterRole, setFilterRole] = useState('all');
+    const [filterRole, setFilterRole] = useState('all');
 
-  const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
+    const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
 
-  const [tableData, setTableData] = useState(systems);
+    const [tableData, setTableData] = useState(controls);
 
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);
@@ -101,8 +104,8 @@ export default function SystemsList() {
   };
 
   const handleDeleteRow = (id: string) => {
-    const deleteRow = systems.filter((row) => row.id !== id);
-    dispatch(deleteSystems(id));
+    const deleteRow = controls.filter((row) => row.id !== id);
+    dispatch(deleteControls(id));
   };
 
   const handleEditRow = (id: string) => {
@@ -110,7 +113,7 @@ export default function SystemsList() {
   };
 
   const dataFiltered = applySortFilter({
-    systems,
+    controls,
     comparator: getComparator(order, orderBy),
     filterName,
     filterRole,
@@ -132,21 +135,21 @@ export default function SystemsList() {
             heading="Test"
             links={[
               { name: 'Dashboard', href: PATH_DASHBOARD.nist.root },
-              { name: 'Systems' },
+              { name: 'Controls' },
               { name: 'List' },
             ]}
             action={
               <Button
                 variant="contained"
                 component={RouterLink}
-                to={PATH_DASHBOARD.nist.new}
+                to={PATH_DASHBOARD.nist.controlsnew}
                 startIcon={<Iconify icon={'eva:plus-fill'} />}
               >
-                New Systems
+                New Control
               </Button>
             }
           />
-          <SystemsTableToolbar
+          <ControlsTableToolbar
             filterName={filterName}
             filterRole={filterRole}
             onFilterName={handleFilterName}
@@ -160,7 +163,7 @@ export default function SystemsList() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={systems.length}
+                  rowCount={controls.length}
                   numSelected={selected.length}
                   onSort={onSort}
                 />
@@ -169,7 +172,7 @@ export default function SystemsList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <SystemTableRow
+                      <ControlTableRow
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
@@ -181,7 +184,7 @@ export default function SystemsList() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(page, rowsPerPage, systems.length)}
+                    emptyRows={emptyRows(page, rowsPerPage, controls.length)}
                   />
 
                   <TableNoData isNotFound={isNotFound} />
@@ -210,19 +213,19 @@ export default function SystemsList() {
 // ----------------------------------------------------------------------
 
 function applySortFilter({
-  systems,
+  controls,
   comparator,
   filterName,
   filterStatus,
   filterRole,
 }: {
-  systems: Systems[];
+  controls: Controls[];
   comparator: (a: any, b: any) => number;
   filterName: string;
   filterStatus: string;
   filterRole: string;
 }) {
-  const stabilizedThis = systems.map((el, index) => [el, index] as const);
+  const stabilizedThis = controls.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -230,22 +233,23 @@ function applySortFilter({
     return a[1] - b[1];
   });
 
-  systems = stabilizedThis.map((el) => el[0]);
+  controls = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    systems = systems.filter(
+    controls = controls.filter(
       (item: Record<string, any>) =>
         item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
   if (filterStatus !== 'all') {
-    systems = systems.filter((item: Record<string, any>) => item.status === filterStatus);
+    controls = controls.filter((item: Record<string, any>) => item.status === filterStatus);
   }
 
   if (filterRole !== 'all') {
-    systems = systems.filter((item: Record<string, any>) => item.role === filterRole);
+    controls = controls.filter((item: Record<string, any>) => item.role === filterRole);
   }
 
-  return systems;
+  return controls;
 }
+

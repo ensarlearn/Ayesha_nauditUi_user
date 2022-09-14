@@ -11,10 +11,10 @@ import {
   CardHeader,
   IconButton,
 } from '@mui/material';
-import { User } from '../../../../@types/nistuser';
-import { RHFSelect } from '../../../../components/hook-form';
+import { User } from '../../../../../@types/nistuser';
+import { RHFSelect } from '../../../../../components/hook-form';
 // components
-import Iconify from '../../../../components/Iconify';
+import Iconify from '../../../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 

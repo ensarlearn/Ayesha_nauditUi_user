@@ -36,6 +36,24 @@ export const MAPBOX_API = process.env.REACT_APP_MAPBOX_API;
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 export const PATH_AFTER_LOGIN = PATH_DASHBOARD.general.app; // as '/dashboard/app'
 
+// API_URL
+const serverVars = {
+  apiUrl: 'https://empowered-ai.vizenanalytics.com/vizen-svc'
+};
+
+const localVars = {
+  apiUrl: 'http://localhost:8080'
+};
+
+const getConfiguration = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return serverVars;
+  }
+  return localVars;
+};
+
+export default getConfiguration;
+
 // LAYOUT
 // ----------------------------------------------------------------------
 

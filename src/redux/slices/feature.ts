@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
-import { Systems, SystemsRequest, SystemsState } from '../../@types/systems';
+import { Features, FeaturesRequest, FeaturesState } from '../../@types/features';
 import { StatusCodes } from '../../utils/status-codes';
 import { extractErrorMessage } from '../../utils/errorHelper';
 import axios from 'src/utils/axios';
 
-const initialState: SystemsState = {
+const initialState: FeaturesState = {
   loadingStatus: StatusCodes.NONE,
   createStatus: StatusCodes.NONE,
   updateStatus: StatusCodes.NONE,
@@ -13,17 +13,17 @@ const initialState: SystemsState = {
   deleteStatus: StatusCodes.NONE,
   error: false,
   errorMessage: null,
-  systems: [],
-  system: null,
+  features: [],
+  feature: null,
   sortBy: null,
   filters: {
     name: '',
   },
-  selectedSystemsName: '',
+  selectedFeaturesName: '',
 };
 
 const slice = createSlice({
-  name: 'systems',
+  name: 'features',
   initialState,
   reducers: {
     startLoading(state) {
@@ -47,35 +47,35 @@ const slice = createSlice({
       state.errorMessage = extractErrorMessage(action.payload);
     },
 
-    getSystemSuccess(state, action) {
+    getFeatureSuccess(state, action) {
       state.loadingStatus = StatusCodes.COMPLETED;
-      state.system = action.payload;
+      state.feature = action.payload;
     },
 
-    getSystemsSuccess(state, action) {
+    getFeaturesSuccess(state, action) {
       state.loadingStatus = StatusCodes.COMPLETED;
-      state.systems = action.payload;
-      console.log(state.systems);
+      state.features = action.payload;
+      console.log(state.features);
     },
 
-    addSystemsSuccess(state, action) {
+    addFeaturesSuccess(state, action) {
       state.createStatus = StatusCodes.COMPLETED;
-      state.systems.push(action.payload);
+      state.features.push(action.payload);
     },
 
-    updateSystemsSuccess(state, action) {
+    updateFeaturesSuccess(state, action) {
       state.updateStatus = StatusCodes.COMPLETED;
-      const systemsIndex = state.systems.findIndex(
-        (systems: Systems) => systems.id === action.payload.id
+      const featuresIndex = state.features.findIndex(
+        (features: Features) => features.id === action.payload.id
       );
-      state.systems[systemsIndex] = action.payload;
+      state.features[featuresIndex] = action.payload;
     },
 
-    deleteSystemsSuccess(state, action) {
+    deleteFeaturesSuccess(state, action) {
       state.deleteStatus = StatusCodes.COMPLETED;
-      const idx = state.systems.findIndex((systems: Systems) => systems.id === action.payload);
+      const idx = state.features.findIndex((features: Features) => features.id === action.payload);
       if (idx > -1) {
-        state.systems.splice(idx, 1);
+        state.features.splice(idx, 1);
       }
     },
 
@@ -97,48 +97,48 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-export function getSystems() {
+export function getFeatures() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('http://localhost:8080/v1/systems/');
-      dispatch(slice.actions.getSystemsSuccess(response.data));
+      const response = await axios.get('http://localhost:8080/v1/features/');
+      dispatch(slice.actions.getFeaturesSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function addSystems(system: SystemsRequest) {
+export function addFeatures(feature: FeaturesRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.post('http://localhost:8080/v1/systems/', system);
-      dispatch(slice.actions.addSystemsSuccess(response.data));
+      const response = await axios.post('http://localhost:8080/v1/features/', feature);
+      dispatch(slice.actions.addFeaturesSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function updateSystems(system: SystemsRequest) {
+export function updateFeatures(feature: FeaturesRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.put('http://localhost:8080/v1/systems/' + system.id, system);
-      dispatch(slice.actions.updateSystemsSuccess(response.data));
+      const response = await axios.put('http://localhost:8080/v1/features/' + feature.id, feature);
+      dispatch(slice.actions.updateFeaturesSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function deleteSystems(id: string) {
+export function deleteFeatures(id: string) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.delete('http://localhost:8080/v1/systems/' + id);
-      dispatch(slice.actions.deleteSystemsSuccess(id));
+      const response = await axios.delete('http://localhost:8080/v1/features/' + id);
+      dispatch(slice.actions.deleteFeaturesSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

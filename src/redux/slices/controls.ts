@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
-import { Systems, SystemsRequest, SystemsState } from '../../@types/systems';
+import { Controls, ControlsRequest, ControlsState } from '../../@types/controls';
 import { StatusCodes } from '../../utils/status-codes';
 import { extractErrorMessage } from '../../utils/errorHelper';
 import axios from 'src/utils/axios';
 
-const initialState: SystemsState = {
+const initialState: ControlsState = {
   loadingStatus: StatusCodes.NONE,
   createStatus: StatusCodes.NONE,
   updateStatus: StatusCodes.NONE,
@@ -13,17 +13,17 @@ const initialState: SystemsState = {
   deleteStatus: StatusCodes.NONE,
   error: false,
   errorMessage: null,
-  systems: [],
-  system: null,
+  controls: [],
+  control: null,
   sortBy: null,
   filters: {
     name: '',
   },
-  selectedSystemsName: '',
+  selectedControlsName: '',
 };
 
 const slice = createSlice({
-  name: 'systems',
+  name: 'controls',
   initialState,
   reducers: {
     startLoading(state) {
@@ -47,35 +47,35 @@ const slice = createSlice({
       state.errorMessage = extractErrorMessage(action.payload);
     },
 
-    getSystemSuccess(state, action) {
+    getControlSuccess(state, action) {
       state.loadingStatus = StatusCodes.COMPLETED;
-      state.system = action.payload;
+      state.control = action.payload;
     },
 
-    getSystemsSuccess(state, action) {
+    getControlsSuccess(state, action) {
       state.loadingStatus = StatusCodes.COMPLETED;
-      state.systems = action.payload;
-      console.log(state.systems);
+      state.controls = action.payload;
+      console.log(state.controls);
     },
 
-    addSystemsSuccess(state, action) {
+    addControlsSuccess(state, action) {
       state.createStatus = StatusCodes.COMPLETED;
-      state.systems.push(action.payload);
+      state.controls.push(action.payload);
     },
 
-    updateSystemsSuccess(state, action) {
+    updateControlsSuccess(state, action) {
       state.updateStatus = StatusCodes.COMPLETED;
-      const systemsIndex = state.systems.findIndex(
-        (systems: Systems) => systems.id === action.payload.id
+      const controlsIndex = state.controls.findIndex(
+        (controls: Controls) => controls.id === action.payload.id
       );
-      state.systems[systemsIndex] = action.payload;
+      state.controls[controlsIndex] = action.payload;
     },
 
-    deleteSystemsSuccess(state, action) {
+    deleteControlsSuccess(state, action) {
       state.deleteStatus = StatusCodes.COMPLETED;
-      const idx = state.systems.findIndex((systems: Systems) => systems.id === action.payload);
+      const idx = state.controls.findIndex((controls: Controls) => controls.id === action.payload);
       if (idx > -1) {
-        state.systems.splice(idx, 1);
+        state.controls.splice(idx, 1);
       }
     },
 
@@ -97,48 +97,48 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-export function getSystems() {
+export function getControls() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('http://localhost:8080/v1/systems/');
-      dispatch(slice.actions.getSystemsSuccess(response.data));
+      const response = await axios.get('/v1/Controls/');
+      dispatch(slice.actions.getControlsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function addSystems(system: SystemsRequest) {
+export function addControls(control: ControlsRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.post('http://localhost:8080/v1/systems/', system);
-      dispatch(slice.actions.addSystemsSuccess(response.data));
+      const response = await axios.post('', control);
+      dispatch(slice.actions.addControlsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function updateSystems(system: SystemsRequest) {
+export function updateControls(control: ControlsRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.put('http://localhost:8080/v1/systems/' + system.id, system);
-      dispatch(slice.actions.updateSystemsSuccess(response.data));
+      const response = await axios.put('/v1/controls/' + control.id, control);
+      dispatch(slice.actions.updateControlsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function deleteSystems(id: string) {
+export function deleteControls(id: string) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.delete('http://localhost:8080/v1/systems/' + id);
-      dispatch(slice.actions.deleteSystemsSuccess(id));
+      const response = await axios.delete('/v1/controls/' + id);
+      dispatch(slice.actions.deleteControlsSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
