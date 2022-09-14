@@ -123,7 +123,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await axios.post('http://localhost:8080/v1/auth/login', {
+    const response = await axios.post('/v1/auth/login', {
       email,
       password,
     });

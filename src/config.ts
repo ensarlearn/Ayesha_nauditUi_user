@@ -38,11 +38,11 @@ export const PATH_AFTER_LOGIN = PATH_DASHBOARD.general.app; // as '/dashboard/ap
 
 // API_URL
 const serverVars = {
-  apiUrl: 'https://empowered-ai.vizenanalytics.com/vizen-svc'
+  apiUrl: 'http://localhost:8080',
 };
 
 const localVars = {
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://localhost:8080',
 };
 
 const getConfiguration = () => {
