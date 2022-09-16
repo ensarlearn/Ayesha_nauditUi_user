@@ -20,25 +20,25 @@ import {
   FormControlLabel,
 } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
-import useTabs from '../../../../../hooks/useTabs';
-import useSettings from '../../../../../hooks/useSettings';
-import useTable, { getComparator, emptyRows } from '../../../../../hooks/useTable';
+import useTabs from '../../../../hooks/useTabs';
+import useSettings from '../../../../hooks/useSettings';
+import useTable, { getComparator, emptyRows } from '../../../../hooks/useTable';
 
 // components
-import Page from '../../../../../components/Page';
-import Iconify from '../../../../../components/Iconify';
-import Scrollbar from '../../../../../components/Scrollbar';
-import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../../components/table';
+import Page from '../../../../components/Page';
+import Iconify from '../../../../components/Iconify';
+import Scrollbar from '../../../../components/Scrollbar';
+import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
 // sections
 import { FeaturesTableToolbar, FeatureTableRow } from 'src/sections/nist';
-import HeaderBreadcrumbs from '../../../../../components/HeaderBreadcrumbs';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
-import { dispatch } from '../../../../../redux/store';
+import { dispatch } from '../../../../redux/store';
 import { deleteFeatures, getFeatures } from 'src/redux/slices/feature';
-import { Features, FeaturesState } from '../../../../../@types/features';
+import { Features, FeaturesState } from '../../../../@types/features';
 
 // ----------------------------------------------------------------------
 
@@ -151,105 +151,105 @@ export default function FeaturesList() {
             }
           />
           <FeaturesTableToolbar
-          filterName={filterName}
-          filterRole={filterRole}
-          onFilterName={handleFilterName}
-          onFilterRole={handleFilterRole}
-          optionsRole={ROLE_OPTIONS}
+            filterName={filterName}
+            filterRole={filterRole}
+            onFilterName={handleFilterName}
+            onFilterRole={handleFilterRole}
+            optionsRole={ROLE_OPTIONS}
           />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
-                <Table size={dense ? 'small' : 'medium'}>
-                        <TableHeadCustom
-                            order={order}
-                            orderBy={orderBy}
-                            headLabel={TABLE_HEAD}
-                            rowCount={features.length}
-                            numSelected={selected.length}
-                            onSort={onSort}
-                        />
-
-            <TableBody>
-                {dataFiltered
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                    <FeatureTableRow
-                    key={row.id}
-                    row={row}
-                    selected={selected.includes(row.id)}
-                    onSelectRow={() => onSelectRow(row.id)}
-                    onDeleteRow={() => handleDeleteRow(row.id)}
-                    onEditRow={() => handleEditRow(row.id)}
-                    />
-                ))}
-
-                <TableEmptyRows
-                height={denseHeight}
-                emptyRows={emptyRows(page, rowsPerPage, features.length)}
+              <Table size={dense ? 'small' : 'medium'}>
+                <TableHeadCustom
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={features.length}
+                  numSelected={selected.length}
+                  onSort={onSort}
                 />
 
-                <TableNoData isNotFound={isNotFound} />
-            </TableBody>
-        </Table>
-    </TableContainer>
-</Scrollbar>
+                <TableBody>
+                  {dataFiltered
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <FeatureTableRow
+                        key={row.id}
+                        row={row}
+                        selected={selected.includes(row.id)}
+                        onSelectRow={() => onSelectRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        onEditRow={() => handleEditRow(row.id)}
+                      />
+                    ))}
 
-<Box sx={{ position: 'relative' }}>
-                        <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={dataFiltered.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={onChangePage}
-                        onRowsPerPageChange={onChangeRowsPerPage}
-                        />
-                    </Box>
-                </Card>
-            </Container>
-        </Page>
-    );
+                  <TableEmptyRows
+                    height={denseHeight}
+                    emptyRows={emptyRows(page, rowsPerPage, features.length)}
+                  />
+
+                  <TableNoData isNotFound={isNotFound} />
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+
+          <Box sx={{ position: 'relative' }}>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={dataFiltered.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={onChangePage}
+              onRowsPerPageChange={onChangeRowsPerPage}
+            />
+          </Box>
+        </Card>
+      </Container>
+    </Page>
+  );
 }
 
 // ------------------------------------------------------------------------------
 
 function applySortFilter({
-    features,
-    comparator,
-    filterName,
-    filterStatus,
-    filterRole,
+  features,
+  comparator,
+  filterName,
+  filterStatus,
+  filterRole,
 }: {
-    features: Features[];
-    comparator: (a: any, b: any) => number;
-    filterName: string;
-    filterStatus: string;
-    filterRole: string;
+  features: Features[];
+  comparator: (a: any, b: any) => number;
+  filterName: string;
+  filterStatus: string;
+  filterRole: string;
 }) {
-    const stabilizedThis = features.map((el, index) => [el, index] as const);
+  const stabilizedThis = features.map((el, index) => [el, index] as const);
 
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
 
-    features = stabilizedThis.map((el) => el[0]);
+  features = stabilizedThis.map((el) => el[0]);
 
-    if (filterName) {
-        features = features.filter(
-            (item: Record<string, any>) => 
-            item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
-        );
-    }
+  if (filterName) {
+    features = features.filter(
+      (item: Record<string, any>) =>
+        item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+    );
+  }
 
-    if (filterStatus !== 'all') {
-        features = features.filter((item: Record<string, any>) => item.role === filterStatus);
-    }
+  if (filterStatus !== 'all') {
+    features = features.filter((item: Record<string, any>) => item.role === filterStatus);
+  }
 
-    if (filterRole !== 'all') {
-        features = features.filter((item: Record<string, any>) => item.role === filterRole);
-    }
+  if (filterRole !== 'all') {
+    features = features.filter((item: Record<string, any>) => item.role === filterRole);
+  }
 
-    return features;
+  return features;
 }

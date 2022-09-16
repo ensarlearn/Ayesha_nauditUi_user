@@ -1,19 +1,27 @@
 import { User } from './nistuser';
+import { Softwares } from './softwares';
 
 export type Systems = {
   id: string;
   name: string;
-  ipaddress: string;
-  os: string;
+  ipAddress?: string;
+  os?: string;
+  cpu?: string;
+  ram?: string;
+  hardDisk?: string;
   user: User;
+  systemSoftware: Softwares[];
 };
 
 export type SystemsRequest = {
   id: string;
   name: string;
-  ipaddress: string;
-  os: string;
-  userid: string;
+  ipAddress?: string;
+  os?: string;
+  cpu?: string;
+  ram?: string;
+  hardDisk?: string;
+  userId: string;
 };
 
 export type SystemsState = {

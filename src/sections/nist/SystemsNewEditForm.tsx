@@ -47,7 +47,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     () => ({
       id: currentSystem?.id || '',
       name: currentSystem?.name || '',
-      ipaddress: currentSystem?.ipaddress || '',
+      ipaddress: currentSystem?.ipAddress || '',
       os: currentSystem?.os || '',
       userid: currentSystem?.user.id || '',
     }),
@@ -72,7 +72,6 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   const values = watch();
 
   useEffect(() => {
-    console.log(currentSystem);
     if (isEdit && currentSystem) {
       reset(defaultValues);
     }
@@ -92,9 +91,9 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
         const update: SystemsRequest = {
           id: data.id,
           name: data.name,
-          ipaddress: data.ipaddress,
+          ipAddress: data.ipAddress,
           os: data.os,
-          userid: dropdownuser,
+          userId: dropdownuser,
         };
         dispatch(updateSystems(update));
       }
@@ -102,16 +101,16 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
         const newsystem: SystemsRequest = {
           id: data.id,
           name: data.name,
-          ipaddress: data.ipaddress,
+          ipAddress: data.ipAddress,
           os: data.os,
-          userid: dropdownuser,
+          userId: dropdownuser,
         };
         dispatch(addSystems(newsystem));
         reset();
       }
 
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.nist.list);
+      navigate(PATH_DASHBOARD.nist.systems);
     } catch (error) {
       console.error(error);
     }

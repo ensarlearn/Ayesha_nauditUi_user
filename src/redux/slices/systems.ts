@@ -55,7 +55,7 @@ const slice = createSlice({
     getSystemsSuccess(state, action) {
       state.loadingStatus = StatusCodes.COMPLETED;
       state.systems = action.payload;
-      console.log(state.systems);
+      //console.log(state.systems);
     },
 
     addSystemsSuccess(state, action) {

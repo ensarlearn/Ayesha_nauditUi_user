@@ -1,63 +1,50 @@
-import { paramCase } from "change-case";
-import { useEffect, useState } from "react";
-// import { Link as RouterLink, useNavigate } from 'raect-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
-// @mui
 import {
-    Box,
-    Tab,
-    Tabs,
-    Card,
-    Table,
-    Switch,
-    Button,
-    Tooltip,
-    Divider,
-    TableBody,
-    Container,
-    IconButton,
-    TableContainer,
-    TablePagination,
-    FormControlLabel,
+  Card,
+  Container,
+  Box,
+  TableContainer,
+  TablePagination,
+  TableBody,
+  Table,
+  Button,
 } from '@mui/material';
-// routes
-import { PATH_DASHBOARD } from "src/routes/paths";
-// hooks
-import useTabs from "src/hooks/useTabs";
-import useSettings from "src/hooks/useSettings";
-import useTable, { getComparator, emptyRows } from 'src/hooks/useTable';
-
-// components
-import Page from 'src/components/Page';
-import Iconify from "src/components/Iconify";
-import Scrollbar from "src/components/Scrollbar";
-import { TableNoData, TableEmptyRows, TableHeadCustom } from "src/components/table";
-// sections
-import { ControlsTableToolbar, ControlTableRow } from 'src/sections/nist';
-import HeaderBreadcrumbs from '../../../../../components/HeaderBreadcrumbs';
+import { Link as RouterLink } from 'react-router-dom';
+import Iconify from '../../../../components/Iconify';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
-import { dispatch } from '../../../../../redux/store';
-import { deleteControls, getControls } from 'src/redux/slices/controls';
-import { Controls, ControlsState } from '../../../../../@types/controls';
-import { useNavigate } from "react-router-dom";
-
-// ----------------------------------------------------------------------------------------
+import { useNavigate } from 'react-router';
+import { Softwares, SoftwaresState } from 'src/@types/softwares';
+import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
+import Page from 'src/components/Page';
+import { TableEmptyRows, TableHeadCustom, TableNoData } from 'src/components/table';
+import useSettings from 'src/hooks/useSettings';
+import useTable, { emptyRows, getComparator } from 'src/hooks/useTable';
+import useTabs from 'src/hooks/useTabs';
+import { deleteSoftwares, getSoftwares } from 'src/redux/slices/software';
+import { dispatch } from 'src/redux/store';
+import { PATH_DASHBOARD } from 'src/routes/paths';
+import Scrollbar from '../../../../components/Scrollbar';
+import { SoftwaresTableToolbar, SoftwareTableRow } from 'src/sections/nist';
 
 const ROLE_OPTIONS = ['all', 'ux designer'];
 
 const TABLE_HEAD = [
-    { id: 'id', label: 'Id', align: 'left' },
-    { id: 'name', label: 'Name', align: 'left' },
-    { id: 'subcategory', label: 'Sub-category', align: 'left' },
-    { id: 'actions', label: 'Actions', align: 'left' },
+  { id: 'id', label: 'Id', align: 'left' },
+  { id: 'name', label: 'Name', align: 'left' },
+  { id: 'version', label: 'Version', align: 'left' },
+  { id: 'owner', label: 'Owner', align: 'left' },
+  { id: 'vendor', label: 'Vendor', align: 'left' },
+  { id: 'installDate', label: 'Install Date', align: 'left' },
+  { id: 'support', label: 'Support', align: 'left' },
+  { id: 'license', label: 'License', align: 'left' },
+  { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
-// ---------------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 
-export default function ControlsList() {
-    const {
-        dense,
+export default function SoftwaresList() {
+  const {
+    dense,
     page,
     order,
     orderBy,
@@ -73,26 +60,26 @@ export default function ControlsList() {
     onChangeDense,
     onChangePage,
     onChangeRowsPerPage,
-    } = useTable();
+  } = useTable();
 
-    const { themeStretch } = useSettings();
+  const { themeStretch } = useSettings();
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const { controls, createStatus, updateStatus, errorMessage } = useSelector(
-        (state: { controls: ControlsState }) => state.controls
-    );
-    useEffect(() => {
-        dispatch(getControls());
-    }, []);
+  const { softwares, createStatus, updateStatus, errorMessage } = useSelector(
+    (state: { softwares: SoftwaresState }) => state.softwares
+  );
+  useEffect(() => {
+    dispatch(getSoftwares());
+  }, []);
 
-    const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState('');
 
-    const [filterRole, setFilterRole] = useState('all');
+  const [filterRole, setFilterRole] = useState('all');
 
-    const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
+  const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
 
-    const [tableData, setTableData] = useState(controls);
+  const [tableData, setTableData] = useState(softwares);
 
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);
@@ -104,16 +91,16 @@ export default function ControlsList() {
   };
 
   const handleDeleteRow = (id: string) => {
-    const deleteRow = controls.filter((row) => row.id !== id);
-    dispatch(deleteControls(id));
+    const deleteRow = softwares.filter((row) => row.id !== id);
+    dispatch(deleteSoftwares(id));
   };
 
   const handleEditRow = (id: string) => {
-    navigate(PATH_DASHBOARD.nist.edit(id));
+    navigate(PATH_DASHBOARD.nist.softwareedit(id));
   };
 
   const dataFiltered = applySortFilter({
-    controls,
+    softwares,
     comparator: getComparator(order, orderBy),
     filterName,
     filterRole,
@@ -128,28 +115,28 @@ export default function ControlsList() {
     (!dataFiltered.length && !!filterStatus);
 
   return (
-    <Page title="User: List">
+    <Page title="">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <Card>
           <HeaderBreadcrumbs
             heading="Test"
             links={[
               { name: 'Dashboard', href: PATH_DASHBOARD.nist.root },
-              { name: 'Controls' },
+              { name: 'Software' },
               { name: 'List' },
             ]}
             action={
               <Button
                 variant="contained"
                 component={RouterLink}
-                to={PATH_DASHBOARD.nist.controlsnew}
+                to={PATH_DASHBOARD.nist.softwarenew}
                 startIcon={<Iconify icon={'eva:plus-fill'} />}
               >
-                New Control
+                New Softwares
               </Button>
             }
           />
-          <ControlsTableToolbar
+          <SoftwaresTableToolbar
             filterName={filterName}
             filterRole={filterRole}
             onFilterName={handleFilterName}
@@ -163,7 +150,7 @@ export default function ControlsList() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={controls.length}
+                  rowCount={softwares.length}
                   numSelected={selected.length}
                   onSort={onSort}
                 />
@@ -172,7 +159,7 @@ export default function ControlsList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <ControlTableRow
+                      <SoftwareTableRow
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
@@ -184,7 +171,7 @@ export default function ControlsList() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(page, rowsPerPage, controls.length)}
+                    emptyRows={emptyRows(page, rowsPerPage, softwares.length)}
                   />
 
                   <TableNoData isNotFound={isNotFound} />
@@ -210,22 +197,22 @@ export default function ControlsList() {
   );
 }
 
-// ----------------------------------------------------------------------
+// --------------------------------------------------------------------------------
 
 function applySortFilter({
-  controls,
+  softwares,
   comparator,
   filterName,
   filterStatus,
   filterRole,
 }: {
-  controls: Controls[];
+  softwares: Softwares[];
   comparator: (a: any, b: any) => number;
   filterName: string;
   filterStatus: string;
   filterRole: string;
 }) {
-  const stabilizedThis = controls.map((el, index) => [el, index] as const);
+  const stabilizedThis = softwares.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -233,23 +220,22 @@ function applySortFilter({
     return a[1] - b[1];
   });
 
-  controls = stabilizedThis.map((el) => el[0]);
+  softwares = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    controls = controls.filter(
+    softwares = softwares.filter(
       (item: Record<string, any>) =>
         item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
   if (filterStatus !== 'all') {
-    controls = controls.filter((item: Record<string, any>) => item.status === filterStatus);
+    softwares = softwares.filter((item: Record<string, any>) => item.role === filterStatus);
   }
 
   if (filterRole !== 'all') {
-    controls = controls.filter((item: Record<string, any>) => item.role === filterRole);
+    softwares = softwares.filter((item: Record<string, any>) => item.role === filterRole);
   }
 
-  return controls;
+  return softwares;
 }
-

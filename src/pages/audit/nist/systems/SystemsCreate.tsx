@@ -3,19 +3,19 @@ import { useLocation, useParams } from 'react-router-dom';
 // @mui
 import { Container } from '@mui/material';
 // routes
-import { PATH_AUTH, PATH_DASHBOARD } from '../../../../../routes/paths';
+import { PATH_AUTH, PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
-import useSettings from '../../../../../hooks/useSettings';
+import useSettings from '../../../../hooks/useSettings';
 // _mock_
 // components
-import HeaderBreadcrumbs from '../../../../../components/HeaderBreadcrumbs';
+import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 // sections
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { SystemsState } from '../../../../../@types/systems';
-import { getSystems } from '../../../../../redux/slices/systems';
-import { dispatch } from '../../../../../redux/store';
-import SystemsNewEditForm from '../../../../../sections/nist/SystemsNewEditForm';
+import { SystemsState } from '../../../../@types/systems';
+import { getSystems } from '../../../../redux/slices/systems';
+import { dispatch } from '../../../../redux/store';
+import SystemsNewEditForm from '../../../../sections/nist/SystemsNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ export default function SystemsCreate() {
         heading={!isEdit ? 'Create a new user' : 'Edit user'}
         links={[
           { name: 'NIST', href: PATH_DASHBOARD.nist.root },
-          { name: 'Systems', href: PATH_DASHBOARD.nist.list },
+          { name: 'Systems', href: PATH_DASHBOARD.nist.systems },
           { name: !isEdit ? 'New user' : capitalCase(id) },
         ]}
       />

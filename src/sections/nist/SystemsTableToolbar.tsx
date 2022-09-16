@@ -5,19 +5,15 @@ import Iconify from '../../components/Iconify';
 // ----------------------------------------------------------------------
 
 type Props = {
-  optionsRole: string[];
   filterName: string;
-  filterRole: string;
+
   onFilterName: (value: string) => void;
-  onFilterRole: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function SystemsTableToolbar({
   filterName,
-  filterRole,
+
   onFilterName,
-  onFilterRole,
-  optionsRole,
 }: Props) {
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ py: 2.5, px: 3 }}>

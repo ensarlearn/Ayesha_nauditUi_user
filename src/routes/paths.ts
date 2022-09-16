@@ -68,9 +68,9 @@ export const PATH_DASHBOARD = {
   },
   nist: {
     root: path(ROOTS_DASHBOARD, '/nist'),
-    
-    edit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/edit`),
-    list: path(ROOTS_DASHBOARD, '/nist/list'),
+
+    systemsedit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/systemsedit`),
+    systems: path(ROOTS_DASHBOARD, '/nist/systems'),
 
     softwareedit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/softwareedit`),
     softwares: path(ROOTS_DASHBOARD, '/nist/softwares'),
@@ -81,7 +81,7 @@ export const PATH_DASHBOARD = {
     featureedit: (id: string) => path(ROOTS_DASHBOARD, `/nist/${id}/featureedit`),
     features: path(ROOTS_DASHBOARD, '/nist/features'),
 
-    new: path(ROOTS_DASHBOARD, '/nist/new'),
+    systemsnew: path(ROOTS_DASHBOARD, '/nist/systemsnew'),
     softwarenew: path(ROOTS_DASHBOARD, '/nist/softwarenew'),
     controlsnew: path(ROOTS_DASHBOARD, '/nist/controlsnew'),
     featurenew: path(ROOTS_DASHBOARD, '/nist/featurenew'),

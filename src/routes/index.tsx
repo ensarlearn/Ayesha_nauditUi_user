@@ -15,7 +15,6 @@ import { PATH_AFTER_LOGIN } from '../config';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 
-
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -147,10 +146,10 @@ export default function Router() {
           path: 'nist',
           children: [
             // Systems
-            { element: <Navigate to="/dashboard/nist/list" replace />, index: true },
-            { path: 'list', element: <SystemsUserList /> },
-            { path: 'new', element: <SystemsCreate /> },
-            { path: ':id/edit', element: <SystemsCreate /> },
+            { element: <Navigate to="/dashboard/nist/systems" replace />, index: true },
+            { path: 'systems', element: <SystemsUserList /> },
+            { path: 'systemsnew', element: <SystemsCreate /> },
+            { path: ':id/systemsedit', element: <SystemsCreate /> },
             // softwares
             { element: <Navigate to="/dashboard/nist/softwares" replace />, index: true },
             { path: 'softwares', element: <SoftwaresUserList /> },
@@ -263,14 +262,18 @@ const Page404 = Loadable(lazy(() => import('../pages/Page404')));
 //Audit
 const AuditApp = Loadable(lazy(() => import('../pages/audit/dashboard/GeneralApp')));
 
-const SystemsUserList = Loadable(lazy(() => import('../pages/audit/nist/systems/systems/SystemsList')));
-const SystemsCreate = Loadable(lazy(() => import('../pages/audit/nist/systems/systems/SystemsCreate')));
+const SystemsUserList = Loadable(lazy(() => import('../pages/audit/nist/systems/SystemsList')));
+const SystemsCreate = Loadable(lazy(() => import('../pages/audit/nist/systems/SystemsCreate')));
 
-const SoftwaresUserList = Loadable(lazy(() => import('src/pages/audit/nist/systems/softwares/SoftwaresList')));
-const SoftwaresCreate = Loadable(lazy(() => import('src/pages/audit/nist/systems/softwares/SoftwaresCreate')));
+const SoftwaresUserList = Loadable(
+  lazy(() => import('src/pages/audit/nist/softwares/SoftwaresList'))
+);
+const SoftwaresCreate = Loadable(
+  lazy(() => import('src/pages/audit/nist/softwares/SoftwaresCreate'))
+);
 
-const ControlsUserList = Loadable(lazy(() => import('src/pages/audit/nist/systems/controls/ControlsList')));
-const ControlsCreate = Loadable(lazy(() => import('src/pages/audit/nist/systems/controls/ControlsCreate')));
+const ControlsUserList = Loadable(lazy(() => import('src/pages/audit/nist/controls/ControlsList')));
+const ControlsCreate = Loadable(lazy(() => import('src/pages/audit/nist/controls/ControlsCreate')));
 
-const FeaturesUserList = Loadable(lazy(() => import('src/pages/audit/nist/systems/features/FeaturesList')));
-const FeaturesCreate = Loadable(lazy(() => import('src/pages/audit/nist/systems/features/FeaturesCreate')));
+const FeaturesUserList = Loadable(lazy(() => import('src/pages/audit/nist/features/FeaturesList')));
+const FeaturesCreate = Loadable(lazy(() => import('src/pages/audit/nist/features/FeaturesCreate')));
