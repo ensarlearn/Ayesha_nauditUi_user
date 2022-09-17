@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack } from '@mui/material';
+import { Autocomplete, Box, Card, Chip, Grid, Stack, TextField } from '@mui/material';
 // utils
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
@@ -20,6 +20,8 @@ import { dispatch, useSelector } from '../../redux/store';
 import { addSystems, updateSystems } from '../../redux/slices/systems';
 import { UserState } from '../../@types/nistuser';
 import { getUsers } from '../../redux/slices/user';
+import { SoftwaresState } from 'src/@types/softwares';
+import { getSoftwares } from 'src/redux/slices/software';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +35,7 @@ type Props = {
 export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   const navigate = useNavigate();
   const { users } = useSelector((state: { user: UserState }) => state.user);
+  const { softwares } = useSelector((state: { softwares: SoftwaresState }) => state.softwares);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -81,10 +84,12 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentSystem]);
   useEffect(() => {
+    dispatch(getSoftwares());
     dispatch(getUsers());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const onSubmit = async (data: FormValuesProps) => {
     try {
       if (isEdit && currentSystem) {
@@ -149,6 +154,18 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
                   </option>
                 ))}
               </RHFSelect>
+
+              <Autocomplete
+                multiple
+                freeSolo
+                options={softwares.map((option) => option.name)}
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
+                  ))
+                }
+                renderInput={(params) => <TextField label="Softwares" {...params} />}
+              />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
