@@ -3,11 +3,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { LoadingButton } from '@mui/lab';
-import { Autocomplete, Box, Card, Chip, Grid, Stack, TextField } from '@mui/material';
+import { DatePicker, LoadingButton } from '@mui/lab';
+import { Autocomplete, Box, Card, Chip, Grid, Stack, TextField, Typography } from '@mui/material';
 // utils
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
@@ -20,12 +20,17 @@ import { dispatch, useSelector } from '../../redux/store';
 import { addSystems, updateSystems } from '../../redux/slices/systems';
 import { UserState } from '../../@types/nistuser';
 import { getUsers } from '../../redux/slices/user';
-import { SoftwaresState } from 'src/@types/softwares';
-import { getSoftwares } from 'src/redux/slices/software';
+import { Softwares, SoftwaresState } from 'src/@types/softwares';
+import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
+import { BlogPostTags } from '../@dashboard/blog';
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = Systems;
+//type FormValuesProps = Systems;
+
+interface FormValuesProps extends Partial<Systems> {
+  softwareids: string[];
+}
 
 type Props = {
   isEdit: boolean;
@@ -35,24 +40,34 @@ type Props = {
 export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   const navigate = useNavigate();
   const { users } = useSelector((state: { user: UserState }) => state.user);
-  const { softwares } = useSelector((state: { softwares: SoftwaresState }) => state.softwares);
+  const { softwares, manufacturers } = useSelector(
+    (state: { softwares: SoftwaresState }) => state.softwares
+  );
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    ipaddress: Yup.string().required('IPAddress is required'),
+    macAddress: Yup.string().required('MACAddress is required'),
   });
 
   const [dropdownuser, setDropdownUser] = useState(currentSystem?.user.id || '');
+  const [dropdownmanufacturer, setDropdownManufacturer] = useState(
+    currentSystem?.manufacturer.id || ''
+  );
 
   const defaultValues = useMemo(
     () => ({
       id: currentSystem?.id || '',
       name: currentSystem?.name || '',
-      ipaddress: currentSystem?.ipAddress || '',
+      macAddress: currentSystem?.macAddress || '',
       os: currentSystem?.os || '',
+      cpu: currentSystem?.cpu || '',
+      ram: currentSystem?.ram || '',
+      hardDisk: currentSystem?.hardDisk || '',
+      purchasedDate: currentSystem?.purchasedDate,
       userid: currentSystem?.user.id || '',
+      softwareids: currentSystem?.systemSoftware.map((st) => st.name),
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentSystem]
@@ -86,31 +101,32 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   useEffect(() => {
     dispatch(getSoftwares());
     dispatch(getUsers());
+    dispatch(getManufacturers());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = async (data: FormValuesProps) => {
+    const request: SystemsRequest = {
+      name: data.name,
+      macAddress: data.macAddress,
+      os: data.os,
+      cpu: data.cpu,
+      ram: data.ram,
+      hardDisk: data.hardDisk,
+      purchasedDate: data.purchasedDate,
+      userId: dropdownuser,
+      manufacturerId: dropdownmanufacturer,
+      softwareIds: data.softwareids,
+    };
+    console.log(request);
     try {
       if (isEdit && currentSystem) {
-        const update: SystemsRequest = {
-          id: data.id,
-          name: data.name,
-          ipAddress: data.ipAddress,
-          os: data.os,
-          userId: dropdownuser,
-        };
-        dispatch(updateSystems(update));
+        request.id = data.id;
+        dispatch(updateSystems(request));
       }
       if (!isEdit) {
-        const newsystem: SystemsRequest = {
-          id: data.id,
-          name: data.name,
-          ipAddress: data.ipAddress,
-          os: data.os,
-          userId: dropdownuser,
-        };
-        dispatch(addSystems(newsystem));
+        dispatch(addSystems(request));
         reset();
       }
 
@@ -122,6 +138,10 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   };
   const onChangeUser = (event: any) => {
     setDropdownUser(event.target.value);
+  };
+
+  const onChangeManufacturer = (event: any) => {
+    setDropdownManufacturer(event.target.value);
   };
 
   return (
@@ -138,8 +158,32 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
               }}
             >
               <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="ipaddress" label="IP Address" />
+              <RHFTextField name="macAddress" label="MAC Address" />
               <RHFTextField name="os" label="OS" />
+              <RHFTextField name="cpu" label="CPU" />
+              <RHFTextField name="ram" label="RAM" />
+              <RHFTextField name="hardDisk" label="Hard Disk" />
+              <Controller
+                name="purchasedDate"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <DatePicker
+                    label="Purchased Date"
+                    value={field.value}
+                    onChange={(newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        fullWidth
+                        error={!!error}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                )}
+              />
               <RHFSelect
                 name={dropdownuser}
                 value={dropdownuser}
@@ -154,17 +198,43 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
                   </option>
                 ))}
               </RHFSelect>
-
-              <Autocomplete
-                multiple
-                freeSolo
-                options={softwares.map((option) => option.name)}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip {...getTagProps({ index })} key={option} size="small" label={option} />
-                  ))
-                }
-                renderInput={(params) => <TextField label="Softwares" {...params} />}
+              <RHFSelect
+                name={dropdownmanufacturer}
+                value={dropdownmanufacturer}
+                label="Manufacturer"
+                placeholder="Manufacturer"
+                onChange={onChangeManufacturer}
+              >
+                <option value="" />
+                {manufacturers.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </RHFSelect>
+              <Controller
+                name="softwareids"
+                control={control}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    multiple
+                    freeSolo
+                    onChange={(event, newValue) => field.onChange(newValue)}
+                    options={softwares.map((option) => option.name)}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          {...getTagProps({ index })}
+                          key={option}
+                          size="small"
+                          label={option}
+                        />
+                      ))
+                    }
+                    renderInput={(params) => <TextField label="Softwares" {...params} />}
+                  />
+                )}
               />
             </Box>
 

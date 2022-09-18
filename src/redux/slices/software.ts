@@ -17,6 +17,7 @@ const initialState: SoftwaresState = {
   errorMessage: null,
   softwares: [],
   software: null,
+  manufacturers: [],
   sortBy: null,
   filters: {
     name: '',
@@ -86,6 +87,11 @@ const slice = createSlice({
       }
     },
 
+    getManufacturerSuccess(state, action) {
+      state.loadingStatus = StatusCodes.COMPLETED;
+      state.manufacturers = action.payload;
+    },
+
     resetStatus(state) {
       state.updateStatus = StatusCodes.NONE;
       state.createStatus = StatusCodes.NONE;
@@ -108,7 +114,7 @@ export function getSoftwares() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('http://localhost:8080/v1/software/');
+      const response = await axios.get('/v1/software/');
       dispatch(slice.actions.getSoftwaresSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -120,7 +126,7 @@ export function addSoftwares(software: SoftwaresRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.post('http://localhost:8080/v1/software/', software);
+      const response = await axios.post('/v1/software/', software);
       dispatch(slice.actions.addSoftwaresSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -132,10 +138,7 @@ export function updateSoftwares(software: SoftwaresRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.put(
-        'http://localhost:8080/v1/software/' + software.id,
-        software
-      );
+      const response = await axios.put('/v1/software/' + software.id, software);
       dispatch(slice.actions.updateSoftwaresSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -147,8 +150,19 @@ export function deleteSoftwares(id: string) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.delete('http://localhost:8080/v1/software/' + id);
+      const response = await axios.delete('/v1/software/' + id);
       dispatch(slice.actions.deleteSoftwaresSuccess(id));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function getManufacturers() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/v1/manufacturer/');
+      dispatch(slice.actions.getManufacturerSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

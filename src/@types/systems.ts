@@ -1,27 +1,33 @@
+import { Manufacturer } from './manufacturer';
 import { User } from './nistuser';
 import { Softwares } from './softwares';
 
 export type Systems = {
   id: string;
   name: string;
-  ipAddress?: string;
+  macAddress?: string;
   os?: string;
   cpu?: string;
   ram?: string;
   hardDisk?: string;
+  purchasedDate?: Date | number;
   user: User;
   systemSoftware: Softwares[];
+  manufacturer: Manufacturer;
 };
 
 export type SystemsRequest = {
-  id: string;
-  name: string;
-  ipAddress?: string;
+  id?: string;
+  name?: string;
+  macAddress?: string;
   os?: string;
   cpu?: string;
   ram?: string;
   hardDisk?: string;
+  purchasedDate?: Date | number;
   userId: string;
+  manufacturerId: string;
+  softwareIds: string[];
 };
 
 export type SystemsState = {

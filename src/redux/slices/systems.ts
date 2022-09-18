@@ -101,7 +101,7 @@ export function getSystems() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('http://localhost:8080/v1/systems/');
+      const response = await axios.get('/v1/systems/');
       dispatch(slice.actions.getSystemsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -113,7 +113,7 @@ export function addSystems(system: SystemsRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.post('http://localhost:8080/v1/systems/', system);
+      const response = await axios.post('/v1/systems/', system);
       dispatch(slice.actions.addSystemsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -125,7 +125,7 @@ export function updateSystems(system: SystemsRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.put('http://localhost:8080/v1/systems/' + system.id, system);
+      const response = await axios.put('/v1/systems/' + system.id, system);
       dispatch(slice.actions.updateSystemsSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -137,7 +137,7 @@ export function deleteSystems(id: string) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.delete('http://localhost:8080/v1/systems/' + id);
+      const response = await axios.delete('/v1/systems/' + id);
       dispatch(slice.actions.deleteSystemsSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
