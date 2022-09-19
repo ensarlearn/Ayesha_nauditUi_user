@@ -1,3 +1,4 @@
+import { FileDB } from './filedb';
 import { Manufacturer } from './manufacturer';
 import { User } from './nistuser';
 import { Softwares } from './softwares';
@@ -14,6 +15,7 @@ export type Systems = {
   user: User;
   systemSoftware: Softwares[];
   manufacturer: Manufacturer;
+  fileDB: FileDB;
 };
 
 export type SystemsRequest = {
@@ -27,7 +29,8 @@ export type SystemsRequest = {
   purchasedDate?: Date | number;
   userId: string;
   manufacturerId: string;
-  softwareIds: string[];
+  softwareIds?: string[];
+  image?: string | unknown;
 };
 
 export type SystemsState = {

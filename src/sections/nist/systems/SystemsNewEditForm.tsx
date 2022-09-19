@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -10,19 +10,28 @@ import { DatePicker, LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Card, Chip, Grid, Stack, TextField, Typography } from '@mui/material';
 // utils
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // _mock
 // components
-import { FormProvider, RHFSelect, RHFTextField } from '../../components/hook-form';
-import { Systems, SystemsRequest } from '../../@types/systems';
-import { dispatch, useSelector } from '../../redux/store';
-import { addSystems, updateSystems } from '../../redux/slices/systems';
-import { UserState } from '../../@types/nistuser';
-import { getUsers } from '../../redux/slices/user';
+import {
+  FormProvider,
+  RHFSelect,
+  RHFTextField,
+  RHFUploadSingleFile,
+} from '../../../components/hook-form';
+import Image from '../../../components/Image';
+import { Systems, SystemsRequest } from '../../../@types/systems';
+import { dispatch, useSelector } from '../../../redux/store';
+import { addSystems, updateSystems } from '../../../redux/slices/systems';
+import { UserState } from '../../../@types/nistuser';
+import { getUsers } from '../../../redux/slices/user';
 import { Softwares, SoftwaresState } from 'src/@types/softwares';
 import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
-import { BlogPostTags } from '../@dashboard/blog';
+import { BlogPostTags } from '../../@dashboard/blog';
+import { arrayBuffer } from 'stream/consumers';
+import { computeSegEndResizable } from '@fullcalendar/common';
+import { HOST_API } from '../../../config';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +39,7 @@ import { BlogPostTags } from '../@dashboard/blog';
 
 interface FormValuesProps extends Partial<Systems> {
   softwareids: string[];
+  image: File | any;
 }
 
 type Props = {
@@ -68,6 +78,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
       purchasedDate: currentSystem?.purchasedDate,
       userid: currentSystem?.user.id || '',
       softwareids: currentSystem?.systemSoftware.map((st) => st.name),
+      image: currentSystem?.fileDB.data,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentSystem]
@@ -106,6 +117,18 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const readFileAsync = (file: Blob) =>
+    new Promise((resolve, reject) => {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        resolve(e.target?.result?.toString().split(',')[1]);
+      };
+
+      reader.onerror = reject;
+    });
+
+  //  const imageurl = `${HOST_API}/v1/systems/files/${currentSystem?.fileDB.id}`;
   const onSubmit = async (data: FormValuesProps) => {
     const request: SystemsRequest = {
       name: data.name,
@@ -119,7 +142,19 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
       manufacturerId: dropdownmanufacturer,
       softwareIds: data.softwareids,
     };
-    console.log(request);
+
+    let contentBuffer = await readFileAsync(data.image);
+    console.log(contentBuffer);
+    request.image = contentBuffer;
+
+    /* var reader = new FileReader();
+    reader.readAsDataURL(data.image);
+    reader.onload = function (e) {
+      const str = e.target?.result;
+      console.log(str?.toString().split(',')[1]);
+      request.image = str?.toString().split(',')[1];
+    };
+*/
     try {
       if (isEdit && currentSystem) {
         request.id = data.id;
@@ -143,6 +178,22 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   const onChangeManufacturer = (event: any) => {
     setDropdownManufacturer(event.target.value);
   };
+
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
+
+      if (file) {
+        setValue(
+          'image',
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+      }
+    },
+    [setValue]
+  );
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -235,6 +286,19 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
                     renderInput={(params) => <TextField label="Softwares" {...params} />}
                   />
                 )}
+              />
+              {currentSystem?.fileDB.data && (
+                <Image
+                  width="180"
+                  height="300"
+                  src={`data:image/png;base64,${currentSystem?.fileDB.data}`}
+                />
+              )}
+              <RHFUploadSingleFile
+                name="image"
+                accept="image/*"
+                maxSize={3145728}
+                onDrop={handleDrop}
               />
             </Box>
 

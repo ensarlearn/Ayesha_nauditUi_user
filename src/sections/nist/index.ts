@@ -1,7 +1,7 @@
 // systems
-export { default as SystemsTableToolbar } from './SystemsTableToolbar';
-export { default as SystemTableRow } from './SystemTableRow';
-export { default as SystemsNewEditForm } from './SystemsNewEditForm';
+export { default as SystemsTableToolbar } from './systems/SystemsTableToolbar';
+export { default as SystemTableRow } from './systems/SystemTableRow';
+export { default as SystemsNewEditForm } from './systems/SystemsNewEditForm';
 // software
 export { default as SoftwaresTableToolbar } from './SoftwaresTableToolbar';
 export { default as SoftwareTableRow } from './SoftwareTableRow';
@@ -14,4 +14,3 @@ export { default as ControlsNewEditForm } from './ControlsNewEditForm';
 export { default as FeaturesTableToolbar } from './FeaturesTableToolbar';
 export { default as FeatureTableRow } from './FeatureTableRow';
 export { default as FeaturesNewEditForm } from './FeaturesNewEditForm';
-

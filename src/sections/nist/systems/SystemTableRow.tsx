@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { TableRow, TableCell, MenuItem } from '@mui/material';
 // @types
-import { UserManager } from '../../@types/user';
+import { UserManager } from '../../../@types/user';
 // components
-import Iconify from '../../components/Iconify';
-import { TableMoreMenu } from '../../components/table';
+import Iconify from '../../../components/Iconify';
+import { TableMoreMenu } from '../../../components/table';
 import { Systems } from 'src/@types/systems';
 
 // ----------------------------------------------------------------------
@@ -28,7 +28,7 @@ export default function SystemTableRow({
 }: Props) {
   const theme = useTheme();
 
-  const { id, name } = row;
+  const { name, cpu, ram, hardDisk, os } = row;
 
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -42,8 +42,11 @@ export default function SystemTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell align="left">{id}</TableCell>
       <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{os}</TableCell>
+      <TableCell align="left">{cpu}</TableCell>
+      <TableCell align="left">{ram}</TableCell>
+      <TableCell align="left">{hardDisk}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

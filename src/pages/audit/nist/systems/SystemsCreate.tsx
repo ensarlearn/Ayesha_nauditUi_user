@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import { SystemsState } from '../../../../@types/systems';
 import { getSystems } from '../../../../redux/slices/systems';
 import { dispatch } from '../../../../redux/store';
-import SystemsNewEditForm from '../../../../sections/nist/SystemsNewEditForm';
+import SystemsNewEditForm from '../../../../sections/nist/systems/SystemsNewEditForm';
 
 // ----------------------------------------------------------------------
 

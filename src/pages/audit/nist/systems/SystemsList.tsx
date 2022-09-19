@@ -10,6 +10,9 @@ import {
   Container,
   TableContainer,
   TablePagination,
+  Stack,
+  Divider,
+  useTheme,
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -30,10 +33,16 @@ import { dispatch } from '../../../../redux/store';
 import { deleteSystems, getSystems } from '../../../../redux/slices/systems';
 import { Systems, SystemsState } from '../../../../@types/systems';
 import useSettings from 'src/hooks/useSettings';
+import InvoiceAnalytic from 'src/sections/@dashboard/invoice/InvoiceAnalytic';
+import { sumBy } from 'lodash';
+import SystemsAnalytic from 'src/sections/nist/systems/SystemsAnalytic';
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'Id', align: 'left' },
   { id: 'name', label: 'Name', align: 'left' },
+  { id: 'os', label: 'OS', align: 'left' },
+  { id: 'cpu', label: 'CPU', align: 'left' },
+  { id: 'ram', label: 'RAM', align: 'left' },
+  { id: 'hardDisk', label: 'Hard Disk', align: 'left' },
   { id: '' },
 ];
 
@@ -56,7 +65,7 @@ export default function SystemsList() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable();
-
+  const theme = useTheme();
   const { themeStretch } = useSettings();
 
   const navigate = useNavigate();
@@ -91,28 +100,54 @@ export default function SystemsList() {
 
   const isNotFound = !dataFiltered.length && !!filterName;
 
+  const getWindowsSystems = () => systems.filter((item) => item.os?.includes('Windows')).length;
+
   return (
     <Page title="User: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
+        <HeaderBreadcrumbs
+          heading="Systems"
+          links={[
+            { name: 'Dashboard', href: PATH_DASHBOARD.nist.root },
+            { name: 'Systems' },
+            { name: 'List' },
+          ]}
+          action={
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to={PATH_DASHBOARD.nist.systemsnew}
+              startIcon={<Iconify icon={'eva:plus-fill'} />}
+            >
+              New Systems
+            </Button>
+          }
+        />
+        <Card sx={{ mb: 5 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <SystemsAnalytic
+                title="Total"
+                total={systems.length}
+                title2="Systems"
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+              <SystemsAnalytic
+                title="Windows"
+                total={getWindowsSystems()}
+                title2="Systems"
+                icon="ic:round-receipt"
+                color={theme.palette.info.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
         <Card>
-          <HeaderBreadcrumbs
-            heading="Systems"
-            links={[
-              { name: 'Dashboard', href: PATH_DASHBOARD.nist.root },
-              { name: 'Systems' },
-              { name: 'List' },
-            ]}
-            action={
-              <Button
-                variant="contained"
-                component={RouterLink}
-                to={PATH_DASHBOARD.nist.systemsnew}
-                startIcon={<Iconify icon={'eva:plus-fill'} />}
-              >
-                New Systems
-              </Button>
-            }
-          />
           <SystemsTableToolbar filterName={filterName} onFilterName={handleFilterName} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
