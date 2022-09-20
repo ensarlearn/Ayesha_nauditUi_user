@@ -11,7 +11,7 @@ export type Systems = {
   cpu?: string;
   ram?: string;
   hardDisk?: string;
-  purchasedDate?: Date | number;
+  purchasedDate?: Date | string | number;
   user: User;
   systemSoftware: Softwares[];
   manufacturer: Manufacturer;
@@ -26,15 +26,15 @@ export type SystemsRequest = {
   cpu?: string;
   ram?: string;
   hardDisk?: string;
-  purchasedDate?: Date | number;
+  purchasedDate?: string;
   userId: string;
   manufacturerId: string;
   softwareIds?: string[];
-  image?: string | unknown;
 };
 
 export type SystemsState = {
   loadingStatus: string;
+  uploadingStatus: string;
   createStatus: string;
   updateStatus: string;
   deleteStatus: string;
