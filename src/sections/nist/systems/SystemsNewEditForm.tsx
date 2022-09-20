@@ -7,7 +7,17 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { DatePicker, LoadingButton } from '@mui/lab';
-import { Autocomplete, Box, Card, Chip, Grid, Stack, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Card,
+  Chip,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 // utils
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -21,9 +31,9 @@ import {
   RHFUploadSingleFile,
 } from '../../../components/hook-form';
 import Image from '../../../components/Image';
-import { Systems, SystemsRequest } from '../../../@types/systems';
+import { Systems, SystemsRequest, SystemsState } from '../../../@types/systems';
 import { dispatch, useSelector } from '../../../redux/store';
-import { addSystems, updateSystems } from '../../../redux/slices/systems';
+import { addSystems, postUploadImage, updateSystems } from '../../../redux/slices/systems';
 import { UserState } from '../../../@types/nistuser';
 import { getUsers } from '../../../redux/slices/user';
 import { Softwares, SoftwaresState } from 'src/@types/softwares';
@@ -32,6 +42,8 @@ import { BlogPostTags } from '../../@dashboard/blog';
 import { arrayBuffer } from 'stream/consumers';
 import { computeSegEndResizable } from '@fullcalendar/common';
 import { HOST_API } from '../../../config';
+import { fDateTimeSuffix } from 'src/utils/formatTime';
+import { format } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +51,7 @@ import { HOST_API } from '../../../config';
 
 interface FormValuesProps extends Partial<Systems> {
   softwareids: string[];
-  image: File | any;
+  //imageurl: File | any;
 }
 
 type Props = {
@@ -50,21 +62,30 @@ type Props = {
 export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
   const navigate = useNavigate();
   const { users } = useSelector((state: { user: UserState }) => state.user);
+
   const { softwares, manufacturers } = useSelector(
     (state: { softwares: SoftwaresState }) => state.softwares
   );
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    macAddress: Yup.string().required('MACAddress is required'),
-  });
-
+  const [previewImage, setPreviewImage] = useState();
   const [dropdownuser, setDropdownUser] = useState(currentSystem?.user.id || '');
   const [dropdownmanufacturer, setDropdownManufacturer] = useState(
     currentSystem?.manufacturer.id || ''
   );
+
+  const [imageurl, setImageurl] = useState('');
+
+  const NewUserSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    macAddress: Yup.string().required('MACAddress is required'),
+    os: Yup.string().required('OS is required'),
+    cpu: Yup.string().required('CPU is required'),
+    ram: Yup.string().required('RAM is required'),
+    hardDisk: Yup.string().required('HardDisk is required'),
+    purchasedDate: Yup.string().required('PurchasedDate is required'),
+  });
 
   const defaultValues = useMemo(
     () => ({
@@ -78,7 +99,6 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
       purchasedDate: currentSystem?.purchasedDate,
       userid: currentSystem?.user.id || '',
       softwareids: currentSystem?.systemSoftware.map((st) => st.name),
-      image: currentSystem?.fileDB.data,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentSystem]
@@ -113,22 +133,13 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     dispatch(getSoftwares());
     dispatch(getUsers());
     dispatch(getManufacturers());
+    if (currentSystem?.fileDB) {
+      setImageurl(`${HOST_API}/v1/systems/files/${currentSystem?.fileDB.id}`);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const readFileAsync = (file: Blob) =>
-    new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        resolve(e.target?.result?.toString().split(',')[1]);
-      };
-
-      reader.onerror = reject;
-    });
-
-  //  const imageurl = `${HOST_API}/v1/systems/files/${currentSystem?.fileDB.id}`;
   const onSubmit = async (data: FormValuesProps) => {
     const request: SystemsRequest = {
       name: data.name,
@@ -137,24 +148,12 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
       cpu: data.cpu,
       ram: data.ram,
       hardDisk: data.hardDisk,
-      purchasedDate: data.purchasedDate,
+      purchasedDate: format(new Date(data.purchasedDate || ''), 'yyyy-mm-dd'),
       userId: dropdownuser,
       manufacturerId: dropdownmanufacturer,
       softwareIds: data.softwareids,
     };
 
-    let contentBuffer = await readFileAsync(data.image);
-    console.log(contentBuffer);
-    request.image = contentBuffer;
-
-    /* var reader = new FileReader();
-    reader.readAsDataURL(data.image);
-    reader.onload = function (e) {
-      const str = e.target?.result;
-      console.log(str?.toString().split(',')[1]);
-      request.image = str?.toString().split(',')[1];
-    };
-*/
     try {
       if (isEdit && currentSystem) {
         request.id = data.id;
@@ -179,21 +178,14 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     setDropdownManufacturer(event.target.value);
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
+  const handleOnChange = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    dispatch(postUploadImage(currentSystem?.id || '', file));
 
-      if (file) {
-        setValue(
-          'image',
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
+    setPreviewImage(e.target.files[0]);
+    setImageurl('');
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -287,24 +279,27 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
                   />
                 )}
               />
-              {currentSystem?.fileDB.data && (
-                <Image
-                  width="180"
-                  height="300"
-                  src={`data:image/png;base64,${currentSystem?.fileDB.data}`}
-                />
-              )}
-              <RHFUploadSingleFile
-                name="image"
-                accept="image/*"
-                maxSize={3145728}
-                onDrop={handleDrop}
-              />
             </Box>
+            {isEdit && (
+              <Box>
+                <Button variant="contained" component="label">
+                  Import
+                  <input
+                    hidden
+                    type={'file'}
+                    name="images"
+                    accept="image/*"
+                    onChange={handleOnChange}
+                  />
+                </Button>
+                {imageurl && <Image src={imageurl} ratio="16/9" />}
+                {previewImage && <Image src={URL.createObjectURL(previewImage)} ratio="16/9" />}
+              </Box>
+            )}
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create User' : 'Save Changes'}
+                {!isEdit ? 'Create System' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

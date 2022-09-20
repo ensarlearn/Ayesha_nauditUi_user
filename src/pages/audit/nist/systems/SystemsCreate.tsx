@@ -39,11 +39,11 @@ export default function SystemsCreate() {
   return (
     <Container maxWidth={themeStretch ? false : 'lg'}>
       <HeaderBreadcrumbs
-        heading={!isEdit ? 'Create a new user' : 'Edit user'}
+        heading={!isEdit ? 'Create a new System' : 'Edit System'}
         links={[
           { name: 'NIST', href: PATH_DASHBOARD.nist.root },
           { name: 'Systems', href: PATH_DASHBOARD.nist.systems },
-          { name: !isEdit ? 'New user' : capitalCase(id) },
+          { name: !isEdit ? 'New System' : capitalCase(id) },
         ]}
       />
 

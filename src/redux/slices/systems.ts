@@ -11,6 +11,7 @@ const initialState: SystemsState = {
   updateStatus: StatusCodes.NONE,
   statusChangeStatus: StatusCodes.NONE,
   deleteStatus: StatusCodes.NONE,
+  uploadingStatus: StatusCodes.NONE,
   error: false,
   errorMessage: null,
   systems: [],
@@ -42,6 +43,9 @@ const slice = createSlice({
       state.deleteStatus = StatusCodes.REQUESTED;
     },
 
+    startUploading(state) {
+      state.uploadingStatus = StatusCodes.REQUESTED;
+    },
     hasError(state, action) {
       state.error = action.payload;
       state.errorMessage = extractErrorMessage(action.payload);
@@ -80,8 +84,16 @@ const slice = createSlice({
       }
     },
 
+    postUploadSuccess(state, action) {
+      state.uploadingStatus = StatusCodes.COMPLETED;
+    },
+    postUploadImageSuccess(state, action) {
+      state.uploadingStatus = StatusCodes.COMPLETED;
+    },
+
     resetStatus(state) {
       state.updateStatus = StatusCodes.NONE;
+      state.uploadingStatus = StatusCodes.NONE;
       state.createStatus = StatusCodes.NONE;
       state.deleteStatus = StatusCodes.NONE;
       state.statusChangeStatus = StatusCodes.NONE;
@@ -140,6 +152,40 @@ export function deleteSystems(id: string) {
     try {
       const response = await axios.delete('/v1/systems/' + id);
       dispatch(slice.actions.deleteSystemsSuccess(id));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function postUploadImage(imageid: string, file: File) {
+  return async () => {
+    dispatch(slice.actions.startUploading);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log('storage/uploadFile');
+
+      const response = await axios.post(`/v1/systems/files/${imageid}`, formData);
+      console.log('response.data', response.data);
+      dispatch(slice.actions.postUploadImageSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function postUploadFile(file: File) {
+  return async () => {
+    dispatch(slice.actions.startUploading);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log('storage/uploadFile');
+
+      const response = await axios.post('/v1/systems/import', formData);
+      console.log('response.data', response.data);
+      dispatch(slice.actions.postUploadSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

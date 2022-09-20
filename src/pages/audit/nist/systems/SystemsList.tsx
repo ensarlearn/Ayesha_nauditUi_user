@@ -30,7 +30,7 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
 import { dispatch } from '../../../../redux/store';
-import { deleteSystems, getSystems } from '../../../../redux/slices/systems';
+import { deleteSystems, getSystems, postUploadFile } from '../../../../redux/slices/systems';
 import { Systems, SystemsState } from '../../../../@types/systems';
 import useSettings from 'src/hooks/useSettings';
 import InvoiceAnalytic from 'src/sections/@dashboard/invoice/InvoiceAnalytic';
@@ -101,9 +101,13 @@ export default function SystemsList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   const getWindowsSystems = () => systems.filter((item) => item.os?.includes('Windows')).length;
-
+  const handleOnChange = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    dispatch(postUploadFile(file));
+  };
   return (
-    <Page title="User: List">
+    <Page title="System: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Systems"
@@ -122,7 +126,20 @@ export default function SystemsList() {
               New Systems
             </Button>
           }
+          action2={
+            <Button variant="contained" component="label">
+              Import
+              <input
+                hidden
+                type={'file'}
+                id={'csvFileInput'}
+                accept={'.csv'}
+                onChange={handleOnChange}
+              />
+            </Button>
+          }
         />
+
         <Card sx={{ mb: 5 }}>
           <Scrollbar>
             <Stack
