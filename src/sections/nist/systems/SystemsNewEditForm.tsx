@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -7,42 +7,23 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { DatePicker, LoadingButton } from '@mui/lab';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Card,
-  Chip,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Button, Card, Chip, Grid, Stack, TextField } from '@mui/material';
 // utils
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // _mock
 // components
-import {
-  FormProvider,
-  RHFSelect,
-  RHFTextField,
-  RHFUploadSingleFile,
-} from '../../../components/hook-form';
+import { FormProvider, RHFSelect, RHFTextField } from '../../../components/hook-form';
 import Image from '../../../components/Image';
-import { Systems, SystemsRequest, SystemsState } from '../../../@types/systems';
+import { Systems, SystemsRequest } from '../../../@types/systems';
 import { dispatch, useSelector } from '../../../redux/store';
 import { addSystems, postUploadImage, updateSystems } from '../../../redux/slices/systems';
 import { UserState } from '../../../@types/nistuser';
 import { getUsers } from '../../../redux/slices/user';
-import { Softwares, SoftwaresState } from 'src/@types/softwares';
+import { SoftwaresState } from 'src/@types/softwares';
 import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
-import { BlogPostTags } from '../../@dashboard/blog';
-import { arrayBuffer } from 'stream/consumers';
-import { computeSegEndResizable } from '@fullcalendar/common';
 import { HOST_API } from '../../../config';
-import { fDateTimeSuffix } from 'src/utils/formatTime';
 import { format } from 'date-fns';
 
 // ----------------------------------------------------------------------
@@ -111,14 +92,10 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
 
   const {
     reset,
-    watch,
     control,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (isEdit && currentSystem) {
@@ -129,6 +106,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentSystem]);
+
   useEffect(() => {
     dispatch(getSoftwares());
     dispatch(getUsers());
@@ -178,6 +156,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
     setDropdownManufacturer(event.target.value);
   };
 
+  //store images in databases
   const handleOnChange = (e: any) => {
     const file = e.target.files[0];
     console.log(file);
@@ -227,6 +206,7 @@ export default function SystemsNewEditForm({ isEdit, currentSystem }: Props) {
                   />
                 )}
               />
+
               <RHFSelect
                 name={dropdownuser}
                 value={dropdownuser}

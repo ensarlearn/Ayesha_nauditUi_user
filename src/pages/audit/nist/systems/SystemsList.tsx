@@ -103,7 +103,6 @@ export default function SystemsList() {
   const getWindowsSystems = () => systems.filter((item) => item.os?.includes('Windows')).length;
   const handleOnChange = (e: any) => {
     const file = e.target.files[0];
-    console.log(file);
     dispatch(postUploadFile(file));
   };
   return (

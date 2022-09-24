@@ -25,7 +25,8 @@ import {
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
-  displayName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   photoURL: File | any;
   phoneNumber: string | null;
@@ -44,11 +45,12 @@ export default function AccountGeneral() {
   const { user } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required'),
+    firstName: Yup.string().required('Name is required'),
   });
 
   const defaultValues = {
-    displayName: user?.displayName || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
     email: user?.email || '',
     photoURL: user?.photoURL || '',
     phoneNumber: user?.phoneNumber || '',
@@ -143,7 +145,8 @@ export default function AccountGeneral() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
+              <RHFTextField name="firstName" label="First Name" />
+              <RHFTextField name="lastName" label="Last Name" />
               <RHFTextField name="email" label="Email Address" />
 
               <RHFTextField name="phoneNumber" label="Phone Number" />

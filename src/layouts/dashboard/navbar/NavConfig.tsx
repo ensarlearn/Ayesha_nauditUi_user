@@ -28,7 +28,7 @@ const ICONS = {
   menuItem: getIcon('ic_menu_item'),
 };
 
-const navConfig = [
+export const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
@@ -76,5 +76,11 @@ const navConfig = [
     ],
   },
 ];
-
-export default navConfig;
+export const navConfigUser = [
+  // GENERAL
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'general',
+    items: [{ title: 'app', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard }],
+  },
+];

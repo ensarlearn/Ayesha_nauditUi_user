@@ -15,10 +15,11 @@ import Logo from '../../../components/Logo';
 import Scrollbar from '../../../components/Scrollbar';
 import { NavSectionVertical } from '../../../components/nav-section';
 //
-import navConfig from './NavConfig';
+import { navConfig, navConfigUser } from './NavConfig';
 import NavbarDocs from './NavbarDocs';
 import NavbarAccount from './NavbarAccount';
 import CollapseButton from './CollapseButton';
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +41,8 @@ type Props = {
 
 export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props) {
   const theme = useTheme();
+
+  const { user } = useAuth();
 
   const { pathname } = useLocation();
 
@@ -83,8 +86,12 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props)
         <NavbarAccount isCollapse={isCollapse} />
       </Stack>
 
-      <NavSectionVertical navConfig={navConfig} isCollapse={isCollapse} />
-
+      {(user?.role === 'ROLE_SUPER_ADMIN' || user?.role === 'ROLE_ADMIN') && (
+        <NavSectionVertical navConfig={navConfig} isCollapse={isCollapse} />
+      )}
+      {user?.role === 'ROLE_USER' && (
+        <NavSectionVertical navConfig={navConfigUser} isCollapse={isCollapse} />
+      )}
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );
