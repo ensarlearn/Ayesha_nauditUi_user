@@ -167,6 +167,16 @@ export default function Router() {
             { path: ':id/featuresedit', element: <FeaturesCreate /> },
           ],
         },
+        {
+          path: 'hr',
+          children: [
+            // Status
+            { element: <Navigate to="/dashboard/hr/status" replace />, index: true },
+            { path: 'status', element: <HRStatusList /> },
+            { path: 'statusnew', element: <HRStatusCreate /> },
+            { path: ':id/statusedit', element: <HRStatusCreate /> },
+          ],
+        },
       ],
     },
 
@@ -277,3 +287,7 @@ const ControlsCreate = Loadable(lazy(() => import('src/pages/audit/nist/controls
 
 const FeaturesUserList = Loadable(lazy(() => import('src/pages/audit/nist/features/FeaturesList')));
 const FeaturesCreate = Loadable(lazy(() => import('src/pages/audit/nist/features/FeaturesCreate')));
+
+//HR
+const HRStatusList = Loadable(lazy(() => import('../pages/audit/hr/status/StatusList')));
+const HRStatusCreate = Loadable(lazy(() => import('../pages/audit/hr/status/StatusCreate')));

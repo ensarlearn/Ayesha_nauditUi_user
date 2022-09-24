@@ -9,6 +9,7 @@ import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 import userReducer from './slices/user';
 import systemsReducer from './slices/systems';
+import hrstatusReducer from './slices/hrstatus';
 import softwaresReducer from './slices/software';
 import controlsReducer from './slices/controls';
 import featuresReducer from './slices/feature';
@@ -40,6 +41,12 @@ const systemsPersistConfig = {
   keyPrefix: 'redux-',
   whitelist: ['sortBy'],
 };
+const hrStatusPersistConfig = {
+  key: 'hrstatus',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['sortBy'],
+};
 const softwaresPersistConfig = {
   key: 'softwares',
   storage,
@@ -66,6 +73,7 @@ const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   product: persistReducer(productPersistConfig, productReducer),
   systems: persistReducer(systemsPersistConfig, systemsReducer),
+  hrstatus: persistReducer(hrStatusPersistConfig, hrstatusReducer),
   softwares: persistReducer(softwaresPersistConfig, softwaresReducer),
   controls: persistReducer(controlsPersistConfig, controlsReducer),
   features: persistReducer(featuresPersistConfig, featuresReducer),

@@ -86,6 +86,13 @@ export const PATH_DASHBOARD = {
     controlsnew: path(ROOTS_DASHBOARD, '/nist/controlsnew'),
     featurenew: path(ROOTS_DASHBOARD, '/nist/featurenew'),
   },
+  hr: {
+    root: path(ROOTS_DASHBOARD, '/hr'),
+
+    statusedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/statusedit`),
+    status: path(ROOTS_DASHBOARD, '/hr/status'),
+    statusnew: path(ROOTS_DASHBOARD, '/hr/statusnew'),
+  },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/e-commerce/shop'),

@@ -75,6 +75,28 @@ export const navConfig = [
       },
     ],
   },
+
+  // NIST
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'HR',
+    items: [
+      // status
+      {
+        title: 'status',
+        path: PATH_DASHBOARD.hr.root,
+        icon: ICONS.user,
+        children: [{ title: 'status', path: PATH_DASHBOARD.hr.status }],
+      },
+      // status
+      {
+        title: 'management',
+        path: PATH_DASHBOARD.hr.root,
+        icon: ICONS.user,
+        children: [{ title: 'projects', path: PATH_DASHBOARD.hr.status }],
+      },
+    ],
+  },
 ];
 export const navConfigUser = [
   // GENERAL
