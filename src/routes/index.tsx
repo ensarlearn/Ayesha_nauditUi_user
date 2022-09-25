@@ -175,6 +175,12 @@ export default function Router() {
             { path: 'status', element: <HRStatusList /> },
             { path: 'statusnew', element: <HRStatusCreate /> },
             { path: ':id/statusedit', element: <HRStatusCreate /> },
+            //  TimesheetAttendance
+            { element: <Navigate to="/dashboard/hr/timesheetattendance" replace />, index: true },
+            { path: 'timesheetattendance', element: <HRTimesheetAttendanceList /> },
+            { path: 'timesheetattendancenew', element: <HRTimesheetAttendanceCreate /> },
+            { path: ':id/timesheetattendanceedit', element: <HRTimesheetAttendanceCreate /> },
+
           ],
         },
       ],
@@ -291,3 +297,7 @@ const FeaturesCreate = Loadable(lazy(() => import('src/pages/audit/nist/features
 //HR
 const HRStatusList = Loadable(lazy(() => import('../pages/audit/hr/status/StatusList')));
 const HRStatusCreate = Loadable(lazy(() => import('../pages/audit/hr/status/StatusCreate')));
+
+// TimesheetAttendanceState
+const HRTimesheetAttendanceList = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceList')));
+const HRTimesheetAttendanceCreate = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceCreate')));

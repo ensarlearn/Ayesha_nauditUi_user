@@ -92,6 +92,10 @@ export const PATH_DASHBOARD = {
     statusedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/statusedit`),
     status: path(ROOTS_DASHBOARD, '/hr/status'),
     statusnew: path(ROOTS_DASHBOARD, '/hr/statusnew'),
+
+    timesheetattendanceedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/timesheetattendanceedit`),
+    timesheetattendance: path(ROOTS_DASHBOARD, '/hr/timesheetattendance'),
+    timesheetattendancenew: path(ROOTS_DASHBOARD, '/hr/timesheetattendancenew'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
