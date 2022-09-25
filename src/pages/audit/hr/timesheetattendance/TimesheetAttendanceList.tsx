@@ -38,13 +38,12 @@ import HRTimesheetAttendanceTableToolbar from 'src/sections/hr/timesheetattendan
 import HRTimesheetAttendanceTableRow from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceTableRow';
 
 const TABLE_HEAD = [
-  // { id: 'project', label: 'Project', align: 'left' },
-  // { id: 'task', label: 'Task', align: 'left' },
-  // { id: 'subtask', label: 'Sub Task', align: 'left' },
+  { id: 'project', label: 'Project', align: 'left' },
+  { id: 'task', label: 'Task', align: 'left' },
+  { id: 'subtask', label: 'Sub-Task', align: 'left' },
   { id: 'hours', label: 'Hours', align: 'left' },
   { id: 'remarks', label: 'Remarks', align: 'left' },
   { id: 'workdate', label: 'Work Date', align: 'left' },
-  { id: 'project', label: 'project', align: 'left' },
 
   { id: '' },
 ];
@@ -112,10 +111,10 @@ export default function HRTimesheetAttendanceList() {
     <Page title="HRTimesheetAttendance: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="HRTimesheetAttendance"
+          heading="HR Timesheet Attendance"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HRTimesheetAttendance' },
+            { name: 'HR Timesheet Attendance' },
             { name: 'List' },
           ]}
           action={
@@ -125,7 +124,7 @@ export default function HRTimesheetAttendanceList() {
               to={PATH_DASHBOARD.hr.timesheetattendancenew}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New HRTimesheetAttendance
+              New HR Timesheet Attendance
             </Button>
           }
           action2={
@@ -152,7 +151,7 @@ export default function HRTimesheetAttendanceList() {
               <HRTimesheetAttendanceAnalytic
                 title="Total"
                 total={hrTimesheetAttendances.length}
-                title2="HRTimesheetAttendance"
+                title2="HR Timesheet Attendance"
                 icon="ic:round-receipt"
                 color={theme.palette.info.main}
               />
