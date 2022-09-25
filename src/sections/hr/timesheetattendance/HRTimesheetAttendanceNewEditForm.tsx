@@ -99,6 +99,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
     const request: HRTimesheetAttendanceRequest = {
       hours: data.hours,
       remarks: data.remarks,
+      // project: data.project[],
       workDate: format(new Date(data.workDate || ''), 'yyyy-mm-dd'),
       userId: dropdownuser,
       // projectId: dropdownuser,

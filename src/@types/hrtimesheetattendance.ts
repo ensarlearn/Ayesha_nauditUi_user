@@ -1,4 +1,7 @@
 import { User } from './nistuser';
+import { HRProject } from './hrproject';
+import { HRTask } from './hrtask';
+import { HRSubtask } from './hrsubtask';
 
 export type HRTimesheetAttendance = {
   id: string;
@@ -6,9 +9,9 @@ export type HRTimesheetAttendance = {
   remarks?: string;
   workDate?: Date | string | number;
   user: User;
-  // projects: Project;
-  // task: Task;
-  // subtask: Subtask
+  project: HRProject;
+  task: HRTask;
+  subtask: HRSubtask
 };
 
 export type HRTimesheetAttendanceRequest = {
@@ -17,6 +20,9 @@ export type HRTimesheetAttendanceRequest = {
   remarks?: string;
   workDate?: string;
   userId: string;
+  project?: string;
+  task?: string;
+  subtask?: string;
 };
 
 export type HRTimesheetAttendanceState = {

@@ -43,7 +43,8 @@ const TABLE_HEAD = [
   // { id: 'subtask', label: 'Sub Task', align: 'left' },
   { id: 'hours', label: 'Hours', align: 'left' },
   { id: 'remarks', label: 'Remarks', align: 'left' },
-  // { id: 'workdate', label: 'Work Date', align: 'left' },
+  { id: 'workdate', label: 'Work Date', align: 'left' },
+  { id: 'project', label: 'project', align: 'left' },
 
   { id: '' },
 ];

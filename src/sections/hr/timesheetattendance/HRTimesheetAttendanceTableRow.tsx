@@ -28,8 +28,10 @@ export default function HRTimesheetAttendanceTableRow({
 }: Props) {
   const theme = useTheme();
 
-  const { hours, remarks } = row;
-
+  const { hours, remarks, workDate, project, task, subtask } = row;
+console.log('project name',row.project.name)
+console.log('task name',row.task.name)
+console.log('subtask name',row.subtask.name)
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -44,6 +46,10 @@ export default function HRTimesheetAttendanceTableRow({
     <TableRow hover selected={selected}>
       <TableCell align="left">{hours}</TableCell>
       <TableCell align="left">{remarks}</TableCell>
+      <TableCell align="left">{workDate}</TableCell>
+      <TableCell align="left">{project}</TableCell>
+      <TableCell align="left">{task}</TableCell>
+      <TableCell align="left">{subtask}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu
