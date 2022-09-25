@@ -93,7 +93,10 @@ export const navConfig = [
         title: 'management',
         path: PATH_DASHBOARD.hr.root,
         icon: ICONS.user,
-        children: [{ title: 'projects', path: PATH_DASHBOARD.hr.status }],
+        children: [
+          { title: 'projects', path: PATH_DASHBOARD.hr.status },
+          { title: 'timesheet attendance', path: PATH_DASHBOARD.hr.timesheetattendance },
+        ],
       },
     ],
   },
