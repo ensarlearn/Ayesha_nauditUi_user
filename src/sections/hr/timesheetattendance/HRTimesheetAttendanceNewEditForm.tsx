@@ -118,7 +118,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
       remarks: data.remarks,
       workDate: format(new Date(data.workDate || ''), 'yyyy-mm-dd'),
       userId: dropdownuser,
-      projectId: dropdownproject,
+      projectsId: dropdownproject,
       taskId: dropdowntask,
       subtaskId: dropdownsubtask,
     };
@@ -199,7 +199,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
               <RHFSelect
                 name={dropdownsubtask}
                 value={dropdownsubtask}
-                label="Subtask"
+                label="Sub-task"
                 placeholder="Subtask"
                 onChange={onChangeSubtask}
               >
@@ -253,7 +253,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create HR TimesheetAttendance' : 'Save Changes'}
+                {!isEdit ? 'Create HR Timesheet Attendance' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

@@ -20,7 +20,7 @@ export type HRTimesheetAttendanceRequest = {
   remarks?: string;
   workDate?: string;
   userId: string;
-  projectId: string;
+  projectsId: string;
   taskId: string;
   subtaskId: string;
 };

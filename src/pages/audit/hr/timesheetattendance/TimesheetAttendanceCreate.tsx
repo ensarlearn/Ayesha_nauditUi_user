@@ -39,11 +39,11 @@ export default function TimesheetAttendanceCreate() {
   return (
     <Container maxWidth={themeStretch ? false : 'lg'}>
       <HeaderBreadcrumbs
-        heading={!isEdit ? 'Create a new TimesheetAttendance' : 'Edit TimesheetAttendance'}
+        heading={!isEdit ? 'Create a new Timesheet Attendance' : 'Edit Timesheet Attendance'}
         links={[
           { name: 'HR', href: PATH_DASHBOARD.hr.root },
           { name: 'HR Timesheet Attendance', href: PATH_DASHBOARD.hr.timesheetattendance },
-          { name: !isEdit ? 'New TimesheetAttendance' : capitalCase(id) },
+          { name: !isEdit ? 'New Timesheet Attendance' : capitalCase(id) },
         ]}
       />
 
