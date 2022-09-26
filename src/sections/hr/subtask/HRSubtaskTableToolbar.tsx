@@ -21,7 +21,7 @@ export default function HRSubtaskTableToolbar({
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="Search user..."
+        placeholder="Search Subtask..."
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

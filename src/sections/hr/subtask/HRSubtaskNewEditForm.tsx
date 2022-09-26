@@ -22,7 +22,7 @@ import { HRTaskState } from '../../../@types/hrtask';
 import { dispatch, useSelector } from '../../../redux/store';
 import { addHRSubtask, updateHRSubtask } from '../../../redux/slices/hrsubtask';
 import { UserState } from '../../../@types/nistuser';
-import { getUsers } from '../../../redux/slices/user';
+import { getHRTask } from '../../../redux/slices/hrtask';
 import { SoftwaresState } from 'src/@types/softwares';
 import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
 import { HOST_API } from '../../../config';
@@ -44,7 +44,6 @@ type Props = {
 
 export default function HRSubtaskNewEditForm({ isEdit, currentHRSubtask }: Props) {
   const navigate = useNavigate();
-  const { users } = useSelector((state: { user: UserState }) => state.user);
   const { hrTasks } = useSelector((state: { hrtask: HRTaskState }) => state.hrtask);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -87,7 +86,10 @@ export default function HRSubtaskNewEditForm({ isEdit, currentHRSubtask }: Props
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentHRSubtask]);
 
-
+  useEffect(() => {
+    dispatch(getHRTask());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSubmit = async (data: FormValuesProps) => {
     const request: HRSubtaskRequest = {

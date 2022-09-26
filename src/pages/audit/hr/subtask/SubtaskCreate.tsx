@@ -39,11 +39,11 @@ export default function SubtaskCreate() {
   return (
     <Container maxWidth={themeStretch ? false : 'lg'}>
       <HeaderBreadcrumbs
-        heading={!isEdit ? 'Create a new Subtask' : 'Edit Subtask'}
+        heading={!isEdit ? 'Create a new Sub-task' : 'Edit Sub-task'}
         links={[
           { name: 'HR', href: PATH_DASHBOARD.hr.root },
-          { name: 'HRSubtask', href: PATH_DASHBOARD.hr.subtask },
-          { name: !isEdit ? 'New Subtask' : capitalCase(id) },
+          { name: 'HR Sub-task', href: PATH_DASHBOARD.hr.subtask },
+          { name: !isEdit ? 'New Sub-task' : capitalCase(id) },
         ]}
       />
 

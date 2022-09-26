@@ -42,7 +42,7 @@ export default function TaskCreate() {
         heading={!isEdit ? 'Create a new Task' : 'Edit Task'}
         links={[
           { name: 'HR', href: PATH_DASHBOARD.hr.root },
-          { name: 'HRTask', href: PATH_DASHBOARD.hr.task },
+          { name: 'HR Task', href: PATH_DASHBOARD.hr.task },
           { name: !isEdit ? 'New Task' : capitalCase(id) },
         ]}
       />

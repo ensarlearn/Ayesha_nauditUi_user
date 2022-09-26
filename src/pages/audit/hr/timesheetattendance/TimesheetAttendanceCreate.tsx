@@ -42,7 +42,7 @@ export default function TimesheetAttendanceCreate() {
         heading={!isEdit ? 'Create a new TimesheetAttendance' : 'Edit TimesheetAttendance'}
         links={[
           { name: 'HR', href: PATH_DASHBOARD.hr.root },
-          { name: 'HRTimesheetAttendance', href: PATH_DASHBOARD.hr.timesheetattendance },
+          { name: 'HR Timesheet Attendance', href: PATH_DASHBOARD.hr.timesheetattendance },
           { name: !isEdit ? 'New TimesheetAttendance' : capitalCase(id) },
         ]}
       />

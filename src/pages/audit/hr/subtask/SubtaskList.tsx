@@ -106,13 +106,13 @@ export default function HRSubtaskList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title="HRSubtask: List">
+    <Page title="HR Subtask: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="HRSubtask"
+          heading="HR Sub-task"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HRSubtask' },
+            { name: 'HR Sub-task' },
             { name: 'List' },
           ]}
           action={
@@ -122,7 +122,7 @@ export default function HRSubtaskList() {
               to={PATH_DASHBOARD.hr.subtasknew}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New HRSubtask
+              New HR Sub-task
             </Button>
           }
           action2={
@@ -149,7 +149,7 @@ export default function HRSubtaskList() {
               <HRSubtaskAnalytic
                 title="Total"
                 total={hrSubtasks.length}
-                title2="HRSubtask"
+                title2="HR Sub-task"
                 icon="ic:round-receipt"
                 color={theme.palette.info.main}
               />

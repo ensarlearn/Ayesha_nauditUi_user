@@ -105,13 +105,13 @@ export default function HRProjectList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title="HRProject: List">
+    <Page title="HR Project: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="HRProject"
+          heading="HR Project"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HRProject' },
+            { name: 'HR Project' },
             { name: 'List' },
           ]}
           action={
@@ -121,7 +121,7 @@ export default function HRProjectList() {
               to={PATH_DASHBOARD.hr.projectnew}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New HRProject
+              New HR Project
             </Button>
           }
           action2={
@@ -148,7 +148,7 @@ export default function HRProjectList() {
               <HRProjectAnalytic
                 title="Total"
                 total={hrProjects.length}
-                title2="HRProject"
+                title2="HR Project"
                 icon="ic:round-receipt"
                 color={theme.palette.info.main}
               />

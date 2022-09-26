@@ -28,7 +28,7 @@ export default function HRSubtaskTableRow({
 }: Props) {
   const theme = useTheme();
 
-  const { name } = row;
+  const { name, task } = row;
 
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -44,6 +44,7 @@ export default function HRSubtaskTableRow({
     <TableRow hover selected={selected}>
 
       <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{task?.name}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

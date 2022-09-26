@@ -21,7 +21,7 @@ export default function HRStatusTableToolbar({
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="Search user..."
+        placeholder="Search Status..."
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

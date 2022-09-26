@@ -21,7 +21,7 @@ export default function HRTimesheetAttendanceTableToolbar({
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder="Search user..."
+        placeholder="Search TimesheetAttendance..."
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

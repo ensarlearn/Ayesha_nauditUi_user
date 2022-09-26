@@ -51,7 +51,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
   const { users } = useSelector((state: { user: UserState }) => state.user);
   const { hrProjects } = useSelector((state: { hrproject: HRProjectState }) => state.hrproject);
   const { hrTasks } = useSelector((state: { hrtask: HRTaskState }) => state.hrtask);
-  // const { hrSubtasks } = useSelector((state: { hrsubtask: HRSubtaskState }) => state.hrsubtask);
+  const { hrSubtasks } = useSelector((state: { hrsubtask: HRSubtaskState }) => state.hrsubtask);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -196,7 +196,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
                 ))}
               </RHFSelect>
 
-              {/* <RHFSelect
+              <RHFSelect
                 name={dropdownsubtask}
                 value={dropdownsubtask}
                 label="Subtask"
@@ -209,7 +209,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
                     {option.name}
                   </option>
                 ))}
-              </RHFSelect> */}
+              </RHFSelect>
               <RHFTextField name="hours" label="Hours" />
               <RHFTextField name="remarks" label="Remarks" />
 

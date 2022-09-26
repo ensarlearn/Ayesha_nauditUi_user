@@ -42,7 +42,7 @@ export default function ProjectCreate() {
         heading={!isEdit ? 'Create a new Project' : 'Edit Project'}
         links={[
           { name: 'HR', href: PATH_DASHBOARD.hr.root },
-          { name: 'HRProject', href: PATH_DASHBOARD.hr.project },
+          { name: 'HR Project', href: PATH_DASHBOARD.hr.project },
           { name: !isEdit ? 'New Project' : capitalCase(id) },
         ]}
       />

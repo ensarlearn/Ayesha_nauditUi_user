@@ -13,7 +13,7 @@ import hrstatusReducer from './slices/hrstatus';
 import hrtimesheetattendanceReducer from './slices/hrtimesheetattendance';
 import hrprojectReducer from './slices/hrproject';
 import hrtaskReducer from './slices/hrtask';
-import hrsubtaskReducer from './slices/hrtask';
+import hrsubtaskReducer from './slices/hrsubtask';
 import softwaresReducer from './slices/software';
 import controlsReducer from './slices/controls';
 import featuresReducer from './slices/feature';
