@@ -1,6 +1,7 @@
 export type HRProject = {
     id: string;
     name: string;
+    disabled?: boolean;
 };
 
 export type HRProjectRequest = {
@@ -16,8 +17,8 @@ export type HRProjectState = {
     statusChangeStatus: string;
     error: boolean;
     errorMessage: string | null;
-    hrprojects: HRProject[];
-    hrproject: HRProject | null;
+    hrProjects: HRProject[];
+    hrProject: HRProject | null;
     sortBy: string | null;
     filters: {
         name: string;

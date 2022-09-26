@@ -1,6 +1,7 @@
 export type HRTask = {
     id: string;
     name: string;
+    disabled?: boolean;
 };
 
 export type HRTaskRequest = {
@@ -16,11 +17,11 @@ export type HRTaskState = {
     statusChangeStatus: string;
     error: boolean;
     errorMessage: string | null;
-    hrtasks: HRTask[];
-    hrtask: HRTask | null;
+    hrTasks: HRTask[];
+    hrTask: HRTask | null;
     sortBy: string | null;
     filters: {
         name: string;
     };
-    selectedTasksName: string;
+    selectedHRTasksName: string;
 };

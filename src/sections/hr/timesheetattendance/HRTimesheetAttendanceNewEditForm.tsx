@@ -20,7 +20,13 @@ import { HRTimesheetAttendance, HRTimesheetAttendanceRequest } from '../../../@t
 import { dispatch, useSelector } from '../../../redux/store';
 import { addHRTimesheetAttendance, updateHRTimesheetAttendance } from '../../../redux/slices/hrtimesheetattendance';
 import { UserState } from '../../../@types/nistuser';
+import { HRProjectState } from '../../../@types/hrproject';
+import { HRTaskState } from '../../../@types/hrtask';
+import { HRSubtaskState } from '../../../@types/hrsubtask';
 import { getUsers } from '../../../redux/slices/user';
+import { getHRProjects } from '../../../redux/slices/hrproject';
+import { getHRTasks } from '../../../redux/slices/hrtask';
+import { getHRSubtasks } from '../../../redux/slices/hrsubtask';
 import { SoftwaresState } from 'src/@types/softwares';
 import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
 import { HOST_API } from '../../../config';
@@ -31,7 +37,7 @@ import { format } from 'date-fns';
 //type FormValuesProps = HRTimesheetAttendance;
 
 interface FormValuesProps extends Partial<HRTimesheetAttendance> {
-  softwareids: string[];
+  // softwareids: string[];
   //imageurl: File | any;
 }
 
@@ -43,10 +49,16 @@ type Props = {
 export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTimesheetAttendance }: Props) {
   const navigate = useNavigate();
   const { users } = useSelector((state: { user: UserState }) => state.user);
+  const { hrProjects } = useSelector((state: { hrproject: HRProjectState }) => state.hrproject);
+  const { hrTasks } = useSelector((state: { hrtask: HRTaskState }) => state.hrtask);
+  const { hrSubtasks } = useSelector((state: { hrsubtask: HRSubtaskState }) => state.hrsubtask);
 
   const { enqueueSnackbar } = useSnackbar();
 
   const [dropdownuser, setDropdownUser] = useState(currentHRTimesheetAttendance?.user.id || '');
+  const [dropdownproject, setDropdownProject] = useState(currentHRTimesheetAttendance?.project.id || '');
+  const [dropdowntask, setDropdownTask] = useState(currentHRTimesheetAttendance?.task.id || '');
+  const [dropdownsubtask, setDropdownSubtask] = useState(currentHRTimesheetAttendance?.subtask.id || '');
 
   const NewUserSchema = Yup.object().shape({
     hours: Yup.string().required('hours are required'),
@@ -60,14 +72,14 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
       remarks: currentHRTimesheetAttendance?.remarks || '',
       hours: currentHRTimesheetAttendance?.hours || '',
       workDate: currentHRTimesheetAttendance?.workDate,
-      // projectsid:currentHRTimesheetAttendance?.projects.id || '',
+      projectsid: currentHRTimesheetAttendance?.project.id || '',
       userid: currentHRTimesheetAttendance?.user.id || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentHRTimesheetAttendance]
   );
 
-  const methods = useForm<FormValuesProps>({
+  const methods = useForm({
     resolver: yupResolver(NewUserSchema),
     defaultValues,
   });
@@ -91,6 +103,9 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
 
   useEffect(() => {
     dispatch(getUsers());
+    dispatch(getHRProjects());
+    dispatch(getHRTasks());
+    dispatch(getHRSubtasks());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -102,7 +117,9 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
       // project: data.project[],
       workDate: format(new Date(data.workDate || ''), 'yyyy-mm-dd'),
       userId: dropdownuser,
-      // projectId: dropdownuser,
+      projectId: dropdownproject,
+      taskId: dropdowntask,
+      subtaskId: dropdownsubtask,
     };
 
     try {
@@ -125,6 +142,15 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
     setDropdownUser(event.target.value);
   };
 
+  const onChangeProject = (event: any) => {
+    setDropdownProject(event.target.value);
+  };
+  const onChangeTask = (event: any) => {
+    setDropdownTask(event.target.value);
+  }; const onChangeSubtask = (event: any) => {
+    setDropdownSubtask(event.target.value);
+  };
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -135,9 +161,53 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
                 display: 'grid',
                 columnGap: 2,
                 rowGap: 3,
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(3, 1fr)' },
               }}
             >
+              <RHFSelect
+                name={dropdownproject}
+                value={dropdownproject}
+                label="Project"
+                placeholder="Project"
+                onChange={onChangeProject}
+              >
+                <option value="" />
+                {hrProjects.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </RHFSelect>
+
+              <RHFSelect
+                name={dropdowntask}
+                value={dropdowntask}
+                label="Task"
+                placeholder="Task"
+                onChange={onChangeTask}
+              >
+                <option value="" />
+                {hrTasks.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </RHFSelect>
+
+              <RHFSelect
+                name={dropdownsubtask}
+                value={dropdownsubtask}
+                label="Subtask"
+                placeholder="Subtask"
+                onChange={onChangeSubtask}
+              >
+                <option value="" />
+                {hrSubtasks.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFTextField name="hours" label="Hours" />
               <RHFTextField name="remarks" label="Remarks" />
 

@@ -6,6 +6,7 @@ export type HRSubtask = {
   id: string;
   name: String;
   task: HRTask;
+  disabled?: boolean;
 };
 
 export type HRSubtaskRequest = {

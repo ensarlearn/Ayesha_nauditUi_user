@@ -9,9 +9,9 @@ export type HRTimesheetAttendance = {
   remarks?: string;
   workDate?: Date | string | number;
   user: User;
-  project?: HRProject;
-  task?: HRTask;
-  subtask?: HRSubtask
+  project: HRProject;
+  task: HRTask;
+  subtask: HRSubtask
 };
 
 export type HRTimesheetAttendanceRequest = {
@@ -20,9 +20,9 @@ export type HRTimesheetAttendanceRequest = {
   remarks?: string;
   workDate?: string;
   userId: string;
-  project?: string;
-  task?: string;
-  subtask?: string;
+  projectId: string;
+  taskId: string;
+  subtaskId: string;
 };
 
 export type HRTimesheetAttendanceState = {
