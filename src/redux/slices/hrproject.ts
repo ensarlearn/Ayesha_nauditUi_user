@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
-import { HRProject, HRProjectState } from '../../@types/hrproject';
+import { HRProject, HRProjectRequest, HRProjectState } from '../../@types/hrproject';
 import { StatusCodes } from '../../utils/status-codes';
 import { extractErrorMessage } from '../../utils/errorHelper';
-import axios from '../../utils/axios';
+import axios from 'src/utils/axios';
 
 const initialState: HRProjectState = {
   loadingStatus: StatusCodes.NONE,
@@ -38,6 +38,9 @@ const slice = createSlice({
     startStatusChanging(state) {
       state.statusChangeStatus = StatusCodes.REQUESTED;
     },
+    startDeleting(state) {
+      state.deleteStatus = StatusCodes.REQUESTED;
+    },
 
     hasError(state, action) {
       state.error = action.payload;
@@ -61,20 +64,26 @@ const slice = createSlice({
 
     updateHRProjectSuccess(state, action) {
       state.updateStatus = StatusCodes.COMPLETED;
-      const hrprojectIndex = state.hrProjects.findIndex((hrProject) => hrProject.id === action.payload.id);
-      state.hrProjects[hrprojectIndex] = action.payload;
+      const hrProjectIndex = state.hrProjects.findIndex(
+        (hrProject: HRProject) => hrProject.id === action.payload.id
+      );
+      state.hrProjects[hrProjectIndex] = action.payload;
     },
 
-    statusChangeSuccess(state, action) {
-      state.statusChangeStatus = StatusCodes.COMPLETED;
-      const { ids, disable } = action.payload;
-      const disabledHRProjects = state.hrProjects.filter((hrProject) => ids.includes(hrProject.id));
-      disabledHRProjects.forEach((hrProject) => (hrProject.disabled = disable));
+    deleteHRProjectSuccess(state, action) {
+      state.deleteStatus = StatusCodes.COMPLETED;
+      const idx = state.hrProjects.findIndex(
+        (hrProject: HRProject) => hrProject.id === action.payload
+      );
+      if (idx > -1) {
+        state.hrProjects.splice(idx, 1);
+      }
     },
 
-    resetStatus(state) {
+    resetProject(state) {
       state.updateStatus = StatusCodes.NONE;
       state.createStatus = StatusCodes.NONE;
+      state.deleteStatus = StatusCodes.NONE;
       state.statusChangeStatus = StatusCodes.NONE;
       state.error = false;
       state.errorMessage = null;
@@ -89,7 +98,7 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-export function getHRProjects(selectedOrg?: string) {
+export function getHRProject() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
@@ -102,35 +111,11 @@ export function getHRProjects(selectedOrg?: string) {
   };
 }
 
-export function getCurrentHRProject() {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/v1/hrproject/current');
-      dispatch(slice.actions.getHRProjectSuccess(response.data));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-export function addHRProject(
-  firstName: string,
-  lastName: string,
-  email: string,
-  organizationId: string,
-  role: string
-) {
+export function addHRProject(hrProject: HRProjectRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const data: any = {
-        firstName,
-        lastName,
-        email,
-        role,
-      };
-      const response = await axios.post('/v1/hrproject/', data);
+      const response = await axios.post('/v1/hrproject/', hrProject);
       dispatch(slice.actions.addHRProjectSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -138,24 +123,11 @@ export function addHRProject(
   };
 }
 
-export function updateHRProject(
-  id: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  role: string,
-  organizationId: string
-) {
+export function updateHRProject(hrProject: HRProjectRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.put('/v1/hrproject/', {
-        firstName,
-        lastName,
-        email,
-        role,
-        organizationId,
-      });
+      const response = await axios.put('/v1/hrproject/' + hrProject.id, hrProject);
       dispatch(slice.actions.updateHRProjectSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -163,22 +135,22 @@ export function updateHRProject(
   };
 }
 
-export function updateHRProjectStatus(hrprojects: Array<HRProject>, disable: boolean) {
+export function deleteHRProject(id: string) {
   return async () => {
-    dispatch(slice.actions.startStatusChanging());
-    const ids = hrprojects.map((hrproject) => hrproject.id);
+    dispatch(slice.actions.startCreating());
     try {
-      //disable ? await HRProjectService.disableHRProjects(ids) : await HRProjectService.enableHRProjects(ids);
-      dispatch(slice.actions.statusChangeSuccess({ ids, disable }));
+      const response = await axios.delete('/v1/hrproject/' + id);
+      dispatch(slice.actions.deleteHRProjectSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function resetStatus() {
+
+export function resetProject() {
   return async () => {
-    dispatch(slice.actions.resetStatus());
+    dispatch(slice.actions.resetProject());
   };
 }
 

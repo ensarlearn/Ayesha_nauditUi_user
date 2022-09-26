@@ -4,7 +4,7 @@ import { String } from 'lodash';
 
 export type HRSubtask = {
   id: string;
-  name: String;
+  name: string;
   task: HRTask;
   disabled?: boolean;
 };

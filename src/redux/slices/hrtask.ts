@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
-import { HRTask, HRTaskState } from '../../@types/hrtask';
+import { HRTask, HRTaskRequest, HRTaskState } from '../../@types/hrtask';
 import { StatusCodes } from '../../utils/status-codes';
 import { extractErrorMessage } from '../../utils/errorHelper';
-import axios from '../../utils/axios';
+import axios from 'src/utils/axios';
 
 const initialState: HRTaskState = {
   loadingStatus: StatusCodes.NONE,
@@ -22,7 +22,6 @@ const initialState: HRTaskState = {
   selectedHRTasksName: '',
 };
 
-
 const slice = createSlice({
   name: 'hrtask',
   initialState,
@@ -38,6 +37,9 @@ const slice = createSlice({
     },
     startStatusChanging(state) {
       state.statusChangeStatus = StatusCodes.REQUESTED;
+    },
+    startDeleting(state) {
+      state.deleteStatus = StatusCodes.REQUESTED;
     },
 
     hasError(state, action) {
@@ -62,20 +64,26 @@ const slice = createSlice({
 
     updateHRTaskSuccess(state, action) {
       state.updateStatus = StatusCodes.COMPLETED;
-      const hrtaskIndex = state.hrTasks.findIndex((hrTask) => hrTask.id === action.payload.id);
-      state.hrTasks[hrtaskIndex] = action.payload;
+      const hrTaskIndex = state.hrTasks.findIndex(
+        (hrTask: HRTask) => hrTask.id === action.payload.id
+      );
+      state.hrTasks[hrTaskIndex] = action.payload;
     },
 
-    statusChangeSuccess(state, action) {
-      state.statusChangeStatus = StatusCodes.COMPLETED;
-      const { ids, disable } = action.payload;
-      const disabledHRTasks = state.hrTasks.filter((hrTask) => ids.includes(hrTask.id));
-      disabledHRTasks.forEach((hrTask) => (hrTask.disabled = disable));
+    deleteHRTaskSuccess(state, action) {
+      state.deleteStatus = StatusCodes.COMPLETED;
+      const idx = state.hrTasks.findIndex(
+        (hrTask: HRTask) => hrTask.id === action.payload
+      );
+      if (idx > -1) {
+        state.hrTasks.splice(idx, 1);
+      }
     },
 
-    resetStatus(state) {
+    resetTask(state) {
       state.updateStatus = StatusCodes.NONE;
       state.createStatus = StatusCodes.NONE;
+      state.deleteStatus = StatusCodes.NONE;
       state.statusChangeStatus = StatusCodes.NONE;
       state.error = false;
       state.errorMessage = null;
@@ -90,7 +98,7 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-export function getHRTasks(selectedOrg?: string) {
+export function getHRTask() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
@@ -103,35 +111,11 @@ export function getHRTasks(selectedOrg?: string) {
   };
 }
 
-export function getCurrentHRTask() {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/v1/hrtask/current');
-      dispatch(slice.actions.getHRTaskSuccess(response.data));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-export function addHRTask(
-  firstName: string,
-  lastName: string,
-  email: string,
-  organizationId: string,
-  role: string
-) {
+export function addHRTask(hrTask: HRTaskRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const data: any = {
-        firstName,
-        lastName,
-        email,
-        role,
-      };
-      const response = await axios.post('/v1/hrtask/', data);
+      const response = await axios.post('/v1/hrtask/', hrTask);
       dispatch(slice.actions.addHRTaskSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -139,24 +123,11 @@ export function addHRTask(
   };
 }
 
-export function updateHRTask(
-  id: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  role: string,
-  organizationId: string
-) {
+export function updateHRTask(hrTask: HRTaskRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.put('/v1/hrtask/', {
-        firstName,
-        lastName,
-        email,
-        role,
-        organizationId,
-      });
+      const response = await axios.put('/v1/hrtask/' + hrTask.id, hrTask);
       dispatch(slice.actions.updateHRTaskSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -164,22 +135,22 @@ export function updateHRTask(
   };
 }
 
-export function updateHRTaskStatus(hrtasks: Array<HRTask>, disable: boolean) {
+export function deleteHRTask(id: string) {
   return async () => {
-    dispatch(slice.actions.startStatusChanging());
-    const ids = hrtasks.map((hrtask) => hrtask.id);
+    dispatch(slice.actions.startCreating());
     try {
-      //disable ? await HRTaskService.disableHRTasks(ids) : await HRTaskService.enableHRTasks(ids);
-      dispatch(slice.actions.statusChangeSuccess({ ids, disable }));
+      const response = await axios.delete('/v1/hrtask/' + id);
+      dispatch(slice.actions.deleteHRTaskSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function resetStatus() {
+
+export function resetTask() {
   return async () => {
-    dispatch(slice.actions.resetStatus());
+    dispatch(slice.actions.resetTask());
   };
 }
 

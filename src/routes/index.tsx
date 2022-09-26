@@ -180,7 +180,23 @@ export default function Router() {
             { path: 'timesheetattendance', element: <HRTimesheetAttendanceList /> },
             { path: 'timesheetattendancenew', element: <HRTimesheetAttendanceCreate /> },
             { path: ':id/timesheetattendanceedit', element: <HRTimesheetAttendanceCreate /> },
+            // Project
+            { element: <Navigate to="/dashboard/hr/project" replace />, index: true },
+            { path: 'project', element: <HRProjectList /> },
+            { path: 'projectnew', element: <HRProjectCreate /> },
+            { path: ':id/projectedit', element: <HRProjectCreate /> },
 
+            // Task
+            { element: <Navigate to="/dashboard/hr/task" replace />, index: true },
+            { path: 'task', element: <HRTaskList /> },
+            { path: 'tasknew', element: <HRTaskCreate /> },
+            { path: ':id/taskedit', element: <HRTaskCreate /> },
+
+            // Subtask
+            { element: <Navigate to="/dashboard/hr/subtask" replace />, index: true },
+            { path: 'subtask', element: <HRSubtaskList /> },
+            { path: 'subtasknew', element: <HRSubtaskCreate /> },
+            { path: ':id/subtaskedit', element: <HRSubtaskCreate /> },
           ],
         },
       ],
@@ -301,3 +317,15 @@ const HRStatusCreate = Loadable(lazy(() => import('../pages/audit/hr/status/Stat
 // TimesheetAttendanceState
 const HRTimesheetAttendanceList = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceList')));
 const HRTimesheetAttendanceCreate = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceCreate')));
+
+// Project
+const HRProjectList = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectList')));
+const HRProjectCreate = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectCreate')));
+
+// Task
+const HRTaskList = Loadable(lazy(() => import('../pages/audit/hr/task/TaskList')));
+const HRTaskCreate = Loadable(lazy(() => import('../pages/audit/hr/task/TaskCreate')));
+
+// Subtask
+const HRSubtaskList = Loadable(lazy(() => import('../pages/audit/hr/subtask/SubtaskList')));
+const HRSubtaskCreate = Loadable(lazy(() => import('../pages/audit/hr/subtask/SubtaskCreate')));

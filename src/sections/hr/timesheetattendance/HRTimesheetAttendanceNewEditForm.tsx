@@ -24,9 +24,9 @@ import { HRProjectState } from '../../../@types/hrproject';
 import { HRTaskState } from '../../../@types/hrtask';
 import { HRSubtaskState } from '../../../@types/hrsubtask';
 import { getUsers } from '../../../redux/slices/user';
-import { getHRProjects } from '../../../redux/slices/hrproject';
-import { getHRTasks } from '../../../redux/slices/hrtask';
-import { getHRSubtasks } from '../../../redux/slices/hrsubtask';
+import { getHRProject } from '../../../redux/slices/hrproject';
+import { getHRTask } from '../../../redux/slices/hrtask';
+import { getHRSubtask } from '../../../redux/slices/hrsubtask';
 import { SoftwaresState } from 'src/@types/softwares';
 import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
 import { HOST_API } from '../../../config';
@@ -51,7 +51,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
   const { users } = useSelector((state: { user: UserState }) => state.user);
   const { hrProjects } = useSelector((state: { hrproject: HRProjectState }) => state.hrproject);
   const { hrTasks } = useSelector((state: { hrtask: HRTaskState }) => state.hrtask);
-  const { hrSubtasks } = useSelector((state: { hrsubtask: HRSubtaskState }) => state.hrsubtask);
+  // const { hrSubtasks } = useSelector((state: { hrsubtask: HRSubtaskState }) => state.hrsubtask);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -73,6 +73,8 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
       hours: currentHRTimesheetAttendance?.hours || '',
       workDate: currentHRTimesheetAttendance?.workDate,
       projectsid: currentHRTimesheetAttendance?.project.id || '',
+      taskid: currentHRTimesheetAttendance?.task.id || '',
+      subtaskid: currentHRTimesheetAttendance?.subtask.id || '',
       userid: currentHRTimesheetAttendance?.user.id || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,9 +105,9 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
 
   useEffect(() => {
     dispatch(getUsers());
-    dispatch(getHRProjects());
-    dispatch(getHRTasks());
-    dispatch(getHRSubtasks());
+    dispatch(getHRProject());
+    dispatch(getHRTask());
+    dispatch(getHRSubtask());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -114,7 +116,6 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
     const request: HRTimesheetAttendanceRequest = {
       hours: data.hours,
       remarks: data.remarks,
-      // project: data.project[],
       workDate: format(new Date(data.workDate || ''), 'yyyy-mm-dd'),
       userId: dropdownuser,
       projectId: dropdownproject,
@@ -147,7 +148,8 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
   };
   const onChangeTask = (event: any) => {
     setDropdownTask(event.target.value);
-  }; const onChangeSubtask = (event: any) => {
+  };
+  const onChangeSubtask = (event: any) => {
     setDropdownSubtask(event.target.value);
   };
 
@@ -194,7 +196,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
                 ))}
               </RHFSelect>
 
-              <RHFSelect
+              {/* <RHFSelect
                 name={dropdownsubtask}
                 value={dropdownsubtask}
                 label="Subtask"
@@ -207,7 +209,7 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
                     {option.name}
                   </option>
                 ))}
-              </RHFSelect>
+              </RHFSelect> */}
               <RHFTextField name="hours" label="Hours" />
               <RHFTextField name="remarks" label="Remarks" />
 

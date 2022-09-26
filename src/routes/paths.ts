@@ -96,6 +96,18 @@ export const PATH_DASHBOARD = {
     timesheetattendanceedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/timesheetattendanceedit`),
     timesheetattendance: path(ROOTS_DASHBOARD, '/hr/timesheetattendance'),
     timesheetattendancenew: path(ROOTS_DASHBOARD, '/hr/timesheetattendancenew'),
+
+    projectedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/projectedit`),
+    project: path(ROOTS_DASHBOARD, '/hr/project'),
+    projectnew: path(ROOTS_DASHBOARD, '/hr/projectnew'),
+
+    taskedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/taskedit`),
+    task: path(ROOTS_DASHBOARD, '/hr/task'),
+    tasknew: path(ROOTS_DASHBOARD, '/hr/tasknew'),
+
+    subtaskedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/subtaskedit`),
+    subtask: path(ROOTS_DASHBOARD, '/hr/subtask'),
+    subtasknew: path(ROOTS_DASHBOARD, '/hr/subtasknew'),
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
