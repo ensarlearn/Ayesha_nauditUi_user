@@ -65,6 +65,10 @@ export const PATH_DASHBOARD = {
     account: path(ROOTS_DASHBOARD, '/user/account'),
     edit: (name: string) => path(ROOTS_DASHBOARD, `/user/${name}/edit`),
     demoEdit: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
+
+    roleedit: (id: string) => path(ROOTS_DASHBOARD, `/user/${id}/roleedit`),
+    role: path(ROOTS_DASHBOARD, '/user/role'),
+    rolenew: path(ROOTS_DASHBOARD, '/user/rolenew'),
   },
   nist: {
     root: path(ROOTS_DASHBOARD, '/nist'),

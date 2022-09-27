@@ -51,6 +51,7 @@ export const navConfig = [
           { title: 'create', path: PATH_DASHBOARD.user.new },
           { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
           { title: 'account', path: PATH_DASHBOARD.user.account },
+          { title: 'role', path: PATH_DASHBOARD.user.role },
         ],
       },
     ],

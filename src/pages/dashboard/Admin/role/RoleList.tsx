@@ -25,33 +25,29 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
 // sections
-//import { HRStatusTableToolbar, HRStatusTableRow } from '../../../../sections/hr/status';
+//import { RoleTableToolbar, RoleTableRow } from '../../../../sections/hr/role';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
 import { dispatch } from '../../../../redux/store';
-import { deleteHRTimesheetAttendance, getHRTimesheetAttendance } from '../../../../redux/slices/hrtimesheetattendance';
-import { HRTimesheetAttendance, HRTimesheetAttendanceState } from '../../../../@types/hrtimesheetattendance';
+import { deleteRole, getRole } from '../../../../redux/slices/role';
+import { Role, RoleState } from '../../../../@types/role';
 import useSettings from 'src/hooks/useSettings';
-import HRTimesheetAttendanceAnalytic from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceAnalytic';
-import HRTimesheetAttendanceTableToolbar from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceTableToolbar';
-import HRTimesheetAttendanceTableRow from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceTableRow';
+
+
+import RoleAnalytic from 'src/sections/@dashboard/user/role/RoleAnalytic';
+import RoleTableToolbar from 'src/sections/@dashboard/user/role/RoleTableToolbar';
+import RoleTableRow from 'src/sections/@dashboard/user/role/RoleTableRow';
 
 const TABLE_HEAD = [
-  { id: 'firstName', label: 'User', align: 'left' },
-  { id: 'project', label: 'Project', align: 'left' },
-  { id: 'task', label: 'Task', align: 'left' },
-  { id: 'subtask', label: 'Sub-Task', align: 'left' },
-  { id: 'hours', label: 'Hours', align: 'left' },
-  { id: 'remarks', label: 'Remarks', align: 'left' },
-  { id: 'workdate', label: 'Work Date', align: 'left' },
+  { id: 'name', label: 'Name', align: 'left' },
 
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function HRTimesheetAttendanceList() {
+export default function RoleList() {
   const {
     dense,
     page,
@@ -73,9 +69,9 @@ export default function HRTimesheetAttendanceList() {
 
   const navigate = useNavigate();
 
-  const { hrTimesheetAttendances } = useSelector((state: { hrtimesheetattendance: HRTimesheetAttendanceState }) => state.hrtimesheetattendance);
+  const { roles } = useSelector((state: { role: RoleState }) => state.role);
   useEffect(() => {
-    dispatch(getHRTimesheetAttendance());
+    dispatch(getRole());
   }, []);
 
   const [filterName, setFilterName] = useState('');
@@ -86,15 +82,15 @@ export default function HRTimesheetAttendanceList() {
   };
 
   const handleDeleteRow = (id: string) => {
-    dispatch(deleteHRTimesheetAttendance(id));
+    dispatch(deleteRole(id));
   };
 
   const handleEditRow = (id: string) => {
-    navigate(PATH_DASHBOARD.hr.timesheetattendanceedit(id));
+    navigate(PATH_DASHBOARD.user.roleedit(id));
   };
 
   const dataFiltered = applySortFilter({
-    hrTimesheetAttendances,
+    roles,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -109,23 +105,23 @@ export default function HRTimesheetAttendanceList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title="HRTimesheetAttendance: List">
+    <Page title=" Role: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="HR Timesheet Attendance"
+          heading=" Role"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HR Timesheet Attendance' },
+            { name: 'Dashboard', href: PATH_DASHBOARD.user.root },
+            { name: ' Role' },
             { name: 'List' },
           ]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.hr.timesheetattendancenew}
+              to={PATH_DASHBOARD.user.rolenew}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New HR Timesheet Attendance
+              New Role
             </Button>
           }
           action2={
@@ -149,10 +145,10 @@ export default function HRTimesheetAttendanceList() {
               divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
               sx={{ py: 2 }}
             >
-              <HRTimesheetAttendanceAnalytic
+              <RoleAnalytic
                 title="Total"
-                total={hrTimesheetAttendances.length}
-                title2="HR Timesheet Attendance"
+                total={roles.length}
+                title2=" Role"
                 icon="ic:round-receipt"
                 color={theme.palette.info.main}
               />
@@ -160,7 +156,7 @@ export default function HRTimesheetAttendanceList() {
           </Scrollbar>
         </Card>
         <Card>
-          <HRTimesheetAttendanceTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <RoleTableToolbar filterName={filterName} onFilterName={handleFilterName} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
               <Table size={dense ? 'small' : 'medium'}>
@@ -168,7 +164,7 @@ export default function HRTimesheetAttendanceList() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={hrTimesheetAttendances.length}
+                  rowCount={roles.length}
                   numSelected={selected.length}
                   onSort={onSort}
                 />
@@ -177,7 +173,7 @@ export default function HRTimesheetAttendanceList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <HRTimesheetAttendanceTableRow
+                      <RoleTableRow
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
@@ -189,7 +185,7 @@ export default function HRTimesheetAttendanceList() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(page, rowsPerPage, hrTimesheetAttendances.length)}
+                    emptyRows={emptyRows(page, rowsPerPage, roles.length)}
                   />
 
                   <TableNoData isNotFound={isNotFound} />
@@ -218,15 +214,15 @@ export default function HRTimesheetAttendanceList() {
 // ----------------------------------------------------------------------
 
 function applySortFilter({
-  hrTimesheetAttendances,
+  roles,
   comparator,
   filterName,
 }: {
-  hrTimesheetAttendances: HRTimesheetAttendance[];
+  roles: Role[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {
-  const stabilizedThis = hrTimesheetAttendances.map((el, index) => [el, index] as const);
+  const stabilizedThis = roles.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -234,14 +230,14 @@ function applySortFilter({
     return a[1] - b[1];
   });
 
-  hrTimesheetAttendances = stabilizedThis.map((el) => el[0]);
+  roles = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    hrTimesheetAttendances = hrTimesheetAttendances.filter(
+    roles = roles.filter(
       (item: Record<string, any>) =>
         item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
-  return hrTimesheetAttendances;
+  return roles;
 }

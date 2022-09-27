@@ -100,6 +100,12 @@ export default function Router() {
             { path: 'new', element: <UserCreate /> },
             { path: ':name/edit', element: <UserCreate /> },
             { path: 'account', element: <UserAccount /> },
+
+            // Role
+            { element: <Navigate to="/dashboard/user/role" replace />, index: true },
+            { path: 'role', element: <RoleList /> },
+            { path: 'rolenew', element: <RoleCreate /> },
+            { path: ':id/roleedit', element: <RoleCreate /> },
           ],
         },
         {
@@ -268,6 +274,10 @@ const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
+
+// Role
+const RoleList = Loadable(lazy(() => import('../pages/dashboard/Admin/role/RoleList')));
+const RoleCreate = Loadable(lazy(() => import('../pages/dashboard/Admin/role/RoleCreate')));
 
 // APP
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));

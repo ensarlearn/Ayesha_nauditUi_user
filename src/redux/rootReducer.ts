@@ -13,6 +13,7 @@ import hrstatusReducer from './slices/hrstatus';
 import hrtimesheetattendanceReducer from './slices/hrtimesheetattendance';
 import hrprojectReducer from './slices/hrproject';
 import hrtaskReducer from './slices/hrtask';
+import roleReducer from './slices/role';
 import hrsubtaskReducer from './slices/hrsubtask';
 import softwaresReducer from './slices/software';
 import controlsReducer from './slices/controls';
@@ -35,6 +36,12 @@ const productPersistConfig = {
 
 const userPersistConfig = {
   key: 'user',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['sortBy'],
+};
+const rolePersistConfig = {
+  key: 'role',
   storage,
   keyPrefix: 'redux-',
   whitelist: ['sortBy'],
@@ -99,6 +106,7 @@ const rootReducer = combineReducers({
   calendar: calendarReducer,
   kanban: kanbanReducer,
   user: persistReducer(userPersistConfig, userReducer),
+  role: persistReducer(rolePersistConfig, roleReducer),
   product: persistReducer(productPersistConfig, productReducer),
   systems: persistReducer(systemsPersistConfig, systemsReducer),
   hrstatus: persistReducer(hrStatusPersistConfig, hrstatusReducer),

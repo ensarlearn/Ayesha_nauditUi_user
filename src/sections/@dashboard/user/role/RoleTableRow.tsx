@@ -2,24 +2,23 @@ import { useState } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { TableRow, TableCell, MenuItem } from '@mui/material';
-// @types
-import { UserManager } from '../../../@types/user';
+
 // components
-import Iconify from '../../../components/Iconify';
-import { TableMoreMenu } from '../../../components/table';
-import { HRTimesheetAttendance } from '../../../@types/hrtimesheetattendance';
+import Iconify from '../../../../components/Iconify';
+import { TableMoreMenu } from '../../../../components/table';
+import { Role } from '../../../../@types/role';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: HRTimesheetAttendance;
+  row: Role;
   selected: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
 
-export default function HRTimesheetAttendanceTableRow({
+export default function RoleTableRow({
   row,
   selected,
   onEditRow,
@@ -28,7 +27,7 @@ export default function HRTimesheetAttendanceTableRow({
 }: Props) {
   const theme = useTheme();
 
-  const { hours, remarks, workDate, project, task, subtask, user } = row;
+  const { name } = row;
 
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -42,13 +41,8 @@ export default function HRTimesheetAttendanceTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell align="left">{user?.firstName}</TableCell>
-      <TableCell align="left">{project?.name}</TableCell>
-      <TableCell align="left">{task?.name}</TableCell>
-      <TableCell align="left">{subtask?.name}</TableCell>
-      <TableCell align="left">{hours}</TableCell>
-      <TableCell align="left">{remarks}</TableCell>
-      <TableCell align="left">{workDate}</TableCell>
+
+      <TableCell align="left">{name}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu
