@@ -47,6 +47,7 @@ export const navConfig = [
           { title: 'profile', path: PATH_DASHBOARD.user.profile },
           { title: 'cards', path: PATH_DASHBOARD.user.cards },
           { title: 'list', path: PATH_DASHBOARD.user.list },
+          { title: 'employee list', path: PATH_DASHBOARD.user.employee },
           // { title: 'softwares', path: PATH_DASHBOARD.user.softwares},
           { title: 'create', path: PATH_DASHBOARD.user.new },
           { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },

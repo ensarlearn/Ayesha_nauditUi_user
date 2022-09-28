@@ -106,6 +106,12 @@ export default function Router() {
             { path: 'role', element: <RoleList /> },
             { path: 'rolenew', element: <RoleCreate /> },
             { path: ':id/roleedit', element: <RoleCreate /> },
+
+            // Employee
+            { element: <Navigate to="/dashboard/user/employee" replace />, index: true },
+            { path: 'employee', element: <EmployeeList /> },
+            { path: 'employeenew', element: <EmployeeCreate /> },
+            { path: ':id/employeeedit', element: <EmployeeCreate /> },
           ],
         },
         {
@@ -278,6 +284,10 @@ const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')))
 // Role
 const RoleList = Loadable(lazy(() => import('../pages/dashboard/Admin/role/RoleList')));
 const RoleCreate = Loadable(lazy(() => import('../pages/dashboard/Admin/role/RoleCreate')));
+
+// Employee
+const EmployeeList = Loadable(lazy(() => import('../pages/dashboard/Admin/employee/EmployeeList')));
+const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/Admin/employee/EmployeeCreate')));
 
 // APP
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
