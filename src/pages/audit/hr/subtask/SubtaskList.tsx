@@ -112,7 +112,7 @@ export default function HRSubtaskList() {
           heading="HR Sub-task"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HR Sub-task' },
+            { name: 'HR Sub-task', href: PATH_DASHBOARD.hr.subtask },
             { name: 'List' },
           ]}
           action={

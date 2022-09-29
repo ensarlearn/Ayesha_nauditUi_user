@@ -1,9 +1,6 @@
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { TableRow, TableCell, MenuItem } from '@mui/material';
-// @types
-import { UserManager } from '../../../@types/user';
 // components
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
@@ -26,7 +23,6 @@ export default function HRTimesheetAttendanceTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const theme = useTheme();
 
   const { hours, remarks, workDate, project, task, subtask, user } = row;
 

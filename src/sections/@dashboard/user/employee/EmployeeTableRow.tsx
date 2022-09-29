@@ -1,11 +1,9 @@
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
+import { TableRow, TableCell, Typography, MenuItem } from '@mui/material';
 // @types
 import { UserManager } from '../../../../@types/user';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 
@@ -26,10 +24,8 @@ export default function EmployeeTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const theme = useTheme();
 
-  const { name, avatarUrl, company, role, isVerified, status } = row;
-
+  const { firstName, lastName, roleId, email, employeeId, mobile, joinDate } = row;
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,44 +38,18 @@ export default function EmployeeTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell>
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
         <Typography variant="subtitle2" noWrap>
-          {name}
+          {firstName + ' ' + lastName}
         </Typography>
       </TableCell>
 
-      <TableCell align="left">{company}</TableCell>
-
-      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {role}
-      </TableCell>
-
-      <TableCell align="center">
-        <Iconify
-          icon={isVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
-          sx={{
-            width: 20,
-            height: 20,
-            color: 'success.main',
-            ...(!isVerified && { color: 'warning.main' }),
-          }}
-        />
-      </TableCell>
-
-      <TableCell align="left">
-        <Label
-          variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={(status === 'banned' && 'error') || 'success'}
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {status}
-        </Label>
-      </TableCell>
+      <TableCell align="left">{employeeId}</TableCell>
+      <TableCell align="left">{email}</TableCell>
+      <TableCell align="left">{mobile}</TableCell>
+      <TableCell align="left">{joinDate}</TableCell>
+      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>{roleId?.name}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

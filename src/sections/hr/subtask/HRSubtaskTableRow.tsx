@@ -1,13 +1,11 @@
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { TableRow, TableCell, MenuItem } from '@mui/material';
 // @types
-import { UserManager } from '../../../@types/user';
+import { HRSubtask } from '../../../@types/hrsubtask';
 // components
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
-import { HRSubtask } from '../../../@types/hrsubtask';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +24,6 @@ export default function HRSubtaskTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const theme = useTheme();
 
   const { name, task } = row;
 

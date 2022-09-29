@@ -42,7 +42,7 @@ export default function EmployeeCreate() {
           heading={!isEdit ? 'Create a new employee' : 'Edit employee'}
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            // { name: 'Employee', href: PATH_DASHBOARD. },
+            { name: 'Employee', href: PATH_DASHBOARD.user.employee },
             { name: !isEdit ? 'New employee' : capitalCase(name) },
           ]}
         />

@@ -29,7 +29,7 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
 import { dispatch } from '../../../../redux/store';
-import { deleteEmployee, getEmployee } from '../../../../redux/slices/employee';
+import { deleteEmployee, getEmployee } from '../../../../redux/slices/employees';
 import { Employee, EmployeeState } from '../../../../@types/employee';
 import useSettings from 'src/hooks/useSettings';
 
@@ -39,7 +39,13 @@ import EmployeeTableToolbar from 'src/sections/@dashboard/user/employee/Employee
 import EmployeeTableRow from 'src/sections/@dashboard/user/employee/EmployeeTableRow';
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
+  { id: 'firstName', label: 'Name', align: 'left' },
+  { id: 'employeeId', label: 'Employee ID', align: 'left' },
+  { id: 'email', label: 'Email', align: 'left' },
+  { id: 'mobile', label: 'Mobile', align: 'left' },
+  { id: 'joinDate', label: 'Join Date', align: 'left' },
+  { id: 'role', label: 'Role', align: 'left' },
+  { id: '', label: 'Actions', align: 'left' },
 
   { id: '' },
 ];
@@ -110,7 +116,7 @@ export default function EmployeeList() {
           heading=" Employee"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.user.root },
-            { name: ' Employee' },
+            { name: ' Employee', href: PATH_DASHBOARD.user.employee },
             { name: 'List' },
           ]}
           action={
@@ -147,7 +153,7 @@ export default function EmployeeList() {
               <EmployeeAnalytic
                 title="Total"
                 total={employees.length}
-                title2=" Employee"
+                title2="Employees"
                 icon="ic:round-receipt"
                 color={theme.palette.info.main}
               />

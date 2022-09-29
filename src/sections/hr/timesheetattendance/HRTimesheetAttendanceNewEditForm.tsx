@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { DatePicker, LoadingButton } from '@mui/lab';
-import { Autocomplete, Box, Button, Card, Chip, Grid, Stack, TextField } from '@mui/material';
+import { Box, Card, Grid, Stack, TextField } from '@mui/material';
 // utils
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -15,7 +15,6 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock
 // components
 import { FormProvider, RHFSelect, RHFTextField } from '../../../components/hook-form';
-import Image from '../../../components/Image';
 import { HRTimesheetAttendance, HRTimesheetAttendanceRequest } from '../../../@types/hrtimesheetattendance';
 import { dispatch, useSelector } from '../../../redux/store';
 import { addHRTimesheetAttendance, updateHRTimesheetAttendance } from '../../../redux/slices/hrtimesheetattendance';
@@ -27,18 +26,13 @@ import { getUsers } from '../../../redux/slices/user';
 import { getHRProject } from '../../../redux/slices/hrproject';
 import { getHRTask } from '../../../redux/slices/hrtask';
 import { getHRSubtask } from '../../../redux/slices/hrsubtask';
-import { SoftwaresState } from 'src/@types/softwares';
-import { getManufacturers, getSoftwares } from 'src/redux/slices/software';
-import { HOST_API } from '../../../config';
 import { format } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
-//type FormValuesProps = HRTimesheetAttendance;
 
 interface FormValuesProps extends Partial<HRTimesheetAttendance> {
   // softwareids: string[];
-  //imageurl: File | any;
 }
 
 type Props = {

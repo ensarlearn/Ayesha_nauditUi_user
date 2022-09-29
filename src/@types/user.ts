@@ -1,3 +1,4 @@
+import { Role } from './role';
 // ----------------------------------------------------------------------
 
 export type UserInvoice = {
@@ -70,7 +71,13 @@ export type UserManager = {
   company: string;
   isVerified: boolean;
   status: string;
-  role: string;
+  role?: string;
+  employeeId?: string;
+  roleId?: Role;
+  joinDate?: Date | string | number;
+  mobile?: string;
+  firstName?: string;
+  lastName?: string
 };
 
 export type UserData = {

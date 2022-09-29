@@ -1,16 +1,19 @@
-import { User } from './nistuser';
-import { HRProject } from './hrproject';
-import { HRTask } from './hrtask';
-import { HRSubtask } from './hrsubtask';
+import { Role } from './role';
 
 
 export type Employee = {
   id: string;
   avatarUrl: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  phoneNumber: string;
+  employeeId: string;
+  joinDate: Date | string | number;
+  mobile: string;
   address: string;
+  name: string;
+  roleId: Role;
+  phoneNumber: string;
   country: string;
   state: string;
   city: string;
@@ -18,7 +21,6 @@ export type Employee = {
   company: string;
   isVerified: boolean;
   status: string;
-  role: string;
 };
 export type EmployeeRequest = {
   id?: string;

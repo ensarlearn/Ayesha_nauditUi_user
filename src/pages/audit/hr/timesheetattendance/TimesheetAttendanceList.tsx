@@ -115,7 +115,7 @@ export default function HRTimesheetAttendanceList() {
           heading="HR Timesheet Attendance"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HR Timesheet Attendance' },
+            { name: 'HR Timesheet Attendance', href: PATH_DASHBOARD.hr.timesheetattendance },
             { name: 'List' },
           ]}
           action={

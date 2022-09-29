@@ -1,6 +1,5 @@
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import { TableRow, TableCell, MenuItem } from '@mui/material';
 
 // components
@@ -25,7 +24,6 @@ export default function RoleTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const theme = useTheme();
 
   const { name } = row;
 
