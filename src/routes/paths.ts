@@ -69,7 +69,7 @@ export const PATH_DASHBOARD = {
     roleedit: (id: string) => path(ROOTS_DASHBOARD, `/user/${id}/roleedit`),
     role: path(ROOTS_DASHBOARD, '/user/role'),
     rolenew: path(ROOTS_DASHBOARD, '/user/rolenew'),
-// employee list
+    // employee list
     employeeedit: (id: string) => path(ROOTS_DASHBOARD, `/user/${id}/employeeedit`),
     employee: path(ROOTS_DASHBOARD, '/user/employee'),
     employeenew: path(ROOTS_DASHBOARD, '/user/employeenew'),
@@ -104,6 +104,12 @@ export const PATH_DASHBOARD = {
     timesheetattendanceedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/timesheetattendanceedit`),
     timesheetattendance: path(ROOTS_DASHBOARD, '/hr/timesheetattendance'),
     timesheetattendancenew: path(ROOTS_DASHBOARD, '/hr/timesheetattendancenew'),
+
+
+    departmentedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/departmentedit`),
+    department: path(ROOTS_DASHBOARD, '/hr/department'),
+    departmentnew: path(ROOTS_DASHBOARD, '/hr/departmentnew'),
+
 
     projectedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/projectedit`),
     project: path(ROOTS_DASHBOARD, '/hr/project'),

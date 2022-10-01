@@ -97,6 +97,7 @@ export const navConfig = [
         icon: ICONS.user,
         children: [
           { title: 'projects', path: PATH_DASHBOARD.hr.project },
+          { title: 'department', path: PATH_DASHBOARD.hr.department },
           { title: 'tasks', path: PATH_DASHBOARD.hr.task },
           { title: 'subtasks', path: PATH_DASHBOARD.hr.subtask },
           { title: 'timesheet attendance', path: PATH_DASHBOARD.hr.timesheetattendance },

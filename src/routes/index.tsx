@@ -187,6 +187,13 @@ export default function Router() {
             { path: 'status', element: <HRStatusList /> },
             { path: 'statusnew', element: <HRStatusCreate /> },
             { path: ':id/statusedit', element: <HRStatusCreate /> },
+
+            // Department
+            { element: <Navigate to="/dashboard/hr/department" replace />, index: true },
+            { path: 'department', element: <DepartmentList /> },
+            { path: 'departmentnew', element: <DepartmentCreate /> },
+            { path: ':id/departmentedit', element: <DepartmentCreate /> },
+
             //  TimesheetAttendance
             { element: <Navigate to="/dashboard/hr/timesheetattendance" replace />, index: true },
             { path: 'timesheetattendance', element: <HRTimesheetAttendanceList /> },
@@ -337,6 +344,10 @@ const HRStatusCreate = Loadable(lazy(() => import('../pages/audit/hr/status/Stat
 // TimesheetAttendanceState
 const HRTimesheetAttendanceList = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceList')));
 const HRTimesheetAttendanceCreate = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceCreate')));
+
+// Task
+const DepartmentList = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentList')));
+const DepartmentCreate = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentCreate')));
 
 // Project
 const HRProjectList = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectList')));

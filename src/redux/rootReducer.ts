@@ -13,6 +13,7 @@ import hrstatusReducer from './slices/hrstatus';
 import hrtimesheetattendanceReducer from './slices/hrtimesheetattendance';
 import hrprojectReducer from './slices/hrproject';
 import hrtaskReducer from './slices/hrtask';
+import departmentReducer from './slices/department';
 import roleReducer from './slices/role';
 import employeeReducer from './slices/employee';
 import hrsubtaskReducer from './slices/hrsubtask';
@@ -71,6 +72,12 @@ const hrTimesheetAttendancePersistConfig = {
   keyPrefix: 'redux-',
   whitelist: ['sortBy'],
 };
+const departmentPersistConfig = {
+  key: 'department',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['sortBy'],
+};
 const hrProjectPersistConfig = {
   key: 'hrproject',
   storage,
@@ -119,6 +126,7 @@ const rootReducer = combineReducers({
   systems: persistReducer(systemsPersistConfig, systemsReducer),
   hrstatus: persistReducer(hrStatusPersistConfig, hrstatusReducer),
   hrtimesheetattendance: persistReducer(hrTimesheetAttendancePersistConfig, hrtimesheetattendanceReducer),
+  department: persistReducer(departmentPersistConfig, departmentReducer),
   hrproject: persistReducer(hrProjectPersistConfig, hrprojectReducer),
   hrtask: persistReducer(hrTaskPersistConfig, hrtaskReducer),
   hrsubtask: persistReducer(hrSubtaskPersistConfig, hrsubtaskReducer),
