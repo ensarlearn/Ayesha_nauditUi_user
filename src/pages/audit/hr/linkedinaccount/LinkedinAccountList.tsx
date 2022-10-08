@@ -25,32 +25,32 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
 // sections
-//import { HRStatusTableToolbar, HRStatusTableRow } from '../../../../sections/hr/status';
+//import { LinkedinAccountTableToolbar, LinkedinAccountTableRow } from '../../../../sections/hr/linkedinAccount';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
 import { dispatch } from '../../../../redux/store';
-import { deleteHRTimesheetAttendance, getHRTimesheetAttendance } from '../../../../redux/slices/hrtimesheetattendance';
-import { HRTimesheetAttendance, HRTimesheetAttendanceState } from '../../../../@types/hrtimesheetattendance';
+import { deleteLinkedinAccount, getLinkedinAccount } from '../../../../redux/slices/linkedinaccount';
+import { LinkedinAccount, LinkedinAccountState } from '../../../../@types/linkedinaccount';
 import useSettings from 'src/hooks/useSettings';
-import HRTimesheetAttendanceAnalytic from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceAnalytic';
-import HRTimesheetAttendanceTableToolbar from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceTableToolbar';
-import HRTimesheetAttendanceTableRow from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceTableRow';
 
+
+import LinkedinAccountAnalytic from 'src/sections/hr/linkedinaccount/LinkedinAccountAnalytic';
+import LinkedinAccountTableToolbar from 'src/sections/hr/linkedinaccount/LinkedinAccountTableToolbar';
+import LinkedinAccountTableRow from 'src/sections/hr/linkedinaccount/LinkedinAccountTableRow';
+import { Grid } from '@mui/material';
+import { _analyticOrderTimeline } from '../../../../_mock';
+import {
+  AnalyticsOrderTimeline,
+} from '../../../../sections/@dashboard/general/analytics';
 const TABLE_HEAD = [
-  { id: 'firstName', label: 'User', align: 'left' },
-  { id: 'project', label: 'Project', align: 'left' },
-  { id: 'task', label: 'Task', align: 'left' },
-  { id: 'subtask', label: 'Sub-Task', align: 'left' },
-  { id: 'hours', label: 'Hours', align: 'left' },
-  { id: 'remarks', label: 'Remarks', align: 'left' },
-  { id: 'workdate', label: 'Work Date', align: 'left' },
+  { id: 'email', label: 'Email', align: 'left' },
   { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function HRTimesheetAttendanceList() {
+export default function LinkedinAccountList() {
   const {
     dense,
     page,
@@ -72,9 +72,10 @@ export default function HRTimesheetAttendanceList() {
 
   const navigate = useNavigate();
 
-  const { hrTimesheetAttendances } = useSelector((state: { hrtimesheetattendance: HRTimesheetAttendanceState }) => state.hrtimesheetattendance);
+  const { linkedinAccounts } = useSelector((state: { linkedinaccount: LinkedinAccountState }) => state.linkedinaccount);
+
   useEffect(() => {
-    dispatch(getHRTimesheetAttendance());
+    dispatch(getLinkedinAccount());
   }, []);
 
   const [filterName, setFilterName] = useState('');
@@ -85,15 +86,15 @@ export default function HRTimesheetAttendanceList() {
   };
 
   const handleDeleteRow = (id: string) => {
-    dispatch(deleteHRTimesheetAttendance(id));
+    dispatch(deleteLinkedinAccount(id));
   };
 
   const handleEditRow = (id: string) => {
-    navigate(PATH_DASHBOARD.hr.timesheetattendanceedit(id));
+    navigate(PATH_DASHBOARD.linkedin.linkedinaccountedit(id));
   };
 
   const dataFiltered = applySortFilter({
-    hrTimesheetAttendances,
+    linkedinAccounts,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -108,23 +109,23 @@ export default function HRTimesheetAttendanceList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title="HRTimesheetAttendance: List">
+    <Page title="LinkedinAccount: List">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="HR Timesheet Attendance"
+          heading="Linkedin Account"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.hr.root },
-            { name: 'HR Timesheet Attendance', href: PATH_DASHBOARD.hr.timesheetattendance },
+            { name: 'Dashboard', href: PATH_DASHBOARD.linkedin.root },
+            { name: 'Linkedinaccount', href: PATH_DASHBOARD.linkedin.linkedinaccount },
             { name: 'List' },
           ]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.hr.timesheetattendancenew}
+              to={PATH_DASHBOARD.linkedin.linkedinaccountnew}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
-              New HR Timesheet Attendance
+              New Linkedin Account
             </Button>
           }
           action2={
@@ -148,10 +149,10 @@ export default function HRTimesheetAttendanceList() {
               divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
               sx={{ py: 2 }}
             >
-              <HRTimesheetAttendanceAnalytic
+              <LinkedinAccountAnalytic
                 title="Total"
-                total={hrTimesheetAttendances.length}
-                title2="HR Timesheet Attendance"
+                total={linkedinAccounts.length}
+                title2="Linkedin Account"
                 icon="ic:round-receipt"
                 color={theme.palette.info.main}
               />
@@ -159,7 +160,10 @@ export default function HRTimesheetAttendanceList() {
           </Scrollbar>
         </Card>
         <Card>
-          <HRTimesheetAttendanceTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          {/* <Grid item xs={12} md={6} lg={4}>
+            <AnalyticsOrderTimeline title="Order Timeline" list={_analyticOrderTimeline} />
+          </Grid> */}
+          <LinkedinAccountTableToolbar filterName={filterName} onFilterName={handleFilterName} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
               <Table size={dense ? 'small' : 'medium'}>
@@ -167,7 +171,7 @@ export default function HRTimesheetAttendanceList() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={hrTimesheetAttendances.length}
+                  rowCount={linkedinAccounts.length}
                   numSelected={selected.length}
                   onSort={onSort}
                 />
@@ -176,7 +180,7 @@ export default function HRTimesheetAttendanceList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <HRTimesheetAttendanceTableRow
+                      <LinkedinAccountTableRow
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
@@ -188,7 +192,7 @@ export default function HRTimesheetAttendanceList() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(page, rowsPerPage, hrTimesheetAttendances.length)}
+                    emptyRows={emptyRows(page, rowsPerPage, linkedinAccounts.length)}
                   />
 
                   <TableNoData isNotFound={isNotFound} />
@@ -217,15 +221,15 @@ export default function HRTimesheetAttendanceList() {
 // ----------------------------------------------------------------------
 
 function applySortFilter({
-  hrTimesheetAttendances,
+  linkedinAccounts,
   comparator,
   filterName,
 }: {
-  hrTimesheetAttendances: HRTimesheetAttendance[];
+  linkedinAccounts: LinkedinAccount[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {
-  const stabilizedThis = hrTimesheetAttendances.map((el, index) => [el, index] as const);
+  const stabilizedThis = linkedinAccounts.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -233,14 +237,14 @@ function applySortFilter({
     return a[1] - b[1];
   });
 
-  hrTimesheetAttendances = stabilizedThis.map((el) => el[0]);
+  linkedinAccounts = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    hrTimesheetAttendances = hrTimesheetAttendances.filter(
+    linkedinAccounts = linkedinAccounts.filter(
       (item: Record<string, any>) =>
         item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
-  return hrTimesheetAttendances;
+  return linkedinAccounts;
 }

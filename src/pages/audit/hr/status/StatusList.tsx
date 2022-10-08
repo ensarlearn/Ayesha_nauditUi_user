@@ -40,8 +40,7 @@ import HRStatusTableRow from 'src/sections/hr/status/HRStatusTableRow';
 const TABLE_HEAD = [
   { id: 'title', label: 'Title', align: 'left' },
   { id: 'description', label: 'Description', align: 'left' },
-
-  { id: '' },
+  { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------

@@ -41,8 +41,7 @@ import HRProjectTableRow from 'src/sections/hr/project/HRProjectTableRow';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-
-  { id: '' },
+  { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------

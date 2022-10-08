@@ -38,11 +38,14 @@ import useSettings from 'src/hooks/useSettings';
 import DepartmentAnalytic from 'src/sections/hr/department/DepartmentAnalytic';
 import DepartmentTableToolbar from 'src/sections/hr/department/DepartmentTableToolbar';
 import DepartmentTableRow from 'src/sections/hr/department/DepartmentTableRow';
-
+import { Grid } from '@mui/material';
+import { _analyticOrderTimeline } from '../../../../_mock';
+import {
+  AnalyticsOrderTimeline,
+} from '../../../../sections/@dashboard/general/analytics';
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-
-  { id: '' },
+  { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------
@@ -156,6 +159,9 @@ export default function DepartmentList() {
           </Scrollbar>
         </Card>
         <Card>
+          {/* <Grid item xs={12} md={6} lg={4}>
+            <AnalyticsOrderTimeline title="Order Timeline" list={_analyticOrderTimeline} />
+          </Grid> */}
           <DepartmentTableToolbar filterName={filterName} onFilterName={handleFilterName} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>

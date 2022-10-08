@@ -45,8 +45,7 @@ import {
 } from '../../../../sections/@dashboard/general/analytics';
 const TABLE_HEAD = [
   { id: 'websiteLink', label: 'WebsiteLink', align: 'left' },
-
-  { id: '' },
+  { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------

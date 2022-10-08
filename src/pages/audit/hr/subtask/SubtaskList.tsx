@@ -42,8 +42,7 @@ import HRSubtaskTableRow from 'src/sections/hr/subtask/HRSubtaskTableRow';
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
   { id: 'task', label: 'Task', align: 'left' },
-
-  { id: '' },
+  { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------
