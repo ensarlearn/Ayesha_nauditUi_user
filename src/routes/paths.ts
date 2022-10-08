@@ -94,6 +94,12 @@ export const PATH_DASHBOARD = {
     controlsnew: path(ROOTS_DASHBOARD, '/nist/controlsnew'),
     featurenew: path(ROOTS_DASHBOARD, '/nist/featurenew'),
   },
+  linkedin:{
+    root: path(ROOTS_DASHBOARD, '/linkedin'),
+    linkedinleadedit: (id: string) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadedit`),
+    linkedinlead: path(ROOTS_DASHBOARD, '/linkedin/linkedinlead'),
+    linkedinleadnew: path(ROOTS_DASHBOARD, '/linkedin/linkedinleadnew'),
+  },
   hr: {
     root: path(ROOTS_DASHBOARD, '/hr'),
 

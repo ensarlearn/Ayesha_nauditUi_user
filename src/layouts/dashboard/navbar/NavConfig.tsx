@@ -78,6 +78,23 @@ export const navConfig = [
     ],
   },
 
+  // Linkedin
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'Linkedin',
+    items: [
+      // linkedin
+      {
+        title: 'Linkedin',
+        path: PATH_DASHBOARD.linkedin.root,
+        icon: ICONS.user,
+        children: [
+          { title: 'linkedinlead', path: PATH_DASHBOARD.linkedin.linkedinlead }
+      ],
+      },
+     
+    ],
+  },
   // NIST
   // ----------------------------------------------------------------------
   {

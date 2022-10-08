@@ -180,6 +180,18 @@ export default function Router() {
           ],
         },
         {
+          path: 'linkedin',
+          children: [
+            // LinkedinLead
+            { element: <Navigate to="/dashboard/linkedin/linkedinlead" replace />, index: true },
+            { path: 'linkedinlead', element: <LinkedinLeadList /> },
+            { path: 'linkedinleadnew', element: <LinkedinLeadCreate /> },
+            { path: ':id/linkedinleadedit', element: <LinkedinLeadCreate /> },
+
+          ]
+        },
+
+        {
           path: 'hr',
           children: [
             // Status
@@ -345,10 +357,12 @@ const HRStatusCreate = Loadable(lazy(() => import('../pages/audit/hr/status/Stat
 const HRTimesheetAttendanceList = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceList')));
 const HRTimesheetAttendanceCreate = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceCreate')));
 
-// Task
+// Department
 const DepartmentList = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentList')));
 const DepartmentCreate = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentCreate')));
-
+// LinkedinLead
+const LinkedinLeadList = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadList')));
+const LinkedinLeadCreate = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadCreate')));
 // Project
 const HRProjectList = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectList')));
 const HRProjectCreate = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectCreate')));
