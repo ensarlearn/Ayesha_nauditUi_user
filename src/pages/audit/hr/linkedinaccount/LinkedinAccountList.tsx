@@ -44,7 +44,11 @@ import {
   AnalyticsOrderTimeline,
 } from '../../../../sections/@dashboard/general/analytics';
 const TABLE_HEAD = [
+  { id: 'name', label: 'Name', align: 'left' },
   { id: 'email', label: 'Email', align: 'left' },
+  { id: 'password', label: 'Password', align: 'left' },
+  { id: 'firstName', label: 'Assigned To', align: 'left' },
+  { id: 'type', label: 'Type', align: 'left' },
   { id: 'actions', label: 'Actions', align: 'left' },
 ];
 

@@ -46,15 +46,20 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
 
   const { enqueueSnackbar } = useSnackbar();
 
-
+  const [dropdownuser, setDropdownUser] = useState(currentLinkedinAccount?.user.id || '');
   const NewUserSchema = Yup.object().shape({
+    name: Yup.string().required('name is required'),
     email: Yup.string().required('email is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
       id: currentLinkedinAccount?.id || '',
+      name: currentLinkedinAccount?.name || '',
       email: currentLinkedinAccount?.email || '',
+      password: currentLinkedinAccount?.password || '',
+      type: currentLinkedinAccount?.type || '',
+      userid: currentLinkedinAccount?.user.id || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentLinkedinAccount]
@@ -82,11 +87,17 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentLinkedinAccount]);
 
-
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
   const onSubmit = async (data: FormValuesProps) => {
     const request: LinkedinAccountRequest = {
+      name: data.name,
       email: data.email,
+      password: data.password,
+      type: data.type,
+      userId: dropdownuser,
 
     };
 
@@ -106,7 +117,9 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
       console.error(error);
     }
   };
-
+  const onChangeUser = (event: any) => {
+    setDropdownUser(event.target.value);
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -121,8 +134,24 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
+              <RHFTextField name="name" label="Name" />
               <RHFTextField name="email" label="Email" />
-
+              <RHFTextField name="password" label="Password" />
+              <RHFTextField name="type" label="Type" />
+              <RHFSelect
+                name={dropdownuser}
+                value={dropdownuser}
+                label="Users"
+                placeholder="Users"
+                onChange={onChangeUser}
+              >
+                <option value="" />
+                {users.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.firstName} {option.lastName}
+                  </option>
+                ))}
+              </RHFSelect>
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
