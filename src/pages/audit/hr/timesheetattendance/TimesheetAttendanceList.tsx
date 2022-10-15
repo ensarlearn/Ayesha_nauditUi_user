@@ -238,7 +238,7 @@ function applySortFilter({
   if (filterName) {
     hrTimesheetAttendances = hrTimesheetAttendances.filter(
       (item: Record<string, any>) =>
-        item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.remarks.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

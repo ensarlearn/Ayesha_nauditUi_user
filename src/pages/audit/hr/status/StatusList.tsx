@@ -233,7 +233,7 @@ function applySortFilter({
   if (filterName) {
     hrStatuses = hrStatuses.filter(
       (item: Record<string, any>) =>
-        item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.title.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

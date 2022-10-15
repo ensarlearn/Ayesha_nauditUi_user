@@ -242,7 +242,7 @@ function applySortFilter({
   if (filterName) {
     linkedinLeads = linkedinLeads.filter(
       (item: Record<string, any>) =>
-        item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.websiteLink.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
