@@ -30,8 +30,14 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
 import { dispatch } from '../../../../redux/store';
-import { deleteHRTimesheetAttendance, getHRTimesheetAttendance } from '../../../../redux/slices/hrtimesheetattendance';
-import { HRTimesheetAttendance, HRTimesheetAttendanceState } from '../../../../@types/hrtimesheetattendance';
+import {
+  deleteHRTimesheetAttendance,
+  getHRTimesheetAttendance,
+} from '../../../../redux/slices/hrtimesheetattendance';
+import {
+  HRTimesheetAttendance,
+  HRTimesheetAttendanceState,
+} from '../../../../@types/hrtimesheetattendance';
 import useSettings from 'src/hooks/useSettings';
 import HRTimesheetAttendanceAnalytic from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceAnalytic';
 import HRTimesheetAttendanceTableToolbar from 'src/sections/hr/timesheetattendance/HRTimesheetAttendanceTableToolbar';
@@ -72,7 +78,9 @@ export default function HRTimesheetAttendanceList() {
 
   const navigate = useNavigate();
 
-  const { hrTimesheetAttendances } = useSelector((state: { hrtimesheetattendance: HRTimesheetAttendanceState }) => state.hrtimesheetattendance);
+  const { hrTimesheetAttendances } = useSelector(
+    (state: { hrtimesheetattendance: HRTimesheetAttendanceState }) => state.hrtimesheetattendance
+  );
   useEffect(() => {
     dispatch(getHRTimesheetAttendance());
   }, []);
@@ -159,7 +167,10 @@ export default function HRTimesheetAttendanceList() {
           </Scrollbar>
         </Card>
         <Card>
-          <HRTimesheetAttendanceTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <HRTimesheetAttendanceTableToolbar
+            filterName={filterName}
+            onFilterName={handleFilterName}
+          />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
               <Table size={dense ? 'small' : 'medium'}>
@@ -238,7 +249,7 @@ function applySortFilter({
   if (filterName) {
     hrTimesheetAttendances = hrTimesheetAttendances.filter(
       (item: Record<string, any>) =>
-        item.remarks.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.user.firstName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

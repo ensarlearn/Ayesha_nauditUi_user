@@ -30,19 +30,19 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { useSelector } from 'react-redux';
 
 import { dispatch } from '../../../../redux/store';
-import { deleteLinkedinAccount, getLinkedinAccount } from '../../../../redux/slices/linkedinaccount';
+import {
+  deleteLinkedinAccount,
+  getLinkedinAccount,
+} from '../../../../redux/slices/linkedinaccount';
 import { LinkedinAccount, LinkedinAccountState } from '../../../../@types/linkedinaccount';
 import useSettings from 'src/hooks/useSettings';
-
 
 import LinkedinAccountAnalytic from 'src/sections/hr/linkedinaccount/LinkedinAccountAnalytic';
 import LinkedinAccountTableToolbar from 'src/sections/hr/linkedinaccount/LinkedinAccountTableToolbar';
 import LinkedinAccountTableRow from 'src/sections/hr/linkedinaccount/LinkedinAccountTableRow';
 import { Grid } from '@mui/material';
 import { _analyticOrderTimeline } from '../../../../_mock';
-import {
-  AnalyticsOrderTimeline,
-} from '../../../../sections/@dashboard/general/analytics';
+import { AnalyticsOrderTimeline } from '../../../../sections/@dashboard/general/analytics';
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
   { id: 'email', label: 'Email', align: 'left' },
@@ -76,7 +76,9 @@ export default function LinkedinAccountList() {
 
   const navigate = useNavigate();
 
-  const { linkedinAccounts } = useSelector((state: { linkedinaccount: LinkedinAccountState }) => state.linkedinaccount);
+  const { linkedinAccounts } = useSelector(
+    (state: { linkedinaccount: LinkedinAccountState }) => state.linkedinaccount
+  );
 
   useEffect(() => {
     dispatch(getLinkedinAccount());
@@ -246,7 +248,7 @@ function applySortFilter({
   if (filterName) {
     linkedinAccounts = linkedinAccounts.filter(
       (item: Record<string, any>) =>
-        item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.firstName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

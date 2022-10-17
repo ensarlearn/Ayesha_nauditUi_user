@@ -24,8 +24,7 @@ export default function LinkedinAccountTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-
-  const { name, email, password, type, user } = row;
+  const { firstName, lastName, email, password, type, user } = row;
 
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -39,8 +38,9 @@ export default function LinkedinAccountTableRow({
 
   return (
     <TableRow hover selected={selected}>
-
-      <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">
+        {firstName} {lastName}
+      </TableCell>
       <TableCell align="left">{email}</TableCell>
       <TableCell align="left">{password}</TableCell>
       <TableCell align="left">{user?.firstName}</TableCell>

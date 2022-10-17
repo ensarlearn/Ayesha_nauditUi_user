@@ -48,14 +48,16 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
 
   const [dropdownuser, setDropdownUser] = useState(currentLinkedinAccount?.user.id || '');
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('name is required'),
-    email: Yup.string().required('email is required'),
+    firstName: Yup.string().required('FirstName is required'),
+    email: Yup.string().required('Email is required'),
+    password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
       id: currentLinkedinAccount?.id || '',
-      name: currentLinkedinAccount?.name || '',
+      firstName: currentLinkedinAccount?.firstName || '',
+      lastName: currentLinkedinAccount?.lastName || '',
       email: currentLinkedinAccount?.email || '',
       password: currentLinkedinAccount?.password || '',
       type: currentLinkedinAccount?.type || '',
@@ -93,12 +95,12 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
 
   const onSubmit = async (data: FormValuesProps) => {
     const request: LinkedinAccountRequest = {
-      name: data.name,
+      firstName: data.firstName,
+      lastName: data.lastName,
       email: data.email,
       password: data.password,
       type: data.type,
       userId: dropdownuser,
-
     };
 
     try {
@@ -134,15 +136,16 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="name" label="Name" />
+              <RHFTextField name="firstName" label="First Name" />
+              <RHFTextField name="lastName" label="Last Name" />
               <RHFTextField name="email" label="Email" />
               <RHFTextField name="password" label="Password" />
               <RHFTextField name="type" label="Type" />
               <RHFSelect
                 name={dropdownuser}
                 value={dropdownuser}
-                label="Users"
-                placeholder="Users"
+                label="Assigned To"
+                placeholder="Assigned To"
                 onChange={onChangeUser}
               >
                 <option value="" />
