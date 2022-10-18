@@ -51,6 +51,7 @@ export default function LinkedinLeadNewEditForm({ isEdit, currentLinkedinLead }:
   const NewUserSchema = Yup.object().shape({
     leadName: Yup.string().required('Lead Name is required'),
     linkedinLink: Yup.string().required('Linkedin Link is required'),
+    websiteLink: Yup.string().url() ,
   });
 
   const defaultValues = useMemo(

@@ -15,9 +15,15 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // _mock
 // components
 import { FormProvider, RHFSelect, RHFTextField } from '../../../components/hook-form';
-import { HRTimesheetAttendance, HRTimesheetAttendanceRequest } from '../../../@types/hrtimesheetattendance';
+import {
+  HRTimesheetAttendance,
+  HRTimesheetAttendanceRequest,
+} from '../../../@types/hrtimesheetattendance';
 import { dispatch, useSelector } from '../../../redux/store';
-import { addHRTimesheetAttendance, updateHRTimesheetAttendance } from '../../../redux/slices/hrtimesheetattendance';
+import {
+  addHRTimesheetAttendance,
+  updateHRTimesheetAttendance,
+} from '../../../redux/slices/hrtimesheetattendance';
 import { UserState } from '../../../@types/nistuser';
 import { HRProjectState } from '../../../@types/hrproject';
 import { HRTaskState } from '../../../@types/hrtask';
@@ -30,7 +36,6 @@ import { format } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
-
 interface FormValuesProps extends Partial<HRTimesheetAttendance> {
   // softwareids: string[];
 }
@@ -40,7 +45,10 @@ type Props = {
   currentHRTimesheetAttendance?: HRTimesheetAttendance;
 };
 
-export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTimesheetAttendance }: Props) {
+export default function HRTimesheetAttendanceNewEditForm({
+  isEdit,
+  currentHRTimesheetAttendance,
+}: Props) {
   const navigate = useNavigate();
   const { users } = useSelector((state: { user: UserState }) => state.user);
   const { hrProjects } = useSelector((state: { hrproject: HRProjectState }) => state.hrproject);
@@ -50,12 +58,16 @@ export default function HRTimesheetAttendanceNewEditForm({ isEdit, currentHRTime
   const { enqueueSnackbar } = useSnackbar();
 
   const [dropdownuser, setDropdownUser] = useState(currentHRTimesheetAttendance?.user.id || '');
-  const [dropdownproject, setDropdownProject] = useState(currentHRTimesheetAttendance?.project.id || '');
+  const [dropdownproject, setDropdownProject] = useState(
+    currentHRTimesheetAttendance?.project.id || ''
+  );
   const [dropdowntask, setDropdownTask] = useState(currentHRTimesheetAttendance?.task.id || '');
-  const [dropdownsubtask, setDropdownSubtask] = useState(currentHRTimesheetAttendance?.subtask.id || '');
+  const [dropdownsubtask, setDropdownSubtask] = useState(
+    currentHRTimesheetAttendance?.subtask.id || ''
+  );
 
   const NewUserSchema = Yup.object().shape({
-    hours: Yup.string().required('hours are required'),
+    hours: Yup.number().positive().integer().required('hours are required'),
     remarks: Yup.string().required('remarks is required'),
     workDate: Yup.string().required('WorkDate is required'),
   });

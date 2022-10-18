@@ -49,7 +49,7 @@ export default function LinkedinAccountNewEditForm({ isEdit, currentLinkedinAcco
   const [dropdownuser, setDropdownUser] = useState(currentLinkedinAccount?.user.id || '');
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('FirstName is required'),
-    email: Yup.string().required('Email is required'),
+    email: Yup.string().email().required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
 
