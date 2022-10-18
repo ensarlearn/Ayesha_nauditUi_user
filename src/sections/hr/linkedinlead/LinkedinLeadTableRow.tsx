@@ -24,8 +24,7 @@ export default function LinkedinLeadTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-
-  const { websiteLink } = row;
+  const { leadName, websiteLink, linkedinLink, sent, user, responseType } = row;
 
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -39,8 +38,14 @@ export default function LinkedinLeadTableRow({
 
   return (
     <TableRow hover selected={selected}>
-
+      <TableCell align="left">{leadName}</TableCell>
       <TableCell align="left">{websiteLink}</TableCell>
+      <TableCell align="left">{linkedinLink}</TableCell>
+      <TableCell align="left">{sent}</TableCell>
+      <TableCell align="left">
+        {user?.firstName} {user?.lastName}
+      </TableCell>
+      <TableCell align="left">{responseType}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

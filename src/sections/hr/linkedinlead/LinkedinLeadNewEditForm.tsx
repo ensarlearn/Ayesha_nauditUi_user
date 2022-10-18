@@ -46,15 +46,22 @@ export default function LinkedinLeadNewEditForm({ isEdit, currentLinkedinLead }:
 
   const { enqueueSnackbar } = useSnackbar();
 
+  const [dropdownuser, setDropdownUser] = useState(currentLinkedinLead?.user.id || '');
 
   const NewUserSchema = Yup.object().shape({
-    websiteLink: Yup.string().required('website link is required'),
+    leadName: Yup.string().required('Lead Name is required'),
+    linkedinLink: Yup.string().required('Linkedin Link is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
       id: currentLinkedinLead?.id || '',
+      leadName: currentLinkedinLead?.leadName || '',
       websiteLink: currentLinkedinLead?.websiteLink || '',
+      linkedinLink: currentLinkedinLead?.linkedinLink || '',
+      sent: currentLinkedinLead?.sent || '',
+      userid: currentLinkedinLead?.user.id || '',
+      responseType: currentLinkedinLead?.responseType || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentLinkedinLead]
@@ -82,12 +89,18 @@ export default function LinkedinLeadNewEditForm({ isEdit, currentLinkedinLead }:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentLinkedinLead]);
 
-
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
   const onSubmit = async (data: FormValuesProps) => {
     const request: LinkedinLeadRequest = {
+      leadName: data.leadName,
       websiteLink: data.websiteLink,
-
+      linkedinLink: data.linkedinLink,
+      sent: data.sent,
+      userId: dropdownuser,
+      responseType: data.responseType,
     };
 
     try {
@@ -106,7 +119,9 @@ export default function LinkedinLeadNewEditForm({ isEdit, currentLinkedinLead }:
       console.error(error);
     }
   };
-
+  const onChangeUser = (event: any) => {
+    setDropdownUser(event.target.value);
+  };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -121,8 +136,25 @@ export default function LinkedinLeadNewEditForm({ isEdit, currentLinkedinLead }:
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFTextField name="websiteLink" label="WebsiteLink" />
-
+              <RHFTextField name="leadName" label="Lead Name" />
+              <RHFTextField name="websiteLink" label="Website Link" />
+              <RHFTextField name="linkedinLink" label="LinkedIn Link" />
+              <RHFTextField name="sent" label="Sent" />
+              <RHFTextField name="responseType" label="Response Type" />
+              <RHFSelect
+                name={dropdownuser}
+                value={dropdownuser}
+                label="Sent From"
+                placeholder="Sent From"
+                onChange={onChangeUser}
+              >
+                <option value="" />
+                {users.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.firstName} {option.lastName}
+                  </option>
+                ))}
+              </RHFSelect>
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

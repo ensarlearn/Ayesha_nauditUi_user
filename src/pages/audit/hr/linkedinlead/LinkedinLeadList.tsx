@@ -34,17 +34,19 @@ import { deleteLinkedinLead, getLinkedinLead } from '../../../../redux/slices/li
 import { LinkedinLead, LinkedinLeadState } from '../../../../@types/linkedinlead';
 import useSettings from 'src/hooks/useSettings';
 
-
 import LinkedinLeadAnalytic from 'src/sections/hr/linkedinlead/LinkedinLeadAnalytic';
 import LinkedinLeadTableToolbar from 'src/sections/hr/linkedinlead/LinkedinLeadTableToolbar';
 import LinkedinLeadTableRow from 'src/sections/hr/linkedinlead/LinkedinLeadTableRow';
 import { Grid } from '@mui/material';
 import { _analyticOrderTimeline } from '../../../../_mock';
-import {
-  AnalyticsOrderTimeline,
-} from '../../../../sections/@dashboard/general/analytics';
+import { AnalyticsOrderTimeline } from '../../../../sections/@dashboard/general/analytics';
 const TABLE_HEAD = [
-  { id: 'websiteLink', label: 'WebsiteLink', align: 'left' },
+  { id: 'leadName', label: 'Name', align: 'left' },
+  { id: 'websiteLink', label: 'Website Link', align: 'left' },
+  { id: 'linkedinLink', label: 'LinkedIn Link', align: 'left' },
+  { id: 'sent', label: 'Sent', align: 'left' },
+  { id: 'user', label: 'Sent From', align: 'left' },
+  { id: 'responseType', label: 'Response Type', align: 'left' },
   { id: 'actions', label: 'Actions', align: 'left' },
 ];
 
@@ -72,7 +74,9 @@ export default function LinkedinLeadList() {
 
   const navigate = useNavigate();
 
-  const { linkedinLeads } = useSelector((state: { linkedinlead: LinkedinLeadState }) => state.linkedinlead);
+  const { linkedinLeads } = useSelector(
+    (state: { linkedinlead: LinkedinLeadState }) => state.linkedinlead
+  );
 
   useEffect(() => {
     dispatch(getLinkedinLead());
