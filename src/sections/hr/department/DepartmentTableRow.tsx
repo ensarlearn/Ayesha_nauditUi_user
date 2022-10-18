@@ -6,6 +6,7 @@ import { TableRow, TableCell, MenuItem } from '@mui/material';
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
 import { HRTask } from '../../../@types/hrtask';
+import { capitalCase } from 'change-case';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +41,7 @@ export default function HRTaskTableRow({
   return (
     <TableRow hover selected={selected}>
 
-      <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{capitalCase(name)}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

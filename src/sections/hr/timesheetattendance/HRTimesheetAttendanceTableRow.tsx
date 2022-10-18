@@ -5,6 +5,7 @@ import { TableRow, TableCell, MenuItem } from '@mui/material';
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
 import { HRTimesheetAttendance } from '../../../@types/hrtimesheetattendance';
+import { capitalCase } from 'change-case';
 
 // ----------------------------------------------------------------------
 
@@ -38,12 +39,12 @@ export default function HRTimesheetAttendanceTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell align="left">{user?.firstName}</TableCell>
-      <TableCell align="left">{project?.name}</TableCell>
-      <TableCell align="left">{task?.name}</TableCell>
-      <TableCell align="left">{subtask?.name}</TableCell>
-      <TableCell align="left">{hours}</TableCell>
-      <TableCell align="left">{remarks}</TableCell>
+      <TableCell align="left">{capitalCase(user?.firstName)}</TableCell>
+      <TableCell align="left">{capitalCase(project?.name)}</TableCell>
+      <TableCell align="left">{capitalCase(task?.name)}</TableCell>
+      <TableCell align="left">{capitalCase(subtask?.name)}</TableCell>
+      <TableCell align="left">{hours} Hrs</TableCell>
+      <TableCell align="left">{capitalCase(remarks)}</TableCell>
       <TableCell align="left">{workDate}</TableCell>
 
       <TableCell align="right">

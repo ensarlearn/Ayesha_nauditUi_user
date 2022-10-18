@@ -6,6 +6,7 @@ import { HRSubtask } from '../../../@types/hrsubtask';
 // components
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
+import { capitalCase } from 'change-case';
 
 // ----------------------------------------------------------------------
 
@@ -40,8 +41,8 @@ export default function HRSubtaskTableRow({
   return (
     <TableRow hover selected={selected}>
 
-      <TableCell align="left">{name}</TableCell>
-      <TableCell align="left">{task?.name}</TableCell>
+      <TableCell align="left">{capitalCase(name)}</TableCell>
+      <TableCell align="left">{capitalCase(task?.name)}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

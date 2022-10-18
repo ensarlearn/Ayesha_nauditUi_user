@@ -3,7 +3,7 @@ import { Organization } from './org';
 export type User = {
   id: string;
   username?: string;
-  firstName?: string;
+  firstName: string;
   lastName?: string;
   displayName?: string;
   email?: string;

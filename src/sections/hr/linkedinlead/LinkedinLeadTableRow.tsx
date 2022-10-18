@@ -6,6 +6,7 @@ import { TableRow, TableCell, MenuItem } from '@mui/material';
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
 import { LinkedinLead } from '../../../@types/linkedinlead';
+import { capitalCase } from 'change-case';
 
 // ----------------------------------------------------------------------
 
@@ -38,14 +39,14 @@ export default function LinkedinLeadTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell align="left">{leadName}</TableCell>
+      <TableCell align="left">{capitalCase(leadName)}</TableCell>
       <TableCell align="left">{websiteLink}</TableCell>
       <TableCell align="left">{linkedinLink}</TableCell>
-      <TableCell align="left">{sent}</TableCell>
+      <TableCell align="left">{capitalCase(sent)}</TableCell>
       <TableCell align="left">
         {user?.firstName} {user?.lastName}
       </TableCell>
-      <TableCell align="left">{responseType}</TableCell>
+      <TableCell align="left">{capitalCase(responseType)}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

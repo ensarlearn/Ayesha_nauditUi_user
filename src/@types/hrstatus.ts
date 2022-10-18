@@ -3,7 +3,7 @@ import { User } from './nistuser';
 export type HRStatus = {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   workDate?: Date | string | number;
   user: User;
 };

@@ -6,7 +6,7 @@ import { HRSubtask } from './hrsubtask';
 export type HRTimesheetAttendance = {
   id: string;
   hours: string;
-  remarks?: string;
+  remarks: string;
   workDate?: Date | string | number;
   user: User;
   project: HRProject;

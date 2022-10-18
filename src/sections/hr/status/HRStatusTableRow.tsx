@@ -8,6 +8,7 @@ import { UserManager } from '../../../@types/user';
 import Iconify from '../../../components/Iconify';
 import { TableMoreMenu } from '../../../components/table';
 import { HRStatus } from '../../../@types/hrstatus';
+import { capitalCase } from 'change-case';
 
 // ----------------------------------------------------------------------
 
@@ -42,8 +43,8 @@ export default function HRStatusTableRow({
 
   return (
     <TableRow hover selected={selected}>
-      <TableCell align="left">{title}</TableCell>
-      <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{capitalCase(title)}</TableCell>
+      <TableCell align="left">{capitalCase(description)}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu
