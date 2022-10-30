@@ -78,6 +78,24 @@ export const navConfig = [
     ],
   },
 
+  // TIMEOFF
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'Timeoff',
+    items: [
+      // HOLIDAYS
+      {
+        title: 'timeoff',
+        path: PATH_DASHBOARD.timeoff.root,
+        icon: ICONS.user,
+        children: [
+          { title: 'holidays', path: PATH_DASHBOARD.timeoff.holidays },
+          { title: 'timeoff', path: PATH_DASHBOARD.timeoff.timeoff },
+        ],
+      },
+    ],
+  },
+
   // Linkedin
   // ----------------------------------------------------------------------
   {

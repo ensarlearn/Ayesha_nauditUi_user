@@ -94,6 +94,17 @@ export const PATH_DASHBOARD = {
     controlsnew: path(ROOTS_DASHBOARD, '/nist/controlsnew'),
     featurenew: path(ROOTS_DASHBOARD, '/nist/featurenew'),
   },
+  timeoff: {
+    root: path(ROOTS_DASHBOARD, '/timeoff'),
+
+    holidaysedit: (id: string) => path(ROOTS_DASHBOARD, `/timeoff/${id}/holidaysedit`),
+    holidays: path(ROOTS_DASHBOARD, '/timeoff/holidays'),
+    holidaysnew: path(ROOTS_DASHBOARD, '/timeoff/holidaysnew'),
+
+    timeoffedit: (id: string) => path(ROOTS_DASHBOARD, `/timeoff/${id}/timeoffedit`),
+    timeoff: path(ROOTS_DASHBOARD, '/timeoff/timeoff'),
+    timeoffnew: path(ROOTS_DASHBOARD, '/timeoff/timeoffnew'),
+  },
   linkedin:{
     root: path(ROOTS_DASHBOARD, '/linkedin'),
     linkedinleadedit: (id: string) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadedit`),
