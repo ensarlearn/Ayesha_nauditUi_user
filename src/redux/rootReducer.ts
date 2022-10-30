@@ -9,6 +9,8 @@ import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 import userReducer from './slices/user';
 import systemsReducer from './slices/systems';
+import holidaysReducer from './slices/holidays';
+import timeoffReducer from './slices/timeoff';
 import hrstatusReducer from './slices/hrstatus';
 import hrtimesheetattendanceReducer from './slices/hrtimesheetattendance';
 import hrprojectReducer from './slices/hrproject';
@@ -58,6 +60,18 @@ const employeePersistConfig = {
 };
 const systemsPersistConfig = {
   key: 'systems',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['sortBy'],
+};
+const holidaysPersistConfig = {
+  key: 'holidays',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['sortBy'],
+};
+const timeoffPersistConfig = {
+  key: 'timeoff',
   storage,
   keyPrefix: 'redux-',
   whitelist: ['sortBy'],
@@ -138,6 +152,8 @@ const rootReducer = combineReducers({
   employee: persistReducer(employeePersistConfig, employeeReducer),
   product: persistReducer(productPersistConfig, productReducer),
   systems: persistReducer(systemsPersistConfig, systemsReducer),
+  holidays: persistReducer(holidaysPersistConfig, holidaysReducer),
+  timeoff: persistReducer(timeoffPersistConfig, timeoffReducer),
   hrstatus: persistReducer(hrStatusPersistConfig, hrstatusReducer),
   hrtimesheetattendance: persistReducer(hrTimesheetAttendancePersistConfig, hrtimesheetattendanceReducer),
   department: persistReducer(departmentPersistConfig, departmentReducer),
