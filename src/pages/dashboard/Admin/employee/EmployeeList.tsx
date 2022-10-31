@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
@@ -32,7 +32,6 @@ import { dispatch } from '../../../../redux/store';
 import { deleteEmployee, getEmployee } from '../../../../redux/slices/employees';
 import { Employee, EmployeeState } from '../../../../@types/employee';
 import useSettings from 'src/hooks/useSettings';
-
 
 import EmployeeAnalytic from 'src/sections/@dashboard/user/employee/EmployeeAnalytic';
 import EmployeeTableToolbar from 'src/sections/@dashboard/user/employee/EmployeeTableToolbar';
@@ -161,7 +160,15 @@ export default function EmployeeList() {
           </Scrollbar>
         </Card>
         <Card>
-          {/* <EmployeeTableToolbar filterName={filterName} onFilterName={handleFilterName} /> */}
+          <EmployeeTableToolbar
+            filterName={filterName}
+            onFilterName={handleFilterName}
+            optionsRole={[]}
+            filterRole={''}
+            onFilterRole={function (event: ChangeEvent<HTMLInputElement>): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
               <Table size={dense ? 'small' : 'medium'}>

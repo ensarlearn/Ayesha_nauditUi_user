@@ -89,7 +89,7 @@ export const defaultSettings: SettingsValueProps = {
   themeContrast: 'default',
   themeLayout: 'horizontal',
   themeColorPresets: 'default',
-  themeStretch: false,
+  themeStretch: true,
 };
 
 // MULTI LANGUAGES

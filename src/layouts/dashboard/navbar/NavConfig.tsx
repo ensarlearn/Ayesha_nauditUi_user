@@ -44,15 +44,9 @@ export const navConfig = [
         path: PATH_DASHBOARD.user.root,
         icon: ICONS.user,
         children: [
-          { title: 'profile', path: PATH_DASHBOARD.user.profile },
-          { title: 'cards', path: PATH_DASHBOARD.user.cards },
-          { title: 'list', path: PATH_DASHBOARD.user.list },
-          { title: 'employee list', path: PATH_DASHBOARD.user.employee },
-          // { title: 'softwares', path: PATH_DASHBOARD.user.softwares},
-          { title: 'create', path: PATH_DASHBOARD.user.new },
-          { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
+          { title: 'list', path: PATH_DASHBOARD.user.employee },
+
           { title: 'account', path: PATH_DASHBOARD.user.account },
-          { title: 'role', path: PATH_DASHBOARD.user.role },
         ],
       },
     ],
@@ -90,10 +84,9 @@ export const navConfig = [
         icon: ICONS.user,
         children: [
           { title: 'linkedinlead', path: PATH_DASHBOARD.linkedin.linkedinlead },
-          { title: 'linkedinaccount', path: PATH_DASHBOARD.linkedin.linkedinaccount }
-      ],
+          { title: 'linkedinaccount', path: PATH_DASHBOARD.linkedin.linkedinaccount },
+        ],
       },
-     
     ],
   },
   // NIST
