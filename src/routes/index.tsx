@@ -180,6 +180,21 @@ export default function Router() {
           ],
         },
         {
+          path: 'timeoff',
+          children: [
+            // Holidays
+            { element: <Navigate to="/dashboard/timeoff/holidays" replace />, index: true },
+            { path: 'holidays', element: <HolidaysList /> },
+            { path: 'holidaysnew', element: <HolidaysCreate /> },
+            { path: ':id/holidaysedit', element: <HolidaysCreate /> },
+            // Timeoff
+            { element: <Navigate to="/dashboard/timeoff/timeoff" replace />, index: true },
+            { path: 'timeoff', element: <TimeoffList /> },
+            { path: 'timeoffnew', element: <TimeoffCreate /> },
+            { path: ':id/timeoffedit', element: <TimeoffCreate /> },
+          ],
+        },
+        {
           path: 'linkedin',
           children: [
             // LinkedinLead
@@ -383,3 +398,12 @@ const HRTaskCreate = Loadable(lazy(() => import('../pages/audit/hr/task/TaskCrea
 // Subtask
 const HRSubtaskList = Loadable(lazy(() => import('../pages/audit/hr/subtask/SubtaskList')));
 const HRSubtaskCreate = Loadable(lazy(() => import('../pages/audit/hr/subtask/SubtaskCreate')));
+
+// Timeoff Holidays
+const HolidaysList = Loadable(lazy(() => import('../pages/audit/timeoff/holidays/HolidaysList')));
+const HolidaysCreate = Loadable(lazy(() => import('../pages/audit/timeoff/holidays/HolidaysCreate')));
+
+// Timeoff
+const TimeoffList = Loadable(lazy(() => import('../pages/audit/timeoff/timeoff/TimeoffList')));
+const TimeoffCreate = Loadable(lazy(() => import('../pages/audit/timeoff/timeoff/TimeoffCreate')));
+
