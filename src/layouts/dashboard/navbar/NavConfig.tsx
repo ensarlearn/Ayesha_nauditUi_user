@@ -101,8 +101,8 @@ export const navConfig = [
         path: PATH_DASHBOARD.linkedin.root,
         icon: ICONS.user,
         children: [
-          { title: 'linkedinlead', path: PATH_DASHBOARD.linkedin.linkedinlead },
-          { title: 'linkedinaccount', path: PATH_DASHBOARD.linkedin.linkedinaccount },
+          { title: 'Lead', path: PATH_DASHBOARD.linkedin.linkedinlead },
+          { title: 'Account', path: PATH_DASHBOARD.linkedin.linkedinaccount },
         ],
       },
     ],

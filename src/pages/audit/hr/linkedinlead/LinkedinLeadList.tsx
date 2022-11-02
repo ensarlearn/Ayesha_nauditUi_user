@@ -97,6 +97,10 @@ export default function LinkedinLeadList() {
     navigate(PATH_DASHBOARD.linkedin.linkedinleadedit(id));
   };
 
+  const handleViewRow = (id: string) => {
+    navigate(PATH_DASHBOARD.linkedin.linkedinleadview(id));
+  };
+
   const dataFiltered = applySortFilter({
     linkedinLeads,
     comparator: getComparator(order, orderBy),
@@ -189,6 +193,7 @@ export default function LinkedinLeadList() {
                         row={row}
                         selected={selected.includes(row.id)}
                         onSelectRow={() => onSelectRow(row.id)}
+                        onViewRow={() => handleViewRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
                         onEditRow={() => handleEditRow(row.id)}
                       />

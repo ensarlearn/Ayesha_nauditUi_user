@@ -107,7 +107,8 @@ export const PATH_DASHBOARD = {
   },
   linkedin:{
     root: path(ROOTS_DASHBOARD, '/linkedin'),
-    linkedinleadedit: (id: string) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadedit`),
+    linkedinleadview: (id: string) => path(ROOTS_DASHBOARD, `/linkedin/${id}`),
+    linkedinleadedit: (id: string | undefined) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadedit`),
     linkedinlead: path(ROOTS_DASHBOARD, '/linkedin/linkedinlead'),
     linkedinleadnew: path(ROOTS_DASHBOARD, '/linkedin/linkedinleadnew'),
 

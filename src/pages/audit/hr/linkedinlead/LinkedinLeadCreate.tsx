@@ -16,7 +16,7 @@ import { LinkedinLeadState } from '../../../../@types/linkedinlead';
 import { getLinkedinLead } from '../../../../redux/slices/linkedinlead';
 import { dispatch } from '../../../../redux/store';
 import LinkedinLeadNewEditForm from 'src/sections/hr/linkedinlead/LinkedinLeadNewEditForm';
-
+import LinkedinLeadDetails from './LinkedinLeadDetails';
 // ----------------------------------------------------------------------
 
 export default function LinkedinLeadCreate() {
@@ -27,6 +27,7 @@ export default function LinkedinLeadCreate() {
   const { id = '' } = useParams();
 
   const isEdit = pathname.includes('edit');
+  const isView = pathname.includes('view');
 
   const { linkedinLeads } = useSelector((state: { linkedinlead: LinkedinLeadState }) => state.linkedinlead);
 
@@ -48,6 +49,7 @@ export default function LinkedinLeadCreate() {
       />
 
       <LinkedinLeadNewEditForm isEdit={isEdit} currentLinkedinLead={currentLinkedinLead} />
+      {/* <LinkedinLeadDetails isView={!isEdit} currentLinkedinLead={currentLinkedinLead} /> */}
     </Container>
   );
 }
