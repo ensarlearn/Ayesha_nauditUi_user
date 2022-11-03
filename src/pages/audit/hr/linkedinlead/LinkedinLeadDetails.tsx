@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
+
 // @mui
 import {
   Container,
-  Box,
   Card,
   Grid,
   Table,
@@ -10,7 +10,6 @@ import {
   TableBody,
   TableHead,
   TableCell,
-  Typography,
   TableContainer,
   Button,
 } from '@mui/material';
@@ -29,33 +28,21 @@ import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 // sections
 
 import Scrollbar from '../../../../components/Scrollbar';
-import { styled } from '@mui/material/styles';
-import { LinkedinLead } from '../../../.././@types/linkedinlead';
+import { LinkedinLead } from "../../../../@types/linkedinlead";
 
 
 type Props = {
   isView: boolean;
   currentLinkedinLead?: LinkedinLead;
 };
-// ----------------------------------------------------------------------
-
-const RowResultStyle = styled(TableRow)(({ theme }) => ({
-  '& td': {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-  },
-}));
 
 export default function LinkedinLeadDetails({ isView, currentLinkedinLead }: Props) {
 
-  console.log(currentLinkedinLead?.user.id)
-//   const {  } = row;
-// console.log('....', row)
   const { themeStretch } = useSettings();
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const handleEdit =  () => {
+  const handleEdit = () => {
     navigate(PATH_DASHBOARD.linkedin.linkedinleadedit(id));
   };
   return (
@@ -93,38 +80,26 @@ export default function LinkedinLeadDetails({ isView, currentLinkedinLead }: Pro
                   }}
                 >
                   <TableRow>
-                    <TableCell align="left">Name</TableCell>
-                    <TableCell align="left">Website Link</TableCell>
-                    <TableCell align="right">LinkedIn Link</TableCell>
-                    <TableCell align="right">Sent</TableCell>
-                    <TableCell align="right">Sent From</TableCell>
-                    <TableCell align="right">Response Type</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Website Link</TableCell>
+                    <TableCell>LinkedIn Link</TableCell>
+                    <TableCell>Sent</TableCell>
+                    <TableCell>Sent From</TableCell>
+                    <TableCell>Response Type</TableCell>
                   </TableRow>
                 </TableHead>
 
                 <TableBody>
-                  {/* {items.map((row, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      borderBottom: (theme) => `solid 1px ${theme.palette.divider}`,
-                    }}
-                  >
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell align="left">
-                      <Box sx={{ maxWidth: 560 }}>
-                        <Typography variant="subtitle2">{row.title}</Typography>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                          {row.description}
-                        </Typography>
-                      </Box>
+                  <TableRow>
+                    <TableCell> {currentLinkedinLead?.leadName} </TableCell>
+                    <TableCell>{currentLinkedinLead?.websiteLink} </TableCell>
+                    <TableCell>{currentLinkedinLead?.linkedinLink} </TableCell>
+                    <TableCell>{currentLinkedinLead?.sent}</TableCell>
+                    <TableCell>
+                      {currentLinkedinLead?.user?.firstName} {currentLinkedinLead?.user?.lastName}
                     </TableCell>
-                    <TableCell align="left">{row.quantity}</TableCell>
-                    <TableCell align="right">{fCurrency(row.price)}</TableCell>
-                    <TableCell align="right">{fCurrency(row.price * row.quantity)}</TableCell>
+                    <TableCell align="left">{currentLinkedinLead?.responseType}</TableCell>
                   </TableRow>
-                ))} */}
-
                 </TableBody>
               </Table>
             </TableContainer>

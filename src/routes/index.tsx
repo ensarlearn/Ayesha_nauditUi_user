@@ -200,7 +200,7 @@ export default function Router() {
             // LinkedinLead
             { element: <Navigate to="/dashboard/linkedin/linkedinlead" replace />, index: true },
             { path: 'linkedinlead', element: <LinkedinLeadList /> },
-            { path: ':id', element: <LinkedinLeadView /> },
+            { path: ':id/linkedinleadview', element: <LinkedinLeadView /> },
             { path: 'linkedinleadnew', element: <LinkedinLeadCreate /> },
             { path: ':id/linkedinleadedit', element: <LinkedinLeadCreate /> },
 
@@ -384,7 +384,7 @@ const DepartmentList = Loadable(lazy(() => import('../pages/audit/hr/department/
 const DepartmentCreate = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentCreate')));
 // LinkedinLead
 const LinkedinLeadList = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadList')));
-const LinkedinLeadView = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadDetails')));
+const LinkedinLeadView = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadView')));
 const LinkedinLeadCreate = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadCreate')));
 // LinkedinAccount
 const LinkedinAccountList = Loadable(lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountList')));
