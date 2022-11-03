@@ -105,14 +105,18 @@ export const PATH_DASHBOARD = {
     timeoff: path(ROOTS_DASHBOARD, '/timeoff/timeoff'),
     timeoffnew: path(ROOTS_DASHBOARD, '/timeoff/timeoffnew'),
   },
-  linkedin:{
+  linkedin: {
     root: path(ROOTS_DASHBOARD, '/linkedin'),
     linkedinleadview: (id: string) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadview`),
-    linkedinleadedit: (id: string | undefined) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadedit`),
+    linkedinleadedit: (id: string | undefined) =>
+      path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinleadedit`),
     linkedinlead: path(ROOTS_DASHBOARD, '/linkedin/linkedinlead'),
     linkedinleadnew: path(ROOTS_DASHBOARD, '/linkedin/linkedinleadnew'),
 
-    linkedinaccountedit: (id: string) => path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinaccountedit`),
+    linkedinaccountedit: (id: string | undefined) =>
+      path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinaccountedit`),
+    linkedinaccountview: (id: string) =>
+      path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinaccountview`),
     linkedinaccount: path(ROOTS_DASHBOARD, '/linkedin/linkedinaccount'),
     linkedinaccountnew: path(ROOTS_DASHBOARD, '/linkedin/linkedinaccountnew'),
   },
@@ -123,15 +127,14 @@ export const PATH_DASHBOARD = {
     status: path(ROOTS_DASHBOARD, '/hr/status'),
     statusnew: path(ROOTS_DASHBOARD, '/hr/statusnew'),
 
-    timesheetattendanceedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/timesheetattendanceedit`),
+    timesheetattendanceedit: (id: string) =>
+      path(ROOTS_DASHBOARD, `/hr/${id}/timesheetattendanceedit`),
     timesheetattendance: path(ROOTS_DASHBOARD, '/hr/timesheetattendance'),
     timesheetattendancenew: path(ROOTS_DASHBOARD, '/hr/timesheetattendancenew'),
-
 
     departmentedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/departmentedit`),
     department: path(ROOTS_DASHBOARD, '/hr/department'),
     departmentnew: path(ROOTS_DASHBOARD, '/hr/departmentnew'),
-
 
     projectedit: (id: string) => path(ROOTS_DASHBOARD, `/hr/${id}/projectedit`),
     project: path(ROOTS_DASHBOARD, '/hr/project'),

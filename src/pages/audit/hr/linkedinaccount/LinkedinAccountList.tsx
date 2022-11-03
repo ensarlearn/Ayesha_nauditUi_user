@@ -99,6 +99,10 @@ export default function LinkedinAccountList() {
     navigate(PATH_DASHBOARD.linkedin.linkedinaccountedit(id));
   };
 
+  const handleViewRow = (id: string) => {
+    navigate(PATH_DASHBOARD.linkedin.linkedinaccountview(id));
+  };
+
   const dataFiltered = applySortFilter({
     linkedinAccounts,
     comparator: getComparator(order, orderBy),
@@ -192,6 +196,7 @@ export default function LinkedinAccountList() {
                         selected={selected.includes(row.id)}
                         onSelectRow={() => onSelectRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
+                        onViewRow={() => handleViewRow(row.id)}
                         onEditRow={() => handleEditRow(row.id)}
                       />
                     ))}

@@ -13,6 +13,7 @@ import { capitalCase } from 'change-case';
 type Props = {
   row: LinkedinAccount;
   selected: boolean;
+  onViewRow: VoidFunction;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
@@ -22,6 +23,7 @@ export default function LinkedinAccountTableRow({
   row,
   selected,
   onEditRow,
+  onViewRow,
   onSelectRow,
   onDeleteRow,
 }: Props) {
@@ -63,6 +65,15 @@ export default function LinkedinAccountTableRow({
               >
                 <Iconify icon={'eva:trash-2-outline'} />
                 Delete
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onViewRow();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify icon={'eva:eye-fill'} />
+                View
               </MenuItem>
               <MenuItem
                 onClick={() => {

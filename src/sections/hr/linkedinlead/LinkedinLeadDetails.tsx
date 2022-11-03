@@ -14,30 +14,26 @@ import {
   Button,
 } from '@mui/material';
 
-import Iconify from '../../../../components/Iconify';
+import Iconify from '../../../components/Iconify';
 
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // _mock_
 // hooks
-import useSettings from '../../../../hooks/useSettings';
+import useSettings from '../../../hooks/useSettings';
 // components
-import Page from '../../../../components/Page';
-import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import Page from '../../../components/Page';
 // sections
 
-import Scrollbar from '../../../../components/Scrollbar';
-import { LinkedinLead } from "../../../../@types/linkedinlead";
-
+import Scrollbar from '../../../components/Scrollbar';
+import { LinkedinLead } from '../../../@types/linkedinlead';
 
 type Props = {
-  isView: boolean;
   currentLinkedinLead?: LinkedinLead;
 };
 
-export default function LinkedinLeadDetails({ isView, currentLinkedinLead }: Props) {
-
+export default function LinkedinLeadDetails({ currentLinkedinLead }: Props) {
   const { themeStretch } = useSettings();
   const navigate = useNavigate();
 
@@ -48,15 +44,6 @@ export default function LinkedinLeadDetails({ isView, currentLinkedinLead }: Pro
   return (
     <Page title="Linkedin: Lead">
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading="Linkedin Lead"
-          links={[
-            { name: 'Linkedin', href: PATH_DASHBOARD.linkedin.root },
-            { name: 'Linkedinlead', href: PATH_DASHBOARD.linkedin.linkedinlead },
-            { name: `Lead-${id}` || '' },
-          ]}
-        />
-
         <Card sx={{ pt: 5, px: 5 }}>
           <Grid container>
             <Button

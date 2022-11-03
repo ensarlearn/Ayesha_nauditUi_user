@@ -209,8 +209,8 @@ export default function Router() {
             { path: 'linkedinaccount', element: <LinkedinAccountList /> },
             { path: 'linkedinaccountnew', element: <LinkedinAccountCreate /> },
             { path: ':id/linkedinaccountedit', element: <LinkedinAccountCreate /> },
-
-          ]
+            { path: ':id/linkedinaccountview', element: <LinkedinAccountView /> },
+          ],
         },
 
         {
@@ -328,7 +328,9 @@ const RoleCreate = Loadable(lazy(() => import('../pages/dashboard/Admin/role/Rol
 
 // Employee
 const EmployeeList = Loadable(lazy(() => import('../pages/dashboard/Admin/employee/EmployeeList')));
-const EmployeeCreate = Loadable(lazy(() => import('../pages/dashboard/Admin/employee/EmployeeCreate')));
+const EmployeeCreate = Loadable(
+  lazy(() => import('../pages/dashboard/Admin/employee/EmployeeCreate'))
+);
 
 // APP
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
@@ -376,19 +378,38 @@ const HRStatusList = Loadable(lazy(() => import('../pages/audit/hr/status/Status
 const HRStatusCreate = Loadable(lazy(() => import('../pages/audit/hr/status/StatusCreate')));
 
 // TimesheetAttendanceState
-const HRTimesheetAttendanceList = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceList')));
-const HRTimesheetAttendanceCreate = Loadable(lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceCreate')));
+const HRTimesheetAttendanceList = Loadable(
+  lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceList'))
+);
+const HRTimesheetAttendanceCreate = Loadable(
+  lazy(() => import('../pages/audit/hr/timesheetattendance/TimesheetAttendanceCreate'))
+);
 
 // Department
 const DepartmentList = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentList')));
-const DepartmentCreate = Loadable(lazy(() => import('../pages/audit/hr/department/DepartmentCreate')));
+const DepartmentCreate = Loadable(
+  lazy(() => import('../pages/audit/hr/department/DepartmentCreate'))
+);
 // LinkedinLead
-const LinkedinLeadList = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadList')));
-const LinkedinLeadView = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadView')));
-const LinkedinLeadCreate = Loadable(lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadCreate')));
+const LinkedinLeadList = Loadable(
+  lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadList'))
+);
+const LinkedinLeadView = Loadable(
+  lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadView'))
+);
+const LinkedinLeadCreate = Loadable(
+  lazy(() => import('../pages/audit/hr/linkedinlead/LinkedinLeadCreate'))
+);
 // LinkedinAccount
-const LinkedinAccountList = Loadable(lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountList')));
-const LinkedinAccountCreate = Loadable(lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountCreate')));
+const LinkedinAccountList = Loadable(
+  lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountList'))
+);
+const LinkedinAccountView = Loadable(
+  lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountView'))
+);
+const LinkedinAccountCreate = Loadable(
+  lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountCreate'))
+);
 // Project
 const HRProjectList = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectList')));
 const HRProjectCreate = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectCreate')));
@@ -403,9 +424,10 @@ const HRSubtaskCreate = Loadable(lazy(() => import('../pages/audit/hr/subtask/Su
 
 // Timeoff Holidays
 const HolidaysList = Loadable(lazy(() => import('../pages/audit/timeoff/holidays/HolidaysList')));
-const HolidaysCreate = Loadable(lazy(() => import('../pages/audit/timeoff/holidays/HolidaysCreate')));
+const HolidaysCreate = Loadable(
+  lazy(() => import('../pages/audit/timeoff/holidays/HolidaysCreate'))
+);
 
 // Timeoff
 const TimeoffList = Loadable(lazy(() => import('../pages/audit/timeoff/timeoff/TimeoffList')));
 const TimeoffCreate = Loadable(lazy(() => import('../pages/audit/timeoff/timeoff/TimeoffCreate')));
-

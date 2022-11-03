@@ -9,46 +9,46 @@ import useSettings from '../../../../hooks/useSettings';
 // _mock_
 // components
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-
-// _mock_
+// sections
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { LinkedinLeadState } from '../../../../@types/linkedinlead';
-import { getLinkedinLead } from '../../../../redux/slices/linkedinlead';
+import { LinkedinAccountState } from '../../../../@types/linkedinaccount';
+import { getLinkedinAccount } from '../../../../redux/slices/linkedinaccount';
 import { dispatch } from '../../../../redux/store';
-import LinkedinLeadDetails from '../../../../sections/hr/linkedinlead/LinkedinLeadDetails';
+import LinkedinAccountDetails from '../../../../sections/hr/linkedinaccount/LinkedinAccountDetails';
+
 // ----------------------------------------------------------------------
 
-export default function LinkedinLeadView() {
+export default function LinkedinAccountView() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
 
   const { id = '' } = useParams();
 
-  const { linkedinLeads } = useSelector(
-    (state: { linkedinlead: LinkedinLeadState }) => state.linkedinlead
+  const { linkedinAccounts } = useSelector(
+    (state: { linkedinaccount: LinkedinAccountState }) => state.linkedinaccount
   );
 
-  const currentLinkedinLead = linkedinLeads.find(
-    (LinkedinLead) => paramCase(LinkedinLead.id) === id
+  const currentLinkedinAccount = linkedinAccounts.find(
+    (LinkedinAccount) => paramCase(LinkedinAccount.id) === id
   );
 
   useEffect(() => {
-    dispatch(getLinkedinLead());
+    dispatch(getLinkedinAccount());
   }, []);
 
   return (
     <Container maxWidth={themeStretch ? false : 'lg'}>
       <HeaderBreadcrumbs
-        heading="Linkedin Lead"
+        heading="Linkedin Account"
         links={[
           { name: 'Linkedin', href: PATH_DASHBOARD.linkedin.root },
-          { name: 'Linkedin Lead', href: PATH_DASHBOARD.linkedin.linkedinlead },
+          { name: 'Linkedin Account', href: PATH_DASHBOARD.linkedin.linkedinaccount },
           { name: 'View' },
         ]}
       />
-      <LinkedinLeadDetails currentLinkedinLead={currentLinkedinLead} />
+      <LinkedinAccountDetails currentLinkedinAccount={currentLinkedinAccount} />
     </Container>
   );
 }
