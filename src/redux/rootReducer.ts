@@ -18,6 +18,7 @@ import hrtaskReducer from './slices/hrtask';
 import departmentReducer from './slices/department';
 import linkedinleadReducer from './slices/linkedinlead';
 import linkedinaccountReducer from './slices/linkedinaccount';
+import crmReducer from './slices/crm';
 import roleReducer from './slices/role';
 import employeeReducer from './slices/employee';
 import hrsubtaskReducer from './slices/hrsubtask';
@@ -159,6 +160,7 @@ const rootReducer = combineReducers({
   department: persistReducer(departmentPersistConfig, departmentReducer),
   linkedinlead: persistReducer(linkedinleadPersistConfig, linkedinleadReducer),
   linkedinaccount: persistReducer(linkedinaccountPersistConfig, linkedinaccountReducer),
+  crm: persistReducer(linkedinaccountPersistConfig, crmReducer),
   hrproject: persistReducer(hrProjectPersistConfig, hrprojectReducer),
   hrtask: persistReducer(hrTaskPersistConfig, hrtaskReducer),
   hrsubtask: persistReducer(hrSubtaskPersistConfig, hrsubtaskReducer),

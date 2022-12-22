@@ -210,6 +210,13 @@ export default function Router() {
             { path: 'linkedinaccountnew', element: <LinkedinAccountCreate /> },
             { path: ':id/linkedinaccountedit', element: <LinkedinAccountCreate /> },
             { path: ':id/linkedinaccountview', element: <LinkedinAccountView /> },
+
+             // CRM
+             { element: <Navigate to="/dashboard/linkedin/crm" replace />, index: true },
+             { path: 'crm', element: <CrmList /> },
+             { path: 'crmnew', element: <CrmCreate /> },
+             { path: ':id/crmedit', element: <CrmCreate /> },
+             { path: ':id/crmview', element: <CrmView /> },
           ],
         },
 
@@ -409,6 +416,17 @@ const LinkedinAccountView = Loadable(
 );
 const LinkedinAccountCreate = Loadable(
   lazy(() => import('../pages/audit/hr/linkedinaccount/LinkedinAccountCreate'))
+);
+
+// CrmAccount
+const CrmList = Loadable(
+  lazy(() => import('../pages/audit/hr/crm/CrmList'))
+);
+const CrmView = Loadable(
+  lazy(() => import('../pages/audit/hr/crm/CrmView'))
+);
+const CrmCreate = Loadable(
+  lazy(() => import('../pages/audit/hr/crm/CrmCreate'))
 );
 // Project
 const HRProjectList = Loadable(lazy(() => import('../pages/audit/hr/project/ProjectList')));

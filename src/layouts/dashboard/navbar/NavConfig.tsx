@@ -103,6 +103,7 @@ export const navConfig = [
         children: [
           { title: 'Lead', path: PATH_DASHBOARD.linkedin.linkedinlead },
           { title: 'Account', path: PATH_DASHBOARD.linkedin.linkedinaccount },
+          { title: 'CRM', path: PATH_DASHBOARD.linkedin.crm },
         ],
       },
     ],

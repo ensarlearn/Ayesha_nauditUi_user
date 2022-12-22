@@ -119,6 +119,13 @@ export const PATH_DASHBOARD = {
       path(ROOTS_DASHBOARD, `/linkedin/${id}/linkedinaccountview`),
     linkedinaccount: path(ROOTS_DASHBOARD, '/linkedin/linkedinaccount'),
     linkedinaccountnew: path(ROOTS_DASHBOARD, '/linkedin/linkedinaccountnew'),
+
+    crmedit: (id: string | undefined) =>
+      path(ROOTS_DASHBOARD, `/linkedin/${id}/crmedit`),
+    crmview: (id: string) =>
+      path(ROOTS_DASHBOARD, `/linkedin/${id}/crmview`),
+    crm: path(ROOTS_DASHBOARD, '/linkedin/crm'),
+    crmnew: path(ROOTS_DASHBOARD, '/linkedin/crmnew'),
   },
   hr: {
     root: path(ROOTS_DASHBOARD, '/hr'),
