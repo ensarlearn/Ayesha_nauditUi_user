@@ -71,6 +71,7 @@ export const PATH_DASHBOARD = {
     rolenew: path(ROOTS_DASHBOARD, '/user/rolenew'),
     // employee list
     employeeedit: (id: string) => path(ROOTS_DASHBOARD, `/user/${id}/employeeedit`),
+    employeeview: (id: string) => path(ROOTS_DASHBOARD, `/user/${id}/employeeview`),
     employee: path(ROOTS_DASHBOARD, '/user/employee'),
     employeenew: path(ROOTS_DASHBOARD, '/user/employeenew'),
   },

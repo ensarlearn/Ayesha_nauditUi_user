@@ -102,7 +102,7 @@ export function getEmployee() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/v1/employee/');
+      const response = await axios.get('/v1/user/');
       dispatch(slice.actions.getEmployeesSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -114,7 +114,7 @@ export function addEmployee(employee: EmployeeRequest) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.post('/v1/employee/', employee);
+      const response = await axios.post('/v1/user/', employee);
       dispatch(slice.actions.addEmployeeSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -126,7 +126,7 @@ export function updateEmployee(employee: EmployeeRequest) {
   return async () => {
     dispatch(slice.actions.startUpdating());
     try {
-      const response = await axios.put('/v1/employee/' + employee.id, employee);
+      const response = await axios.put('/v1/user/updateuser/' + employee.id, employee);
       dispatch(slice.actions.updateEmployeeSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -138,7 +138,7 @@ export function deleteEmployee(id: string) {
   return async () => {
     dispatch(slice.actions.startCreating());
     try {
-      const response = await axios.delete('/v1/employee/' + id);
+      const response = await axios.delete('/v1/user/' + id);
       dispatch(slice.actions.deleteEmployeeSuccess(id));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

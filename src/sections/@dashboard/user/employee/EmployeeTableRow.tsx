@@ -6,6 +6,7 @@ import { UserManager } from '../../../../@types/user';
 // components
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
+import { role } from 'src/_mock/role';
 
 // ----------------------------------------------------------------------
 
@@ -15,6 +16,7 @@ type Props = {
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  onViewRow: VoidFunction;
 };
 
 export default function EmployeeTableRow({
@@ -25,7 +27,7 @@ export default function EmployeeTableRow({
   onDeleteRow,
 }: Props) {
 
-  const { firstName, lastName, roleId, email, employeeId, mobile, joinDate } = row;
+  const { firstName, lastName, role, email, employeeId, mobile, joinDate } = row;
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,7 +51,7 @@ export default function EmployeeTableRow({
       <TableCell align="left">{email}</TableCell>
       <TableCell align="left">{mobile}</TableCell>
       <TableCell align="left">{joinDate}</TableCell>
-      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>{roleId?.name}</TableCell>
+      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>{role}</TableCell>
 
       <TableCell align="right">
         <TableMoreMenu

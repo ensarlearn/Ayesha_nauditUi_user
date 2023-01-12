@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel } from '@mui/material';
+import { DatePicker, LoadingButton } from '@mui/lab';
+import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, TextField } from '@mui/material';
 // utils
 import { fData } from '../../../../utils/formatNumber';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // @types
-import { Employee } from '../../../../@types/employee';
+import { Employee, EmployeeRequest } from '../../../../@types/employee';
 import { RoleState } from '../../../../@types/role';
 // _mock
 import { countries } from '../../../../_mock';
@@ -29,6 +29,8 @@ import {
   RHFTextField,
   RHFUploadAvatar,
 } from '../../../../components/hook-form';
+import { format } from 'date-fns';
+import { addEmployee,updateEmployee } from 'src/redux/slices/employee';
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +47,7 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }: Props) 
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const [dropdownrole, setDropdownRole] = useState(currentEmployee?.roleId?.id || '');
+  const [dropdownrole, setDropdownRole] = useState(currentEmployee?.role || '');
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
@@ -64,7 +66,7 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }: Props) 
       mobile: currentEmployee?.mobile || '',
       employeeId: currentEmployee?.employeeId || '',
       joinDate: currentEmployee?.joinDate || '',
-      role: currentEmployee?.roleId || '',
+      role: currentEmployee?.role || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentEmployee]
@@ -102,7 +104,26 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }: Props) 
   }, []);
 
   const onSubmit = async (data: FormValuesProps) => {
+    const request: EmployeeRequest = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      mobile: data.mobile,
+      joinDate: format(new Date(data.joinDate || ''), 'yyyy-mm-dd'),
+      employeeId: data.employeeId,
+      roleName: dropdownrole
+      // role: ''
+    };
     try {
+      if(isEdit && currentEmployee){
+        request.id = currentEmployee.id;
+        dispatch(updateEmployee(request));
+      }
+      if(!isEdit){
+        dispatch(addEmployee(request));
+        reset();
+      }
+
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
@@ -135,7 +156,29 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }: Props) 
               <RHFTextField name="email" label="Email Address" />
               <RHFTextField name="employeeId" label="Employee Id" />
               <RHFTextField name="mobile" label="Mobile" />
-              <RHFTextField name="joinDate" label="Join Date" />
+              {/* <RHFTextField name="joinDate" label="Join Date" /> */}
+
+              <Controller
+                name="joinDate"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <DatePicker
+                    label="joinDate"
+                    value={field.value}
+                    onChange={(newValue) => {
+                      field.onChange(newValue);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        fullWidth
+                        error={!!error}
+                        helperText={error?.message}
+                      />
+                    )}
+                  />
+                )}
+              />
               <RHFSelect
                 name={dropdownrole}
                 value={dropdownrole}
@@ -145,7 +188,7 @@ export default function EmployeeNewEditForm({ isEdit, currentEmployee }: Props) 
               >
                 <option value="" />
                 {roles.map((option) => (
-                  <option key={option.id} value={option.id}>
+                  <option key={option.id} value={option.name}>
                     {option.name}
                   </option>
                 ))}

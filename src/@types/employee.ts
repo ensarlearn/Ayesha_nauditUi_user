@@ -21,16 +21,18 @@ export type Employee = {
   company: string;
   isVerified: boolean;
   status: string;
+  role: string
 };
 export type EmployeeRequest = {
-  id?: string;
-  hours?: string;
-  remarks?: string;
-  workDate?: string;
-  userId: string;
-  projectsId: string;
-  taskId: string;
-  subtaskId: string;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  employeeId: string;
+  mobile: string;
+  joinDate: string;
+//   role: string;
+  roleName: String;
 };
 
 export type EmployeeState = {
